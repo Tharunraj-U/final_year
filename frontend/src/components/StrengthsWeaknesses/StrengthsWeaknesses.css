@@ -1,0 +1,63 @@
+.strengths-weaknesses {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 768px) {
+  .strengths-weaknesses {
+    grid-template-columns: 1fr;
+  }
+}
+
+.sw-section {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.sw-section h3 {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  color: #1a1a2e;
+}
+
+.sw-section ul {
+  list-style: none;
+}
+
+.sw-section li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  border-radius: 8px;
+}
+
+.strength-item {
+  background: #d1fae5;
+  color: #065f46;
+}
+
+.strength-item .sw-icon {
+  color: #10b981;
+  font-weight: bold;
+}
+
+.weakness-item {
+  background: #fef3c7;
+  color: #92400e;
+}
+
+.weakness-item .sw-icon {
+  color: #f59e0b;
+}
+
+.no-items {
+  color: #6b7280;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 1rem;
+}

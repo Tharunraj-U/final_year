@@ -1,0 +1,163 @@
+.streak-counter {
+  background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
+  border-radius: 16px;
+  padding: 20px;
+  color: white;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 8px 30px rgba(255, 107, 107, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.streak-counter::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 50%);
+  animation: shimmer 3s infinite;
+}
+
+@keyframes shimmer {
+  0%, 100% { transform: translate(-25%, -25%); }
+  50% { transform: translate(25%, 25%); }
+}
+
+.streak-counter.animate {
+  animation: pulse 0.5s ease;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+.streak-fire {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.fire {
+  position: absolute;
+  font-size: 32px;
+  animation: flicker 0.5s infinite alternate;
+}
+
+.fire-1 {
+  animation-delay: 0s;
+}
+
+.fire-2 {
+  animation-delay: 0.1s;
+  transform: translateX(-8px);
+  font-size: 28px;
+}
+
+.fire-3 {
+  animation-delay: 0.2s;
+  transform: translateX(8px);
+  font-size: 28px;
+}
+
+.fire-4 {
+  animation-delay: 0.15s;
+  transform: translateY(-10px);
+  font-size: 24px;
+}
+
+@keyframes flicker {
+  0% { transform: scale(1) translateY(0); }
+  100% { transform: scale(1.1) translateY(-2px); }
+}
+
+.streak-info {
+  flex: 1;
+}
+
+.streak-number {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.streak-number .count {
+  font-size: 42px;
+  font-weight: 800;
+  line-height: 1;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.streak-number .label {
+  font-size: 16px;
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+.streak-message {
+  margin-top: 4px;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.streak-calendar {
+  display: flex;
+  gap: 6px;
+}
+
+.calendar-day {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.calendar-day.active {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Dark mode adjustments */
+.dark-mode .streak-counter {
+  background: linear-gradient(135deg, #c44536 0%, #772e25 100%);
+}
+
+@media (max-width: 600px) {
+  .streak-counter {
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+  }
+  
+  .streak-info {
+    width: 100%;
+    order: 1;
+  }
+  
+  .streak-number {
+    justify-content: center;
+  }
+  
+  .streak-calendar {
+    order: 2;
+    margin-top: 10px;
+  }
+  
+  .streak-fire {
+    order: 0;
+  }
+}

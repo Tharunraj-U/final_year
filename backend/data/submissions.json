@@ -1,0 +1,1525 @@
+{
+  "user_ohylefnqi": [
+    {
+      "problem_id": "arr-001",
+      "problem_title": "Two Sum",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "code": "def solution():\n    # Write your code here\n    pass",
+      "passed": true,
+      "passed_count": 0,
+      "total_count": 0,
+      "time_taken_minutes": 0,
+      "score": 0,
+      "time_complexity": "O(n)",
+      "space_complexity": "O(n)",
+      "is_optimal": false,
+      "submission_id": "user_ohylefnqi_1",
+      "submitted_at": "2026-01-12T18:19:15.194540"
+    },
+    {
+      "problem_id": "arr-003",
+      "problem_title": "Contains Duplicate",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "code": "def contains_duplicate(nums: list) -> bool:\n    seen = set()\n    for num in nums:\n        if num in seen:\n            return True\n        seen.add(num)\n    return False\n",
+      "passed": true,
+      "passed_count": 3,
+      "total_count": 3,
+      "time_taken_minutes": 1,
+      "score": 100,
+      "time_complexity": "O(n)",
+      "space_complexity": "O(n)",
+      "is_optimal": true,
+      "submission_id": "user_ohylefnqi_2",
+      "submitted_at": "2026-01-12T19:03:56.029787"
+    },
+    {
+      "problem_id": "arr-002",
+      "problem_title": "Maximum Subarray",
+      "topic": "arrays",
+      "difficulty": "medium",
+      "code": "def max_subarray(nums: list) -> int:\n    max_sum = nums[0]\n    current_sum = nums[0]\n\n    for i in range(1, len(nums)):\n        current_sum = max(nums[i], current_sum + nums[i])\n        max_sum = max(max_sum, current_sum)\n\n    return max_sum\n",
+      "passed": true,
+      "passed_count": 3,
+      "total_count": 3,
+      "time_taken_minutes": 1,
+      "score": 100,
+      "time_complexity": "O(n)",
+      "space_complexity": "O(1)",
+      "is_optimal": true,
+      "submission_id": "user_ohylefnqi_3",
+      "submitted_at": "2026-01-12T19:25:41.611183"
+    },
+    {
+      "problem_id": "arr-002",
+      "problem_title": "Maximum Subarray",
+      "topic": "arrays",
+      "difficulty": "medium",
+      "code": "def max_subarray(nums: list) -> int:\n    max_sum = nums[0]\n    current_sum = nums[0]\n\n    for i in range(1, len(nums)):\n        current_sum = max(nums[i], current_sum + nums[i])\n        max_sum = max(max_sum, current_sum)\n\n    return max_sum\n",
+      "passed": true,
+      "passed_count": 3,
+      "total_count": 3,
+      "time_taken_minutes": 0,
+      "score": 100,
+      "time_complexity": "O(n)",
+      "space_complexity": "O(1)",
+      "is_optimal": true,
+      "submission_id": "user_ohylefnqi_4",
+      "submitted_at": "2026-01-12T19:28:49.005604"
+    },
+    {
+      "problem_id": "arr-002",
+      "problem_title": "Maximum Subarray",
+      "topic": "arrays",
+      "difficulty": "medium",
+      "code": "def max_subarray(nums: list) -> int:\n    # Write your code here\n    pass",
+      "passed": false,
+      "passed_count": 0,
+      "total_count": 3,
+      "time_taken_minutes": 0,
+      "score": 100,
+      "time_complexity": "O(n)",
+      "space_complexity": "O(1)",
+      "is_optimal": true,
+      "submission_id": "user_ohylefnqi_5",
+      "submitted_at": "2026-01-12T19:29:15.304464"
+    },
+    {
+      "problem_id": "arr-004",
+      "problem_title": "Best Time to Buy and Sell Stock",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "code": "def max_profit(prices: list) -> int:\n    # Write your code here\n    pass",
+      "passed": false,
+      "passed_count": 0,
+      "total_count": 3,
+      "time_taken_minutes": 0,
+      "score": 0,
+      "time_complexity": "O(n)",
+      "space_complexity": "O(1)",
+      "is_optimal": false,
+      "submission_id": "user_ohylefnqi_6",
+      "submitted_at": "2026-01-12T19:29:37.729419"
+    },
+    {
+      "problem_id": "arr-001",
+      "problem_title": "Two Sum",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "code": "def two_sum(nums: list, target: int) -> list:\n    seen = {}\n    for i, num in enumerate(nums):\n        diff = target - num\n        if diff in seen:\n            return [seen[diff], i]\n        seen[num] = i\n    return []\n",
+      "passed": true,
+      "passed_count": 3,
+      "total_count": 3,
+      "time_taken_minutes": 1,
+      "score": 100,
+      "time_complexity": "O(n)",
+      "space_complexity": "O(n)",
+      "is_optimal": true,
+      "submission_id": "user_ohylefnqi_7",
+      "submitted_at": "2026-01-12T19:31:47.569140"
+    },
+    {
+      "problem_id": "arr-001",
+      "problem_title": "Two Sum",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "code": "def two_sum(nums: list, target: int) -> list:\n    seen = {}\n    for i, num in enumerate(nums):\n        diff = target - num\n        if diff in seen:\n            return [seen[diff], i]\n        seen[num] = i\n    return []\n",
+      "language": "python",
+      "passed": true,
+      "passed_count": 3,
+      "total_count": 3,
+      "failed_count": 0,
+      "time_taken_minutes": 0,
+      "expected_time_minutes": 15,
+      "attempt_number": 3,
+      "score": 100,
+      "time_complexity": {
+        "estimate": "O(n)",
+        "explanation": "The solution iterates through the list of numbers once, performing constant time operations (hash map lookups and insertions) for each element.",
+        "is_optimal": true
+      },
+      "space_complexity": {
+        "estimate": "O(n)",
+        "explanation": "The hash map stores up to n elements in the worst case, where n is the number of elements in the input array.",
+        "is_optimal": false
+      },
+      "algorithm_type": {
+        "primary": "Hash Map",
+        "secondary": [],
+        "is_appropriate": true,
+        "better_approach": null
+      },
+      "test_case_analysis": {
+        "total_tests": 3,
+        "passed_tests": 3,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 8,
+        "variable_naming": 9,
+        "code_structure": 8,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Proficient",
+      "ai_analysis": {
+        "feedback": "Your solution to the Two Sum problem is well-implemented and efficiently utilizes a hash map to achieve the desired result in linear time. The logic for checking the difference and storing indices is clear and effective. However, adding comments to explain your thought process could enhance the readability for others reviewing your code.",
+        "time_complexity": {
+          "estimate": "O(n)",
+          "explanation": "The solution iterates through the list of numbers once, performing constant time operations (hash map lookups and insertions) for each element.",
+          "is_optimal": true
+        },
+        "space_complexity": {
+          "estimate": "O(n)",
+          "explanation": "The hash map stores up to n elements in the worst case, where n is the number of elements in the input array.",
+          "is_optimal": false
+        },
+        "algorithm_type": {
+          "primary": "Hash Map",
+          "secondary": [],
+          "is_appropriate": true,
+          "better_approach": null
+        },
+        "test_case_analysis": {
+          "total_tests": 3,
+          "passed_tests": 3,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 8,
+          "variable_naming": 9,
+          "code_structure": 8,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Add comments to explain the logic behind your code for better clarity.",
+          "Consider edge cases, such as when the input list has fewer than two elements.",
+          "Explore the use of type hints for function parameters and return types to improve code clarity."
+        ],
+        "concepts_demonstrated": [
+          "Hash maps for efficient lookups",
+          "Iterating through lists",
+          "Basic arithmetic operations"
+        ],
+        "concepts_to_learn": [
+          "Edge case handling",
+          "Algorithm optimization techniques",
+          "Code documentation best practices"
+        ],
+        "score": 100,
+        "mastery_level": "Proficient",
+        "attempt_number": 3,
+        "language": "python"
+      },
+      "submission_id": "user_ohylefnqi_8",
+      "submitted_at": "2026-01-12T19:46:48.499514"
+    },
+    {
+      "problem_id": "arr-001",
+      "problem_title": "Two Sum",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "code": "def two_sum(nums: list, target: int) -> list:\n    seen = {}\n    for i, num in enumerate(nums):\n        diff = target - num\n        if diff in seen:\n            return [seen[diff], i]\n        seen[num] = i\n    return []\n",
+      "language": "python",
+      "passed": true,
+      "passed_count": 3,
+      "total_count": 3,
+      "failed_count": 0,
+      "time_taken_minutes": 0,
+      "expected_time_minutes": 15,
+      "attempt_number": 4,
+      "score": 100,
+      "time_complexity": {
+        "estimate": "O(n)",
+        "explanation": "The solution iterates through the list of numbers once, performing constant time operations (hash map lookups and insertions) for each element.",
+        "is_optimal": true
+      },
+      "space_complexity": {
+        "estimate": "O(n)",
+        "explanation": "The hash map stores up to n elements in the worst case, where n is the number of elements in the input array.",
+        "is_optimal": false
+      },
+      "algorithm_type": {
+        "primary": "Hash Map",
+        "secondary": [],
+        "is_appropriate": true,
+        "better_approach": null
+      },
+      "test_case_analysis": {
+        "total_tests": 3,
+        "passed_tests": 3,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 8,
+        "variable_naming": 9,
+        "code_structure": 8,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Proficient",
+      "ai_analysis": {
+        "feedback": "Your solution to the Two Sum problem is well-implemented, effectively utilizing a hash map to achieve the desired result in linear time. The logic for checking the difference and storing indices is clear and effective. However, adding comments to explain your thought process could enhance the readability for others reviewing your code. Additionally, consider handling edge cases, such as when the input list has fewer than two elements.",
+        "time_complexity": {
+          "estimate": "O(n)",
+          "explanation": "The solution iterates through the list of numbers once, performing constant time operations (hash map lookups and insertions) for each element.",
+          "is_optimal": true
+        },
+        "space_complexity": {
+          "estimate": "O(n)",
+          "explanation": "The hash map stores up to n elements in the worst case, where n is the number of elements in the input array.",
+          "is_optimal": false
+        },
+        "algorithm_type": {
+          "primary": "Hash Map",
+          "secondary": [],
+          "is_appropriate": true,
+          "better_approach": null
+        },
+        "test_case_analysis": {
+          "total_tests": 3,
+          "passed_tests": 3,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 8,
+          "variable_naming": 9,
+          "code_structure": 8,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Add comments to explain the logic behind your code for better clarity.",
+          "Consider edge cases, such as when the input list has fewer than two elements.",
+          "Explore the use of type hints for function parameters and return types to improve code clarity."
+        ],
+        "concepts_demonstrated": [
+          "Hash maps for efficient lookups",
+          "Iterating through lists",
+          "Basic arithmetic operations"
+        ],
+        "concepts_to_learn": [
+          "Edge case handling",
+          "Algorithm optimization techniques",
+          "Code documentation best practices"
+        ],
+        "score": 100,
+        "mastery_level": "Proficient",
+        "attempt_number": 4,
+        "language": "python"
+      },
+      "submission_id": "user_ohylefnqi_9",
+      "submitted_at": "2026-01-12T19:50:25.513688"
+    },
+    {
+      "problem_id": "arr-001",
+      "problem_title": "Two Sum",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "code": "def two_sum(nums: list, target: int) -> list:\n    seen = {}\n    for i, num in enumerate(nums):\n        diff = target - num\n        if diff in seen :\n            return [seen[diff], i]\n        seen[num] = i\n    return []\n",
+      "language": "python",
+      "passed": true,
+      "passed_count": 3,
+      "total_count": 3,
+      "failed_count": 0,
+      "time_taken_minutes": 1,
+      "expected_time_minutes": 15,
+      "attempt_number": 5,
+      "score": 100,
+      "time_complexity": {
+        "estimate": "O(n)",
+        "explanation": "The solution iterates through the list of numbers once, performing constant time operations (hash map lookups and insertions) for each element.",
+        "is_optimal": true
+      },
+      "space_complexity": {
+        "estimate": "O(n)",
+        "explanation": "The hash map stores up to n elements in the worst case, where n is the number of elements in the input array.",
+        "is_optimal": false
+      },
+      "algorithm_type": {
+        "primary": "Hash Map",
+        "secondary": [],
+        "is_appropriate": true,
+        "better_approach": null
+      },
+      "test_case_analysis": {
+        "total_tests": 3,
+        "passed_tests": 3,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 8,
+        "variable_naming": 9,
+        "code_structure": 8,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Proficient",
+      "ai_analysis": {
+        "feedback": "Your solution to the Two Sum problem is well-implemented, effectively utilizing a hash map to achieve the desired result in linear time. The logic for checking the difference and storing indices is clear and effective. However, adding comments to explain your thought process could enhance the readability for others reviewing your code. Additionally, consider handling edge cases, such as when the input list has fewer than two elements.",
+        "time_complexity": {
+          "estimate": "O(n)",
+          "explanation": "The solution iterates through the list of numbers once, performing constant time operations (hash map lookups and insertions) for each element.",
+          "is_optimal": true
+        },
+        "space_complexity": {
+          "estimate": "O(n)",
+          "explanation": "The hash map stores up to n elements in the worst case, where n is the number of elements in the input array.",
+          "is_optimal": false
+        },
+        "algorithm_type": {
+          "primary": "Hash Map",
+          "secondary": [],
+          "is_appropriate": true,
+          "better_approach": null
+        },
+        "test_case_analysis": {
+          "total_tests": 3,
+          "passed_tests": 3,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 8,
+          "variable_naming": 9,
+          "code_structure": 8,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Add comments to explain the logic behind your code for better clarity.",
+          "Consider edge cases, such as when the input list has fewer than two elements.",
+          "Explore the use of type hints for function parameters and return types to improve code clarity."
+        ],
+        "concepts_demonstrated": [
+          "Hash maps for efficient lookups",
+          "Iterating through lists",
+          "Basic arithmetic operations"
+        ],
+        "concepts_to_learn": [
+          "Edge case handling",
+          "Algorithm optimization techniques",
+          "Code documentation best practices"
+        ],
+        "score": 100,
+        "mastery_level": "Proficient",
+        "attempt_number": 5,
+        "language": "python"
+      },
+      "submission_id": "user_ohylefnqi_10",
+      "submitted_at": "2026-01-12T20:07:18.982336"
+    }
+  ],
+  "student_tharun": [
+    {
+      "problem_id": "arr-001",
+      "problem_title": "Two Sum",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "code": "def two_sum(nums, target):\n    seen = {}\n    for i, num in enumerate(nums):\n        complement = target - num\n        if complement in seen:\n            return [seen[complement], i]\n        seen[num] = i\n    return []",
+      "language": "python",
+      "passed": true,
+      "passed_count": 5,
+      "total_count": 5,
+      "time_taken_minutes": 8,
+      "expected_time_minutes": 15,
+      "attempt_number": 1,
+      "score": 95,
+      "time_complexity": {
+        "estimate": "O(n)",
+        "is_optimal": true
+      },
+      "space_complexity": {
+        "estimate": "O(n)",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Hash Map",
+        "is_appropriate": true
+      },
+      "mastery_level": "Expert",
+      "ai_analysis": {
+        "algorithm_type": {
+          "primary": "Hash Map"
+        },
+        "time_complexity": {
+          "is_optimal": true
+        }
+      },
+      "submission_id": "student_tharun_1",
+      "submitted_at": "2026-01-05T20:26:55.840268"
+    },
+    {
+      "problem_id": "arr-002",
+      "problem_title": "Maximum Subarray",
+      "topic": "arrays",
+      "difficulty": "medium",
+      "code": "def max_subarray(nums):\n    max_sum = curr_sum = nums[0]\n    for num in nums[1:]:\n        curr_sum = max(num, curr_sum + num)\n        max_sum = max(max_sum, curr_sum)\n    return max_sum",
+      "language": "python",
+      "passed": true,
+      "passed_count": 5,
+      "total_count": 5,
+      "time_taken_minutes": 12,
+      "score": 98,
+      "time_complexity": {
+        "estimate": "O(n)",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Kadane's Algorithm",
+        "is_appropriate": true
+      },
+      "mastery_level": "Expert",
+      "ai_analysis": {
+        "algorithm_type": {
+          "primary": "Kadane's Algorithm"
+        },
+        "time_complexity": {
+          "is_optimal": true
+        }
+      },
+      "submission_id": "student_tharun_2",
+      "submitted_at": "2026-01-06T01:26:55.840268"
+    },
+    {
+      "problem_id": "str-001",
+      "problem_title": "Valid Anagram",
+      "topic": "strings",
+      "difficulty": "easy",
+      "code": "def is_anagram(s, t):\n    return sorted(s) == sorted(t)",
+      "language": "python",
+      "passed": true,
+      "passed_count": 5,
+      "total_count": 5,
+      "time_taken_minutes": 5,
+      "score": 90,
+      "time_complexity": {
+        "estimate": "O(n log n)",
+        "is_optimal": false
+      },
+      "algorithm_type": {
+        "primary": "Sorting",
+        "is_appropriate": true
+      },
+      "mastery_level": "Proficient",
+      "ai_analysis": {
+        "algorithm_type": {
+          "primary": "Sorting"
+        },
+        "time_complexity": {
+          "is_optimal": false
+        }
+      },
+      "submission_id": "student_tharun_3",
+      "submitted_at": "2026-01-06T06:26:55.840268"
+    },
+    {
+      "problem_id": "dp-001",
+      "problem_title": "Climbing Stairs",
+      "topic": "dynamic_programming",
+      "difficulty": "easy",
+      "code": "def climb_stairs(n):\n    if n <= 2:\n        return n\n    return climb_stairs(n-1) + climb_stairs(n-2)",
+      "language": "python",
+      "passed": false,
+      "passed_count": 2,
+      "total_count": 5,
+      "time_taken_minutes": 25,
+      "score": 40,
+      "time_complexity": {
+        "estimate": "O(2^n)",
+        "is_optimal": false
+      },
+      "algorithm_type": {
+        "primary": "Brute Force Recursion",
+        "is_appropriate": false,
+        "better_approach": "Use DP with memoization"
+      },
+      "mastery_level": "Beginner",
+      "ai_analysis": {
+        "algorithm_type": {
+          "primary": "Brute Force Recursion"
+        },
+        "time_complexity": {
+          "is_optimal": false
+        },
+        "test_case_analysis": {
+          "failure_patterns": [
+            "timeout",
+            "large inputs"
+          ]
+        }
+      },
+      "submission_id": "student_tharun_4",
+      "submitted_at": "2026-01-06T11:26:55.840268"
+    },
+    {
+      "problem_id": "dp-002",
+      "problem_title": "House Robber",
+      "topic": "dynamic_programming",
+      "difficulty": "medium",
+      "code": "# Couldn't solve",
+      "language": "python",
+      "passed": false,
+      "passed_count": 1,
+      "total_count": 5,
+      "time_taken_minutes": 40,
+      "score": 20,
+      "time_complexity": {
+        "estimate": "Unknown",
+        "is_optimal": false
+      },
+      "algorithm_type": {
+        "primary": "Unknown",
+        "is_appropriate": false
+      },
+      "mastery_level": "Beginner",
+      "ai_analysis": {
+        "algorithm_type": {
+          "primary": "Unknown"
+        },
+        "test_case_analysis": {
+          "failure_patterns": [
+            "logic error",
+            "edge cases"
+          ]
+        }
+      },
+      "submission_id": "student_tharun_5",
+      "submitted_at": "2026-01-06T16:26:55.840268"
+    },
+    {
+      "problem_id": "bt-001",
+      "problem_title": "Subsets",
+      "topic": "backtracking",
+      "difficulty": "medium",
+      "code": "def subsets(nums: list) -> list:\n    result = []\n\n    def backtrack(index, current):\n        if index == len(nums):\n            result.append(current[:])\n            return\n        \n        # Exclude nums[index]\n        backtrack(index + 1, current)\n        \n        # Include nums[index]\n        current.append(nums[index])\n        backtrack(index + 1, current)\n        current.pop()\n\n    backtrack(0, [])\n    return result\n",
+      "language": "python",
+      "passed": true,
+      "passed_count": 3,
+      "total_count": 3,
+      "failed_count": 0,
+      "time_taken_minutes": 1,
+      "expected_time_minutes": 20,
+      "attempt_number": 1,
+      "score": 95,
+      "time_complexity": {
+        "estimate": "O(n * 2^n)",
+        "explanation": "The time complexity arises because for each element in the input array, we have two choices: to include it in the current subset or not. This results in 2^n possible subsets, and we take O(n) time to copy the current subset into the result list.",
+        "is_optimal": true
+      },
+      "space_complexity": {
+        "estimate": "O(n)",
+        "explanation": "The space complexity is O(n) due to the storage of the current subset in the recursion stack, which can go as deep as the length of the input array.",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Backtracking",
+        "secondary": [],
+        "is_appropriate": true,
+        "better_approach": null
+      },
+      "test_case_analysis": {
+        "total_tests": 3,
+        "passed_tests": 3,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 8,
+        "variable_naming": 7,
+        "code_structure": 8,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Proficient",
+      "ai_analysis": {
+        "feedback": "Your implementation of the subsets problem is well-structured and effectively utilizes backtracking to generate all possible subsets. The use of a helper function to manage the current state is a good practice. However, consider adding comments to explain the logic behind the backtracking steps for better clarity. Overall, it's a solid solution that meets the problem requirements.",
+        "time_complexity": {
+          "estimate": "O(n * 2^n)",
+          "explanation": "The time complexity arises because for each element in the input array, we have two choices: to include it in the current subset or not. This results in 2^n possible subsets, and we take O(n) time to copy the current subset into the result list.",
+          "is_optimal": true
+        },
+        "space_complexity": {
+          "estimate": "O(n)",
+          "explanation": "The space complexity is O(n) due to the storage of the current subset in the recursion stack, which can go as deep as the length of the input array.",
+          "is_optimal": true
+        },
+        "algorithm_type": {
+          "primary": "Backtracking",
+          "secondary": [],
+          "is_appropriate": true,
+          "better_approach": null
+        },
+        "test_case_analysis": {
+          "total_tests": 3,
+          "passed_tests": 3,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 8,
+          "variable_naming": 7,
+          "code_structure": 8,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Add comments to explain the backtracking logic and the purpose of each step.",
+          "Consider edge cases, such as when the input list is empty, and ensure your code handles them gracefully.",
+          "Explore alternative methods for generating subsets, such as using bit manipulation, to broaden your understanding of the problem."
+        ],
+        "concepts_demonstrated": [
+          "Backtracking",
+          "Recursion",
+          "Subset generation"
+        ],
+        "concepts_to_learn": [
+          "Bit manipulation techniques for subset generation",
+          "Dynamic programming for related problems",
+          "Advanced recursion patterns"
+        ],
+        "score": 95,
+        "mastery_level": "Proficient",
+        "attempt_number": 1,
+        "language": "python"
+      },
+      "submission_id": "student_tharun_6",
+      "submitted_at": "2026-01-12T20:33:11.442075"
+    },
+    {
+      "problem_id": "arr-001",
+      "problem_title": "Two Sum",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "code": "def two_sum(nums: list, target: int) -> list:\n    seen = {}  # value -> index\n    \n    for i, num in enumerate(nums):\n        complement = target - num\n        \n        if complement in seen:\n            return [seen[complement], i]\n        \n        seen[num] = i\n    \n    return []\n",
+      "language": "python",
+      "passed": true,
+      "passed_count": 3,
+      "total_count": 3,
+      "failed_count": 0,
+      "time_taken_minutes": 0,
+      "expected_time_minutes": 15,
+      "attempt_number": 2,
+      "score": 0,
+      "time_complexity": {
+        "estimate": "Unknown",
+        "explanation": "",
+        "is_optimal": false
+      },
+      "space_complexity": {
+        "estimate": "Unknown",
+        "explanation": "",
+        "is_optimal": false
+      },
+      "algorithm_type": {
+        "primary": "Unknown",
+        "secondary": [],
+        "is_appropriate": false,
+        "better_approach": null
+      },
+      "test_case_analysis": {
+        "total_tests": 3,
+        "passed_tests": 3,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 5,
+        "variable_naming": 5,
+        "code_structure": 5,
+        "comments": "Unknown"
+      },
+      "mastery_level": "Unknown",
+      "ai_analysis": {
+        "feedback": "Unable to analyze submission at this time.",
+        "time_complexity": {
+          "estimate": "Unknown",
+          "explanation": "",
+          "is_optimal": false
+        },
+        "space_complexity": {
+          "estimate": "Unknown",
+          "explanation": "",
+          "is_optimal": false
+        },
+        "algorithm_type": {
+          "primary": "Unknown",
+          "secondary": [],
+          "is_appropriate": false,
+          "better_approach": null
+        },
+        "test_case_analysis": {
+          "total_tests": 3,
+          "passed_tests": 3,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 5,
+          "variable_naming": 5,
+          "code_structure": 5,
+          "comments": "Unknown"
+        },
+        "improvement_tips": [],
+        "concepts_demonstrated": [],
+        "concepts_to_learn": [],
+        "score": 0,
+        "mastery_level": "Unknown",
+        "attempt_number": 2,
+        "language": "python"
+      },
+      "submission_id": "student_tharun_7",
+      "submitted_at": "2026-01-27T15:09:02.538933"
+    },
+    {
+      "problem_id": "arr-003",
+      "problem_title": "Contains Duplicate",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "code": "def contains_duplicate(nums: list) -> bool:\n    seen = set()\n    for num in nums:\n        if num in seen:\n            return True\n        seen.add(num)\n    return False\n",
+      "language": "python",
+      "passed": true,
+      "passed_count": 3,
+      "total_count": 3,
+      "failed_count": 0,
+      "time_taken_minutes": 0,
+      "expected_time_minutes": 10,
+      "attempt_number": 1,
+      "score": 0,
+      "time_complexity": {
+        "estimate": "Unknown",
+        "explanation": "",
+        "is_optimal": false
+      },
+      "space_complexity": {
+        "estimate": "Unknown",
+        "explanation": "",
+        "is_optimal": false
+      },
+      "algorithm_type": {
+        "primary": "Unknown",
+        "secondary": [],
+        "is_appropriate": false,
+        "better_approach": null
+      },
+      "test_case_analysis": {
+        "total_tests": 3,
+        "passed_tests": 3,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 5,
+        "variable_naming": 5,
+        "code_structure": 5,
+        "comments": "Unknown"
+      },
+      "mastery_level": "Unknown",
+      "ai_analysis": {
+        "feedback": "Unable to analyze submission at this time.",
+        "time_complexity": {
+          "estimate": "Unknown",
+          "explanation": "",
+          "is_optimal": false
+        },
+        "space_complexity": {
+          "estimate": "Unknown",
+          "explanation": "",
+          "is_optimal": false
+        },
+        "algorithm_type": {
+          "primary": "Unknown",
+          "secondary": [],
+          "is_appropriate": false,
+          "better_approach": null
+        },
+        "test_case_analysis": {
+          "total_tests": 3,
+          "passed_tests": 3,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 5,
+          "variable_naming": 5,
+          "code_structure": 5,
+          "comments": "Unknown"
+        },
+        "improvement_tips": [],
+        "concepts_demonstrated": [],
+        "concepts_to_learn": [],
+        "score": 0,
+        "mastery_level": "Unknown",
+        "attempt_number": 1,
+        "language": "python"
+      },
+      "submission_id": "student_tharun_8",
+      "submitted_at": "2026-02-08T23:08:13.092380"
+    },
+    {
+      "problem_id": "arr-003",
+      "problem_title": "Contains Duplicate",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "code": "def contains_duplicate(nums: list) -> bool:\n    seen = set()\n    for num in nums:\n        if num in seen:\n            return True\n        seen.add(num)\n    return False\n",
+      "language": "python",
+      "passed": true,
+      "passed_count": 3,
+      "total_count": 3,
+      "failed_count": 0,
+      "time_taken_minutes": 0,
+      "expected_time_minutes": 10,
+      "attempt_number": 2,
+      "score": 90,
+      "time_complexity": {
+        "estimate": "O(n)",
+        "explanation": "The time complexity is O(n) because we iterate through the list once, performing O(1) operations (checking membership and adding to a set) for each element.",
+        "is_optimal": true
+      },
+      "space_complexity": {
+        "estimate": "O(n)",
+        "explanation": "The space complexity is O(n) due to the additional storage required for the set that holds the unique elements from the input list.",
+        "is_optimal": false
+      },
+      "algorithm_type": {
+        "primary": "Hash Set",
+        "secondary": [],
+        "is_appropriate": true,
+        "better_approach": null
+      },
+      "test_case_analysis": {
+        "total_tests": 3,
+        "passed_tests": 3,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 8,
+        "variable_naming": 8,
+        "code_structure": 8,
+        "comments": "Adequate"
+      },
+      "mastery_level": "Proficient",
+      "ai_analysis": {
+        "feedback": "Your solution to the 'Contains Duplicate' problem is efficient and correctly implements the use of a set to track seen numbers. This approach ensures that you achieve the desired time complexity of O(n). However, consider adding type hints for better clarity and documentation within your code. Overall, it's a solid implementation that meets the problem requirements.",
+        "time_complexity": {
+          "estimate": "O(n)",
+          "explanation": "The time complexity is O(n) because we iterate through the list once, performing O(1) operations (checking membership and adding to a set) for each element.",
+          "is_optimal": true
+        },
+        "space_complexity": {
+          "estimate": "O(n)",
+          "explanation": "The space complexity is O(n) due to the additional storage required for the set that holds the unique elements from the input list.",
+          "is_optimal": false
+        },
+        "algorithm_type": {
+          "primary": "Hash Set",
+          "secondary": [],
+          "is_appropriate": true,
+          "better_approach": null
+        },
+        "test_case_analysis": {
+          "total_tests": 3,
+          "passed_tests": 3,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 8,
+          "variable_naming": 8,
+          "code_structure": 8,
+          "comments": "Adequate"
+        },
+        "improvement_tips": [
+          "Add type hints to function parameters and return types for better clarity.",
+          "Consider adding comments to explain the logic behind the use of a set.",
+          "Explore edge cases, such as an empty list or a list with one element, to ensure robustness."
+        ],
+        "concepts_demonstrated": [
+          "Set operations",
+          "Time complexity analysis",
+          "Basic algorithm design"
+        ],
+        "concepts_to_learn": [
+          "Advanced data structures",
+          "Algorithm optimization techniques",
+          "Handling edge cases in algorithms"
+        ],
+        "score": 90,
+        "mastery_level": "Proficient",
+        "attempt_number": 2,
+        "language": "python"
+      },
+      "submission_id": "student_tharun_9",
+      "submitted_at": "2026-02-08T23:21:43.834126"
+    }
+  ],
+  "student_irfan": [
+    {
+      "problem_id": "dp-001",
+      "problem_title": "Climbing Stairs",
+      "topic": "dynamic_programming",
+      "difficulty": "easy",
+      "code": "def climb_stairs(n):\n    if n <= 2:\n        return n\n    dp = [0] * (n + 1)\n    dp[1], dp[2] = 1, 2\n    for i in range(3, n + 1):\n        dp[i] = dp[i-1] + dp[i-2]\n    return dp[n]",
+      "language": "python",
+      "passed": true,
+      "passed_count": 5,
+      "total_count": 5,
+      "time_taken_minutes": 10,
+      "score": 95,
+      "time_complexity": {
+        "estimate": "O(n)",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Dynamic Programming",
+        "is_appropriate": true
+      },
+      "mastery_level": "Expert",
+      "ai_analysis": {
+        "algorithm_type": {
+          "primary": "Dynamic Programming"
+        },
+        "time_complexity": {
+          "is_optimal": true
+        }
+      },
+      "submission_id": "student_irfan_1",
+      "submitted_at": "2026-01-05T20:26:55.840268"
+    },
+    {
+      "problem_id": "dp-002",
+      "problem_title": "House Robber",
+      "topic": "dynamic_programming",
+      "difficulty": "medium",
+      "code": "def rob(nums):\n    if len(nums) <= 2:\n        return max(nums) if nums else 0\n    dp = [0] * len(nums)\n    dp[0] = nums[0]\n    dp[1] = max(nums[0], nums[1])\n    for i in range(2, len(nums)):\n        dp[i] = max(dp[i-1], dp[i-2] + nums[i])\n    return dp[-1]",
+      "language": "python",
+      "passed": true,
+      "passed_count": 5,
+      "total_count": 5,
+      "time_taken_minutes": 15,
+      "score": 92,
+      "time_complexity": {
+        "estimate": "O(n)",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Dynamic Programming",
+        "is_appropriate": true
+      },
+      "mastery_level": "Expert",
+      "ai_analysis": {
+        "algorithm_type": {
+          "primary": "Dynamic Programming"
+        },
+        "time_complexity": {
+          "is_optimal": true
+        }
+      },
+      "submission_id": "student_irfan_2",
+      "submitted_at": "2026-01-06T01:26:55.840268"
+    },
+    {
+      "problem_id": "graph-001",
+      "problem_title": "Number of Islands",
+      "topic": "graphs",
+      "difficulty": "medium",
+      "code": "# Couldn't implement DFS correctly",
+      "language": "python",
+      "passed": false,
+      "passed_count": 2,
+      "total_count": 5,
+      "time_taken_minutes": 45,
+      "score": 30,
+      "time_complexity": {
+        "estimate": "Unknown",
+        "is_optimal": false
+      },
+      "algorithm_type": {
+        "primary": "Attempted DFS",
+        "is_appropriate": true,
+        "better_approach": "Need to learn DFS/BFS properly"
+      },
+      "mastery_level": "Beginner",
+      "ai_analysis": {
+        "algorithm_type": {
+          "primary": "Attempted DFS"
+        },
+        "test_case_analysis": {
+          "failure_patterns": [
+            "edge cases",
+            "visited tracking"
+          ]
+        }
+      },
+      "submission_id": "student_irfan_3",
+      "submitted_at": "2026-01-06T06:26:55.840268"
+    },
+    {
+      "problem_id": "graph-002",
+      "problem_title": "Clone Graph",
+      "topic": "graphs",
+      "difficulty": "medium",
+      "code": "# Confused with graph traversal",
+      "language": "python",
+      "passed": false,
+      "passed_count": 0,
+      "total_count": 5,
+      "time_taken_minutes": 50,
+      "score": 15,
+      "algorithm_type": {
+        "primary": "Unknown",
+        "is_appropriate": false
+      },
+      "mastery_level": "Beginner",
+      "ai_analysis": {
+        "algorithm_type": {
+          "primary": "Unknown"
+        },
+        "test_case_analysis": {
+          "failure_patterns": [
+            "graph traversal",
+            "node cloning"
+          ]
+        }
+      },
+      "submission_id": "student_irfan_4",
+      "submitted_at": "2026-01-06T11:26:55.840268"
+    },
+    {
+      "problem_id": "bt-001",
+      "problem_title": "Subsets",
+      "topic": "backtracking",
+      "difficulty": "medium",
+      "code": "def subsets(nums: list) -> list:\n    result = [[]]\n    for num in nums:\n        new_subsets = []\n        for curr in result:\n            new_subsets.append(curr + [num])\n        result.extend(new_subsets)\n    return result\n",
+      "language": "python",
+      "passed": true,
+      "passed_count": 3,
+      "total_count": 3,
+      "failed_count": 0,
+      "time_taken_minutes": 0,
+      "expected_time_minutes": 20,
+      "attempt_number": 1,
+      "score": 85,
+      "time_complexity": {
+        "estimate": "O(n * 2^n)",
+        "explanation": "The time complexity arises because for each of the n elements, we can either include it in a subset or not, leading to 2^n possible subsets. Each subset generation involves copying existing subsets, contributing to the O(n) factor.",
+        "is_optimal": true
+      },
+      "space_complexity": {
+        "estimate": "O(n * 2^n)",
+        "explanation": "The space complexity is driven by the storage of all subsets generated, which can be up to 2^n subsets, each potentially containing up to n elements.",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Iterative Subset Generation",
+        "secondary": [],
+        "is_appropriate": true,
+        "better_approach": null
+      },
+      "test_case_analysis": {
+        "total_tests": 3,
+        "passed_tests": 3,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 8,
+        "variable_naming": 7,
+        "code_structure": 8,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Proficient",
+      "ai_analysis": {
+        "feedback": "Your solution effectively generates all possible subsets of the input list using an iterative approach, which is clear and concise. The use of a separate list to store new subsets before extending the result is a good practice to avoid modifying the list while iterating. However, consider adding comments to explain your logic, especially for those who may not be familiar with the backtracking concept. Additionally, exploring a recursive approach could deepen your understanding of backtracking techniques.",
+        "time_complexity": {
+          "estimate": "O(n * 2^n)",
+          "explanation": "The time complexity arises because for each of the n elements, we can either include it in a subset or not, leading to 2^n possible subsets. Each subset generation involves copying existing subsets, contributing to the O(n) factor.",
+          "is_optimal": true
+        },
+        "space_complexity": {
+          "estimate": "O(n * 2^n)",
+          "explanation": "The space complexity is driven by the storage of all subsets generated, which can be up to 2^n subsets, each potentially containing up to n elements.",
+          "is_optimal": true
+        },
+        "algorithm_type": {
+          "primary": "Iterative Subset Generation",
+          "secondary": [],
+          "is_appropriate": true,
+          "better_approach": null
+        },
+        "test_case_analysis": {
+          "total_tests": 3,
+          "passed_tests": 3,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 8,
+          "variable_naming": 7,
+          "code_structure": 8,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Add comments to explain the logic behind your approach.",
+          "Experiment with a recursive solution to deepen your understanding of backtracking.",
+          "Consider edge cases, such as an empty input array, and ensure your solution handles them gracefully."
+        ],
+        "concepts_demonstrated": [
+          "Subset generation",
+          "Iterative algorithms",
+          "Understanding of time and space complexity"
+        ],
+        "concepts_to_learn": [
+          "Recursive backtracking",
+          "Dynamic programming basics",
+          "Handling edge cases in algorithms"
+        ],
+        "score": 85,
+        "mastery_level": "Proficient",
+        "attempt_number": 1,
+        "language": "python"
+      },
+      "submission_id": "student_irfan_5",
+      "submitted_at": "2026-01-12T20:35:31.690529"
+    },
+    {
+      "problem_id": "arr-001",
+      "problem_title": "Two Sum",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "code": "def two_sum(nums: list, target: int) -> list:\n    seen = {}  # value -> index\n    \n    for i, num in enumerate(nums):\n        complement = target - num\n        \n        if complement in seen:\n            return [seen[complement], i]\n        \n        seen[num] = i\n    \n    return []\n",
+      "language": "python",
+      "passed": true,
+      "passed_count": 3,
+      "total_count": 3,
+      "failed_count": 0,
+      "time_taken_minutes": 1,
+      "expected_time_minutes": 15,
+      "attempt_number": 1,
+      "score": 0,
+      "time_complexity": {
+        "estimate": "Unknown",
+        "explanation": "",
+        "is_optimal": false
+      },
+      "space_complexity": {
+        "estimate": "Unknown",
+        "explanation": "",
+        "is_optimal": false
+      },
+      "algorithm_type": {
+        "primary": "Unknown",
+        "secondary": [],
+        "is_appropriate": false,
+        "better_approach": null
+      },
+      "test_case_analysis": {
+        "total_tests": 3,
+        "passed_tests": 3,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 5,
+        "variable_naming": 5,
+        "code_structure": 5,
+        "comments": "Unknown"
+      },
+      "mastery_level": "Unknown",
+      "ai_analysis": {
+        "feedback": "Unable to analyze submission at this time.",
+        "time_complexity": {
+          "estimate": "Unknown",
+          "explanation": "",
+          "is_optimal": false
+        },
+        "space_complexity": {
+          "estimate": "Unknown",
+          "explanation": "",
+          "is_optimal": false
+        },
+        "algorithm_type": {
+          "primary": "Unknown",
+          "secondary": [],
+          "is_appropriate": false,
+          "better_approach": null
+        },
+        "test_case_analysis": {
+          "total_tests": 3,
+          "passed_tests": 3,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 5,
+          "variable_naming": 5,
+          "code_structure": 5,
+          "comments": "Unknown"
+        },
+        "improvement_tips": [],
+        "concepts_demonstrated": [],
+        "concepts_to_learn": [],
+        "score": 0,
+        "mastery_level": "Unknown",
+        "attempt_number": 1,
+        "language": "python"
+      },
+      "submission_id": "student_irfan_6",
+      "submitted_at": "2026-01-27T15:08:37.256096"
+    }
+  ],
+  "student_jai": [
+    {
+      "problem_id": "arr-001",
+      "problem_title": "Two Sum",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "code": "def two_sum(nums, target):\n    for i in range(len(nums)):\n        for j in range(i+1, len(nums)):\n            if nums[i] + nums[j] == target:\n                return [i, j]\n    return []",
+      "language": "python",
+      "passed": true,
+      "passed_count": 5,
+      "total_count": 5,
+      "time_taken_minutes": 20,
+      "score": 65,
+      "time_complexity": {
+        "estimate": "O(n\u00b2)",
+        "is_optimal": false
+      },
+      "algorithm_type": {
+        "primary": "Brute Force",
+        "is_appropriate": false,
+        "better_approach": "Use Hash Map for O(n)"
+      },
+      "mastery_level": "Developing",
+      "ai_analysis": {
+        "algorithm_type": {
+          "primary": "Brute Force"
+        },
+        "time_complexity": {
+          "is_optimal": false
+        }
+      },
+      "submission_id": "student_jai_1",
+      "submitted_at": "2026-01-05T20:26:55.840268"
+    },
+    {
+      "problem_id": "arr-003",
+      "problem_title": "Contains Duplicate",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "code": "def contains_duplicate(nums):\n    for i in range(len(nums)):\n        for j in range(i+1, len(nums)):\n            if nums[i] == nums[j]:\n                return True\n    return False",
+      "language": "python",
+      "passed": true,
+      "passed_count": 3,
+      "total_count": 5,
+      "time_taken_minutes": 15,
+      "score": 55,
+      "time_complexity": {
+        "estimate": "O(n\u00b2)",
+        "is_optimal": false
+      },
+      "algorithm_type": {
+        "primary": "Brute Force",
+        "is_appropriate": false,
+        "better_approach": "Use Set for O(n)"
+      },
+      "mastery_level": "Developing",
+      "ai_analysis": {
+        "algorithm_type": {
+          "primary": "Brute Force"
+        },
+        "time_complexity": {
+          "is_optimal": false
+        },
+        "test_case_analysis": {
+          "failure_patterns": [
+            "timeout",
+            "large inputs"
+          ]
+        }
+      },
+      "submission_id": "student_jai_2",
+      "submitted_at": "2026-01-06T01:26:55.840268"
+    },
+    {
+      "problem_id": "str-001",
+      "problem_title": "Valid Anagram",
+      "topic": "strings",
+      "difficulty": "easy",
+      "code": "def is_anagram(s, t):\n    if len(s) != len(t):\n        return False\n    return sorted(s) == sorted(t)",
+      "language": "python",
+      "passed": true,
+      "passed_count": 5,
+      "total_count": 5,
+      "time_taken_minutes": 10,
+      "score": 70,
+      "time_complexity": {
+        "estimate": "O(n log n)",
+        "is_optimal": false
+      },
+      "algorithm_type": {
+        "primary": "Sorting",
+        "is_appropriate": true
+      },
+      "mastery_level": "Developing",
+      "ai_analysis": {
+        "algorithm_type": {
+          "primary": "Sorting"
+        },
+        "time_complexity": {
+          "is_optimal": false
+        }
+      },
+      "submission_id": "student_jai_3",
+      "submitted_at": "2026-01-06T06:26:55.840268"
+    }
+  ],
+  "student_vijay": [
+    {
+      "problem_id": "arr-001",
+      "problem_title": "Two Sum",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "code": "def two_sum(nums, target):\n    seen = {}\n    for i, num in enumerate(nums):\n        if target - num in seen:\n            return [seen[target - num], i]\n        seen[num] = i",
+      "language": "python",
+      "passed": true,
+      "passed_count": 5,
+      "total_count": 5,
+      "time_taken_minutes": 5,
+      "score": 100,
+      "time_complexity": {
+        "estimate": "O(n)",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Hash Map",
+        "is_appropriate": true
+      },
+      "mastery_level": "Expert",
+      "ai_analysis": {
+        "algorithm_type": {
+          "primary": "Hash Map"
+        },
+        "time_complexity": {
+          "is_optimal": true
+        }
+      },
+      "submission_id": "student_vijay_1",
+      "submitted_at": "2026-01-05T20:26:55.840268"
+    },
+    {
+      "problem_id": "dp-003",
+      "problem_title": "Longest Increasing Subsequence",
+      "topic": "dynamic_programming",
+      "difficulty": "hard",
+      "code": "def length_of_lis(nums):\n    from bisect import bisect_left\n    tails = []\n    for num in nums:\n        pos = bisect_left(tails, num)\n        if pos == len(tails):\n            tails.append(num)\n        else:\n            tails[pos] = num\n    return len(tails)",
+      "language": "python",
+      "passed": true,
+      "passed_count": 5,
+      "total_count": 5,
+      "time_taken_minutes": 20,
+      "score": 98,
+      "time_complexity": {
+        "estimate": "O(n log n)",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Binary Search + DP",
+        "is_appropriate": true
+      },
+      "mastery_level": "Expert",
+      "ai_analysis": {
+        "algorithm_type": {
+          "primary": "Binary Search + DP"
+        },
+        "time_complexity": {
+          "is_optimal": true
+        }
+      },
+      "submission_id": "student_vijay_2",
+      "submitted_at": "2026-01-06T01:26:55.840268"
+    },
+    {
+      "problem_id": "graph-001",
+      "problem_title": "Number of Islands",
+      "topic": "graphs",
+      "difficulty": "medium",
+      "code": "def num_islands(grid):\n    def dfs(i, j):\n        if i < 0 or i >= len(grid) or j < 0 or j >= len(grid[0]) or grid[i][j] != '1':\n            return\n        grid[i][j] = '0'\n        dfs(i+1, j)\n        dfs(i-1, j)\n        dfs(i, j+1)\n        dfs(i, j-1)\n    \n    count = 0\n    for i in range(len(grid)):\n        for j in range(len(grid[0])):\n            if grid[i][j] == '1':\n                dfs(i, j)\n                count += 1\n    return count",
+      "language": "python",
+      "passed": true,
+      "passed_count": 5,
+      "total_count": 5,
+      "time_taken_minutes": 15,
+      "score": 95,
+      "time_complexity": {
+        "estimate": "O(m*n)",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "DFS",
+        "is_appropriate": true
+      },
+      "mastery_level": "Expert",
+      "ai_analysis": {
+        "algorithm_type": {
+          "primary": "DFS"
+        },
+        "time_complexity": {
+          "is_optimal": true
+        }
+      },
+      "submission_id": "student_vijay_3",
+      "submitted_at": "2026-01-06T06:26:55.840268"
+    },
+    {
+      "problem_id": "tree-002",
+      "problem_title": "Binary Tree Level Order Traversal",
+      "topic": "trees",
+      "difficulty": "medium",
+      "code": "from collections import deque\ndef level_order(root):\n    if not root:\n        return []\n    result = []\n    queue = deque([root])\n    while queue:\n        level = []\n        for _ in range(len(queue)):\n            node = queue.popleft()\n            level.append(node.val)\n            if node.left:\n                queue.append(node.left)\n            if node.right:\n                queue.append(node.right)\n        result.append(level)\n    return result",
+      "language": "python",
+      "passed": true,
+      "passed_count": 5,
+      "total_count": 5,
+      "time_taken_minutes": 12,
+      "score": 96,
+      "time_complexity": {
+        "estimate": "O(n)",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "BFS",
+        "is_appropriate": true
+      },
+      "mastery_level": "Expert",
+      "ai_analysis": {
+        "algorithm_type": {
+          "primary": "BFS"
+        },
+        "time_complexity": {
+          "is_optimal": true
+        }
+      },
+      "submission_id": "student_vijay_4",
+      "submitted_at": "2026-01-06T11:26:55.840268"
+    }
+  ]
+}

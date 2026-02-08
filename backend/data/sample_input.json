@@ -1,0 +1,116 @@
+{
+  "user_id": "user_123",
+  "submissions": [
+    {
+      "problem_id": "arr-001",
+      "problem_title": "Two Sum",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "solved": true,
+      "attempts": 1,
+      "time_taken_minutes": 10,
+      "user_complexity": "O(n)",
+      "expected_complexity": "O(n)"
+    },
+    {
+      "problem_id": "arr-002",
+      "problem_title": "Maximum Subarray",
+      "topic": "arrays",
+      "difficulty": "medium",
+      "solved": true,
+      "attempts": 2,
+      "time_taken_minutes": 35,
+      "user_complexity": "O(n^2)",
+      "expected_complexity": "O(n)"
+    },
+    {
+      "problem_id": "arr-003",
+      "problem_title": "Rotate Array",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "solved": true,
+      "attempts": 1,
+      "time_taken_minutes": 12,
+      "user_complexity": "O(n)",
+      "expected_complexity": "O(n)"
+    },
+    {
+      "problem_id": "str-001",
+      "problem_title": "Valid Palindrome",
+      "topic": "strings",
+      "difficulty": "easy",
+      "solved": true,
+      "attempts": 1,
+      "time_taken_minutes": 8,
+      "user_complexity": "O(n)",
+      "expected_complexity": "O(n)"
+    },
+    {
+      "problem_id": "str-002",
+      "problem_title": "Longest Substring Without Repeating",
+      "topic": "strings",
+      "difficulty": "medium",
+      "solved": false,
+      "attempts": 4,
+      "time_taken_minutes": 45,
+      "user_complexity": "O(n^2)",
+      "expected_complexity": "O(n)"
+    },
+    {
+      "problem_id": "dp-001",
+      "problem_title": "Climbing Stairs",
+      "topic": "dynamic_programming",
+      "difficulty": "easy",
+      "solved": true,
+      "attempts": 2,
+      "time_taken_minutes": 20,
+      "user_complexity": "O(n)",
+      "expected_complexity": "O(n)"
+    },
+    {
+      "problem_id": "dp-002",
+      "problem_title": "Coin Change",
+      "topic": "dynamic_programming",
+      "difficulty": "medium",
+      "solved": false,
+      "attempts": 5,
+      "time_taken_minutes": 60,
+      "user_complexity": "O(2^n)",
+      "expected_complexity": "O(n * m)"
+    },
+    {
+      "problem_id": "tree-001",
+      "problem_title": "Maximum Depth of Binary Tree",
+      "topic": "trees",
+      "difficulty": "easy",
+      "solved": true,
+      "attempts": 1,
+      "time_taken_minutes": 8,
+      "user_complexity": "O(n)",
+      "expected_complexity": "O(n)"
+    },
+    {
+      "problem_id": "bs-001",
+      "problem_title": "Binary Search",
+      "topic": "binary_search",
+      "difficulty": "easy",
+      "solved": true,
+      "attempts": 1,
+      "time_taken_minutes": 5,
+      "user_complexity": "O(log n)",
+      "expected_complexity": "O(log n)"
+    },
+    {
+      "problem_id": "hash-001",
+      "problem_title": "Contains Duplicate",
+      "topic": "hashing",
+      "difficulty": "easy",
+      "solved": true,
+      "attempts": 1,
+      "time_taken_minutes": 7,
+      "user_complexity": "O(n)",
+      "expected_complexity": "O(n)"
+    }
+  ],
+  "solved_problem_ids": ["arr-001", "arr-003", "str-001", "dp-001", "tree-001", "bs-001", "hash-001"]
+}

@@ -1,0 +1,68 @@
+{
+  "user_ohylefnqi": {
+    "user_id": "user_ohylefnqi",
+    "created_at": "2026-01-12T18:19:15.196532",
+    "total_submissions": 10,
+    "problems_solved": [
+      "arr-003",
+      "arr-001",
+      "arr-002"
+    ]
+  },
+  "student_tharun": {
+    "user_id": "student_tharun",
+    "created_at": "2025-12-06T20:26:55.840268",
+    "total_submissions": 9,
+    "problems_solved": [
+      "arr-002",
+      "arr-001",
+      "arr-003",
+      "str-001",
+      "bt-001"
+    ],
+    "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+    "name": "Tharun",
+    "email": "tharun@example.com"
+  },
+  "student_irfan": {
+    "user_id": "student_irfan",
+    "created_at": "2025-12-11T20:26:55.840268",
+    "total_submissions": 6,
+    "problems_solved": [
+      "bt-001",
+      "arr-001",
+      "dp-002",
+      "dp-001"
+    ],
+    "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+    "name": "Irfan",
+    "email": "irfan@example.com"
+  },
+  "student_jai": {
+    "user_id": "student_jai",
+    "created_at": "2025-12-26T20:26:55.840268",
+    "total_submissions": 3,
+    "problems_solved": [
+      "arr-001",
+      "arr-003",
+      "str-001"
+    ],
+    "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+    "name": "Jai",
+    "email": "jai@example.com"
+  },
+  "student_vijay": {
+    "user_id": "student_vijay",
+    "created_at": "2025-11-06T20:26:55.840268",
+    "total_submissions": 4,
+    "problems_solved": [
+      "arr-001",
+      "dp-003",
+      "graph-001",
+      "tree-002"
+    ],
+    "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
+    "name": "Vijay",
+    "email": "vijay@example.com"
+  }
+}
