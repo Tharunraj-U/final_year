@@ -1,25 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { getProblems, getTopics } from '../../services/api';
-import { Library, Search, FolderOpen, List, ChevronDown, Check, Circle } from 'lucide-react';
+import { 
+  Library, Search, FolderOpen, List, ChevronDown, Check, Circle,
+  BarChart2, Type, PanelLeft, Pointer, SearchCode, Link2, 
+  TreeDeciduous, Network, TrendingUp, CornerUpLeft, Target, 
+  Layers, Hash, Mountain, Binary
+} from 'lucide-react';
 import './ProblemList.css';
 
-// Topic icons and display names
+// Topic icons and display names - using Lucide React components
 const TOPIC_CONFIG = {
-  arrays: { icon: '📊', name: 'Arrays', color: '#3498db' },
-  strings: { icon: '🔤', name: 'Strings', color: '#9b59b6' },
-  sliding_window: { icon: '🪟', name: 'Sliding Window', color: '#1abc9c' },
-  two_pointers: { icon: '👆', name: 'Two Pointers', color: '#e67e22' },
-  binary_search: { icon: '🔍', name: 'Binary Search', color: '#2ecc71' },
-  linked_lists: { icon: '🔗', name: 'Linked Lists', color: '#e74c3c' },
-  trees: { icon: '🌳', name: 'Trees', color: '#27ae60' },
-  graphs: { icon: '🕸️', name: 'Graphs', color: '#8e44ad' },
-  dynamic_programming: { icon: '📈', name: 'Dynamic Programming', color: '#f39c12' },
-  backtracking: { icon: '↩️', name: 'Backtracking', color: '#c0392b' },
-  greedy: { icon: '🎯', name: 'Greedy', color: '#16a085' },
-  stacks: { icon: '📚', name: 'Stacks', color: '#2980b9' },
-  hashing: { icon: '#️⃣', name: 'Hashing', color: '#8e44ad' },
-  heap: { icon: '⛰️', name: 'Heap / Priority Queue', color: '#d35400' },
-  bit_manipulation: { icon: '🔢', name: 'Bit Manipulation', color: '#7f8c8d' },
+  arrays: { icon: BarChart2, name: 'Arrays', color: '#3498db' },
+  strings: { icon: Type, name: 'Strings', color: '#9b59b6' },
+  sliding_window: { icon: PanelLeft, name: 'Sliding Window', color: '#1abc9c' },
+  two_pointers: { icon: Pointer, name: 'Two Pointers', color: '#e67e22' },
+  binary_search: { icon: SearchCode, name: 'Binary Search', color: '#2ecc71' },
+  linked_lists: { icon: Link2, name: 'Linked Lists', color: '#e74c3c' },
+  trees: { icon: TreeDeciduous, name: 'Trees', color: '#27ae60' },
+  graphs: { icon: Network, name: 'Graphs', color: '#8e44ad' },
+  dynamic_programming: { icon: TrendingUp, name: 'Dynamic Programming', color: '#f39c12' },
+  backtracking: { icon: CornerUpLeft, name: 'Backtracking', color: '#c0392b' },
+  greedy: { icon: Target, name: 'Greedy', color: '#16a085' },
+  stacks: { icon: Layers, name: 'Stacks', color: '#2980b9' },
+  hashing: { icon: Hash, name: 'Hashing', color: '#8e44ad' },
+  heap: { icon: Mountain, name: 'Heap / Priority Queue', color: '#d35400' },
+  bit_manipulation: { icon: Binary, name: 'Bit Manipulation', color: '#7f8c8d' },
 };
 
 const ProblemList = ({ onSelectProblem }) => {
@@ -44,11 +49,8 @@ const ProblemList = ({ onSelectProblem }) => {
     try {
       const data = await getTopics();
       setTopics(data.topics || []);
-      const defaultExpanded = {};
-      (data.topics || []).slice(0, 3).forEach(t => {
-        defaultExpanded[t] = true;
-      });
-      setExpandedTopics(defaultExpanded);
+      // Start with all topics collapsed
+      setExpandedTopics({});
     } catch (error) {
       console.error('Failed to load topics:', error);
     }
@@ -101,7 +103,7 @@ const ProblemList = ({ onSelectProblem }) => {
   }, {});
 
   const getTopicConfig = (topic) => {
-    return TOPIC_CONFIG[topic] || { icon: '📝', name: topic.replace('_', ' '), color: '#666' };
+    return TOPIC_CONFIG[topic] || { icon: null, name: topic.replace('_', ' '), color: '#666' };
   };
 
   const getTopicStats = (topicProblems) => {
@@ -170,7 +172,9 @@ const ProblemList = ({ onSelectProblem }) => {
               <div key={topic} className="topic-section">
                 <div className="topic-header" onClick={() => toggleTopic(topic)} style={{ borderLeftColor: config.color }}>
                   <div className="topic-title">
-                    <span className="topic-icon">{config.icon}</span>
+                    <span className="topic-icon">
+                      {config.icon ? <config.icon size={18} color={config.color} /> : <Circle size={18} />}
+                    </span>
                     <span className="topic-name">{config.name}</span>
                     <span className="topic-count">{stats.total} problems</span>
                   </div>

@@ -18,11 +18,30 @@ const Header = ({
   const [showUserMenu, setShowUserMenu] = useState(false);
   const demoUsers = getDemoUsers();
 
+  // Check if user has a Google profile picture
+  const hasGooglePhoto = () => {
+    return currentUser?.picture && currentUser.picture.startsWith('http');
+  };
+
   const getUserEmoji = () => {
     if (currentUser && demoUsers[currentUser.user_id]) {
       return demoUsers[currentUser.user_id].emoji;
     }
     return '👤';
+  };
+
+  const getUserAvatar = () => {
+    if (hasGooglePhoto()) {
+      return (
+        <img 
+          src={currentUser.picture} 
+          alt="Profile" 
+          className="user-avatar"
+          referrerPolicy="no-referrer"
+        />
+      );
+    }
+    return <span className="user-emoji">{getUserEmoji()}</span>;
   };
 
   const getUserName = () => {
@@ -121,7 +140,7 @@ const Header = ({
             className="user-profile" 
             onClick={() => setShowUserMenu(!showUserMenu)}
           >
-            <span className="user-emoji">{getUserEmoji()}</span>
+            {getUserAvatar()}
             <span className="user-name">{getUserName()}</span>
             <ChevronDown size={14} className="dropdown-arrow" />
           </div>
