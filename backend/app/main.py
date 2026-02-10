@@ -29,12 +29,14 @@ ai_service = AIService()
 # Initialize data store - use MongoDB if URI is provided, otherwise fall back to JSON
 USE_MONGODB = False
 data_store = None
+mongodb_store = None  # Reference for MongoDB-specific features
 
 mongodb_uri = os.getenv("MONGODB_URI")
 if mongodb_uri:
     try:
         from .services.mongodb_store import MongoDBStore
         data_store = MongoDBStore()
+        mongodb_store = data_store  # Same instance for MongoDB-specific calls
         USE_MONGODB = True
         print("✅ Using MongoDB for data storage")
     except Exception as e:
