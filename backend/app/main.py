@@ -12,11 +12,9 @@ from dotenv import load_dotenv
 
 from .models.problem import ProblemBank, Problem
 from .services.ai_service import AIService
-from .services.data_store import DataStore
 from .services.code_executor import CodeExecutor
 from .services.google_oauth import google_oauth_service
 from .services.email_service import email_service
-from .services.mongodb_store import MongoDBStore
 
 load_dotenv()
 
@@ -25,20 +23,28 @@ CORS(app, resources={r"/api/*": {"origins": "*", "methods": ["GET", "POST", "PUT
 
 # Initialize services
 problem_bank = ProblemBank()
-data_store = DataStore()
 code_executor = CodeExecutor()
 ai_service = AIService()
 
-# Initialize MongoDB store for persistent storage
-try:
-    mongodb_store = MongoDBStore()
-    print("✅ MongoDB connected successfully")
-    USE_MONGODB = True
-except Exception as e:
-    print(f"⚠️ MongoDB connection failed: {e}")
-    print("📁 Falling back to JSON file storage")
-    mongodb_store = None
-    USE_MONGODB = False
+# Initialize data store - use MongoDB if URI is provided, otherwise fall back to JSON
+USE_MONGODB = False
+data_store = None
+
+mongodb_uri = os.getenv("MONGODB_URI")
+if mongodb_uri:
+    try:
+        from .services.mongodb_store import MongoDBStore
+        data_store = MongoDBStore()
+        USE_MONGODB = True
+        print("✅ Using MongoDB for data storage")
+    except Exception as e:
+        print(f"⚠️ MongoDB connection failed: {e}")
+        print("📁 Falling back to JSON file storage")
+
+if not USE_MONGODB:
+    from .services.data_store import DataStore
+    data_store = DataStore()
+    print("📁 Using JSON file storage")
 
 # Get the base directory for data files
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

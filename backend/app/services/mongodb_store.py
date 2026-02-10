@@ -7,6 +7,7 @@ import hashlib
 from typing import Dict, List, Optional
 from datetime import datetime, timedelta
 from pymongo import MongoClient, DESCENDING
+from pymongo.server_api import ServerApi
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
 
@@ -19,9 +20,23 @@ class MongoDBStore:
     """
     
     def __init__(self):
-        # Connect to local MongoDB
+        # Connect to MongoDB (cloud or local)
         mongo_uri = os.getenv("MONGODB_URI", "mongodb://localhost:27017")
-        self.client = MongoClient(mongo_uri)
+        
+        # Use ServerApi for MongoDB Atlas connections
+        if "mongodb+srv" in mongo_uri:
+            self.client = MongoClient(mongo_uri, server_api=ServerApi('1'))
+        else:
+            self.client = MongoClient(mongo_uri)
+        
+        # Test connection
+        try:
+            self.client.admin.command('ping')
+            print("✅ Connected to MongoDB successfully!")
+        except Exception as e:
+            print(f"❌ MongoDB connection failed: {e}")
+            raise
+        
         self.db = self.client.codemaster_ai
         
         # Collections
