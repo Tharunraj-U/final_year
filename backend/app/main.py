@@ -52,7 +52,41 @@ DATA_DIR = os.path.join(BASE_DIR, "data")
 
 
 def load_problem_bank(filepath: str = None):
-    """Load problems from JSON file."""
+    """Load problems from MongoDB if available, otherwise from JSON file."""
+    global problem_bank
+    
+    # Try MongoDB first if URI is set
+    mongodb_uri = os.getenv("MONGODB_URI")
+    if mongodb_uri:
+        try:
+            from pymongo import MongoClient
+            from pymongo.server_api import ServerApi
+            
+            if "mongodb+srv" in mongodb_uri:
+                client = MongoClient(mongodb_uri, server_api=ServerApi('1'))
+            else:
+                client = MongoClient(mongodb_uri)
+            
+            db = client.codemaster_ai
+            problems_data = list(db.problems.find({}))
+            
+            # Convert MongoDB _id to string
+            for p in problems_data:
+                if '_id' in p:
+                    p['_id'] = str(p['_id'])
+            
+            if problems_data:
+                problem_bank.load_from_list(problems_data)
+                print(f"✅ Loaded {len(problem_bank)} problems from MongoDB")
+                client.close()
+                return
+            else:
+                print("⚠️ No problems in MongoDB, falling back to JSON file")
+                client.close()
+        except Exception as e:
+            print(f"⚠️ MongoDB problems load failed: {e}, falling back to JSON file")
+    
+    # Fallback to JSON file
     if filepath is None:
         filepath = os.path.join(DATA_DIR, "problems.json")
     
