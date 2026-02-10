@@ -906,7 +906,7 @@ def handle_code_draft(user_id, problem_id):
 def get_all_drafts(user_id):
     """Get all code drafts for a user."""
     if not USE_MONGODB or not mongodb_store:
-        return jsonify({"drafts": []})
+        return jsonify({"count": 0, "drafts": []})
     
     try:
         drafts = mongodb_store.get_all_drafts(user_id)
@@ -915,7 +915,8 @@ def get_all_drafts(user_id):
             "drafts": drafts
         })
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        print(f"Error fetching drafts: {e}")
+        return jsonify({"count": 0, "drafts": [], "error": str(e)})
 
 
 # ==================== CODING HISTORY (MongoDB) ====================
@@ -925,11 +926,14 @@ def get_coding_history(user_id):
     """Get detailed coding history with full code."""
     if not USE_MONGODB or not mongodb_store:
         # Fallback to JSON data store
-        history = data_store.get_submission_history(user_id, 100)
-        return jsonify({
-            "count": len(history),
-            "history": history
-        })
+        try:
+            history = data_store.get_submission_history(user_id, 100)
+            return jsonify({
+                "count": len(history),
+                "history": history
+            })
+        except:
+            return jsonify({"count": 0, "history": []})
     
     try:
         limit = request.args.get("limit", 100, type=int)
@@ -939,14 +943,15 @@ def get_coding_history(user_id):
             "history": history
         })
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        print(f"Error fetching coding history: {e}")
+        return jsonify({"count": 0, "history": [], "error": str(e)})
 
 
 @app.route("/api/coding-history/<user_id>/<problem_id>", methods=["GET"])
 def get_problem_coding_history(user_id, problem_id):
     """Get all attempts for a specific problem."""
     if not USE_MONGODB or not mongodb_store:
-        return jsonify({"history": []})
+        return jsonify({"count": 0, "history": []})
     
     try:
         history = mongodb_store.get_problem_history(user_id, problem_id)
@@ -955,7 +960,8 @@ def get_problem_coding_history(user_id, problem_id):
             "history": history
         })
     except Exception as e:
-        return jsonify({"error": str(e)}), 500
+        print(f"Error fetching problem history: {e}")
+        return jsonify({"count": 0, "history": [], "error": str(e)})
 
 
 # ==================== ENHANCED STREAK (NeetCode-style) ====================
