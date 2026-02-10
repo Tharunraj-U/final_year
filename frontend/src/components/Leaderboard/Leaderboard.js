@@ -83,41 +83,34 @@ const Leaderboard = ({ currentUser, onClose }) => {
         </div>
 
         <div className="leaderboard-content">
-          {loading ? (
-            <div className="loading-spinner">
-              <div className="spinner"></div>
-              <p>Loading rankings...</p>
-            </div>
-          ) : (
-            <div className="leaderboard-list">
-              {leaderboard.map((user, index) => (
-                <div 
-                  key={user.username} 
-                  className={`leaderboard-item ${getRankClass(user.rank)} ${currentUser === user.username ? 'current-user' : ''}`}
-                >
-                  <div className="rank-badge">
-                    {getRankBadge(user.rank)}
-                  </div>
-                  <div className="user-avatar">
-                    {user.avatar || '👤'}
-                  </div>
-                  <div className="user-info">
-                    <span className="username">
-                      {user.username}
-                      {currentUser === user.username && <span className="you-badge">You</span>}
-                    </span>
-                    <span className="stats">
-                      {user.problems_solved} problems solved
-                    </span>
-                  </div>
-                  <div className="user-score">
-                    <span className="score-value">{user.total_score.toLocaleString()}</span>
-                    <span className="score-label">points</span>
-                  </div>
+          <div className="leaderboard-list">
+            {leaderboard.map((user, index) => (
+              <div 
+                key={user.username} 
+                className={`leaderboard-item ${getRankClass(user.rank)} ${currentUser === user.username ? 'current-user' : ''}`}
+              >
+                <div className="rank-badge">
+                  {getRankBadge(user.rank)}
                 </div>
-              ))}
-            </div>
-          )}
+                <div className="user-avatar">
+                  {user.avatar || '👤'}
+                </div>
+                <div className="user-info">
+                  <span className="username">
+                    {user.username}
+                    {currentUser === user.username && <span className="you-badge">You</span>}
+                  </span>
+                  <span className="stats">
+                    {user.problems_solved} problems solved
+                  </span>
+                </div>
+                <div className="user-score">
+                  <span className="score-value">{user.total_score.toLocaleString()}</span>
+                  <span className="score-label">points</span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="leaderboard-footer">
