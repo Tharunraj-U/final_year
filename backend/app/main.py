@@ -1102,8 +1102,11 @@ def create_app():
     return app
 
 
+# Load problems at module import time (for gunicorn)
+load_problem_bank()
+load_custom_problems()
+
+
 if __name__ == "__main__":
-    load_problem_bank()
-    load_custom_problems()
     print("Starting server on http://127.0.0.1:5000")
     app.run(debug=True, host="127.0.0.1", port=5000, threaded=True)
