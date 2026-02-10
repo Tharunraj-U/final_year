@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Trophy, X, Check } from 'lucide-react';
 import './Achievements.css';
 
 const ACHIEVEMENTS = [
@@ -35,8 +36,8 @@ const Achievements = ({ stats, onClose }) => {
     <div className="achievements-overlay">
       <div className="achievements-modal">
         <div className="achievements-header">
-          <h2>🏆 Achievements</h2>
-          <button className="close-btn" onClick={onClose}>×</button>
+          <h2><Trophy size={22} /> Achievements</h2>
+          <button className="close-btn" onClick={onClose}><X size={20} /></button>
         </div>
         
         <div className="achievements-progress">
@@ -66,7 +67,7 @@ const Achievements = ({ stats, onClose }) => {
                   <h4>{achievement.title}</h4>
                   <p>{achievement.description}</p>
                 </div>
-                {isUnlocked && <div className="unlocked-badge">✓</div>}
+                {isUnlocked && <div className="unlocked-badge"><Check size={14} /></div>}
               </div>
             );
           })}

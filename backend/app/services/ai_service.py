@@ -1,24 +1,96 @@
 """
-OpenAI GPT-powered AI service for analyzing submissions and recommending problems.
+AI service for analyzing submissions and recommending problems.
+Supports both OpenAI API and local LLMs (Ollama, LM Studio, etc.)
 """
 
 import os
 import json
+import requests
 from typing import Dict, List, Optional
-from openai import OpenAI
 from dotenv import load_dotenv
 
 load_dotenv()
 
+# Configuration - set USE_OPENAI in your .env file
+# USE_OPENAI=true  -> Uses OpenAI API
+# USE_OPENAI=false -> Uses local Ollama (FREE)
+
+USE_OPENAI = os.getenv("USE_OPENAI", "false").lower() == "true"
+OPENAI_MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+OLLAMA_MODEL = os.getenv("OLLAMA_MODEL", "qwen2.5-coder:3b")
+OLLAMA_URL = "http://localhost:11434/api/chat"
+
 
 class AIService:
     """
-    Uses OpenAI GPT to analyze user's coding performance and recommend problems.
+    Uses either OpenAI GPT or local Ollama to analyze user's coding performance and recommend problems.
+    Set USE_OPENAI=true in .env for OpenAI, or USE_OPENAI=false for local Ollama.
     """
     
     def __init__(self):
-        self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
-        self.model = "gpt-4o-mini"
+        self.use_openai = USE_OPENAI
+        
+        if self.use_openai:
+            # Use OpenAI API
+            try:
+                from openai import OpenAI
+                self.client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+                self.model = OPENAI_MODEL
+                print(f"🤖 Using OpenAI: {self.model}")
+            except ImportError:
+                print("⚠️ OpenAI package not installed. Falling back to Ollama.")
+                self.use_openai = False
+                self.model = OLLAMA_MODEL
+                print(f"🤖 Using Ollama: {self.model}")
+        else:
+            # Use local Ollama (FREE)
+            self.model = OLLAMA_MODEL
+            print(f"🤖 Using Ollama: {self.model} (FREE - no API key needed)")
+    
+    def _call_llm(self, prompt: str, temperature: float = 0.3, max_tokens: int = 1000) -> str:
+        """
+        Call the configured LLM (OpenAI or Ollama) and return the response text.
+        """
+        if self.use_openai:
+            return self._call_openai(prompt, temperature, max_tokens)
+        else:
+            return self._call_ollama(prompt, temperature, max_tokens)
+    
+    def _call_ollama(self, prompt: str, temperature: float, max_tokens: int) -> str:
+        """
+        Call Ollama local LLM via HTTP API.
+        Make sure Ollama is running: ollama serve
+        """
+        try:
+            payload = {
+                "model": self.model,
+                "messages": [{"role": "user", "content": prompt}],
+                "stream": False,
+                "options": {
+                    "temperature": temperature,
+                    "num_predict": max_tokens
+                }
+            }
+            response = requests.post(OLLAMA_URL, json=payload, timeout=300)
+            response.raise_for_status()
+            data = response.json()
+            return data.get("message", {}).get("content", "")
+        except requests.exceptions.ConnectionError:
+            print(f"❌ Cannot connect to Ollama. Is it running? Start with: ollama serve")
+            raise Exception("Ollama not available. Run 'ollama serve' first.")
+        except Exception as e:
+            print(f"❌ Ollama error: {e}")
+            raise
+    
+    def _call_openai(self, prompt: str, temperature: float, max_tokens: int) -> str:
+        """Call OpenAI API."""
+        response = self.client.chat.completions.create(
+            model=self.model,
+            messages=[{"role": "user", "content": prompt}],
+            temperature=temperature,
+            max_tokens=max_tokens
+        )
+        return response.choices[0].message.content.strip()
     
     def analyze_submission(
         self,
@@ -77,17 +149,42 @@ STUDENT'S HISTORY (last 5 submissions):
 {json.dumps(submission_history[-5:], indent=2) if submission_history else 'First submission'}
 
 Perform a COMPREHENSIVE analysis and respond in STRICT JSON format:
+
+CRITICAL COMPLEXITY ANALYSIS RULES:
+1. Analyze ONLY the code that ACTUALLY EXECUTES, not helper functions that are defined but never called
+2. Trace the execution flow from the main function - what code paths are actually run?
+3. If a recursive function is defined but never called, it contributes O(0) to complexity
+4. A simple loop "for x in collection" is O(n) where n = len(collection)
+5. O(1) means CONSTANT time regardless of input size (only single operations, no loops over input)
+6. Nested loops are O(n^2), O(n*m), etc.
+7. ACTUAL recursion with branching factor b and depth d is O(b^d) - but only if recursion is actually invoked!
+
+EXAMPLE: If code defines def dfs() but the return statement uses "for d in digits: result *= mapping[d]", 
+the actual complexity is O(n) from the loop, NOT from the unused DFS function.
+
+*** CRITICAL is_optimal DETERMINATION RULES ***
+The expected complexity for this problem is: {problem.get('expected_complexity')}
+Complexity hierarchy (BEST to WORST): O(1) < O(log n) < O(n) < O(n log n) < O(n^2) < O(n^3) < O(2^n) < O(3^n) < O(4^n) < O(n!)
+
+RULE: is_optimal = TRUE if user's complexity is BETTER THAN OR EQUAL TO expected complexity.
+- O(n) vs expected O(4^n) => O(n) is MUCH BETTER => is_optimal = TRUE
+- O(n) vs expected O(n) => EQUAL => is_optimal = TRUE  
+- O(n^2) vs expected O(n) => WORSE => is_optimal = FALSE
+
+DO NOT mark is_optimal=false just because the user didn't use the "expected algorithm".
+If the user found a more efficient approach, that's BETTER and is_optimal should be TRUE!
+
 {{
     "feedback": "Detailed constructive feedback about the solution (3-4 sentences, be specific about what's good and what can improve)",
     "time_complexity": {{
-        "estimate": "O(?) - the time complexity of their solution",
-        "explanation": "Brief explanation of why this is the time complexity",
-        "is_optimal": true/false
+        "estimate": "O(?)",
+        "explanation": "Trace execution: what loops/recursions actually run?",
+        "is_optimal": true/false (MUST be true if user's O(n) <= expected {problem.get('expected_complexity')})
     }},
     "space_complexity": {{
-        "estimate": "O(?) - the space complexity of their solution",
-        "explanation": "Brief explanation of space usage",
-        "is_optimal": true/false
+        "estimate": "O(?)",
+        "explanation": "What memory is actually allocated during execution?",
+        "is_optimal": true/false (true if user's complexity <= expected complexity)
     }},
     "algorithm_type": {{
         "primary": "The main algorithm/technique used (e.g., 'Brute Force', 'Two Pointers', 'Sliding Window', 'Dynamic Programming', 'Hash Map', 'Binary Search', 'Recursion', 'Greedy', 'BFS/DFS', etc.)",
@@ -122,14 +219,8 @@ Perform a COMPREHENSIVE analysis and respond in STRICT JSON format:
 Respond ONLY with valid JSON, no other text."""
 
         try:
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=[{"role": "user", "content": prompt}],
-                temperature=0.3,
-                max_tokens=1000
-            )
+            result = self._call_llm(prompt, temperature=0.3, max_tokens=1000)
             
-            result = response.choices[0].message.content.strip()
             # Parse JSON from response
             if result.startswith("```"):
                 result = result.split("```")[1]
@@ -280,14 +371,8 @@ Respond in STRICT JSON format:
 Respond ONLY with valid JSON, no other text."""
 
         try:
-            response = self.client.chat.completions.create(
-                model=self.model,
-                messages=[{"role": "user", "content": prompt}],
-                temperature=0.4,
-                max_tokens=1200
-            )
+            result = self._call_llm(prompt, temperature=0.4, max_tokens=1200)
             
-            result = response.choices[0].message.content.strip()
             if result.startswith("```"):
                 result = result.split("```")[1]
                 if result.startswith("json"):
@@ -503,3 +588,223 @@ Average Score: {avg_score:.0f}/100
 Difficulty Distribution: Easy={difficulties['easy']}, Medium={difficulties['medium']}, Hard={difficulties['hard']}
 Topic Performance: {json.dumps(topics)}
 """
+
+    # ==================== AI HELP / TUTOR METHODS ====================
+    
+    def get_problem_explanation(self, problem: Dict) -> Dict:
+        """
+        Explain the problem in simple terms, what it's asking, and key concepts.
+        """
+        prompt = f"""You are a friendly coding tutor helping a student understand a problem.
+
+PROBLEM:
+Title: {problem.get('title')}
+Difficulty: {problem.get('difficulty')}
+Topic: {problem.get('topic')}
+Description: {problem.get('description')}
+Expected Complexity: {problem.get('expected_complexity')}
+
+Please explain this problem in a simple, beginner-friendly way:
+1. What is the problem asking? (in simple terms)
+2. What are the inputs and expected outputs?
+3. Give a simple example with step-by-step walkthrough
+4. What key concepts/data structures should the student know?
+
+Be encouraging and supportive. Use simple language. Format with markdown."""
+
+        try:
+            result = self._call_llm(prompt, temperature=0.5, max_tokens=800)
+            return {
+                "success": True,
+                "explanation": result,
+                "type": "explanation"
+            }
+        except Exception as e:
+            return {
+                "success": False,
+                "error": str(e),
+                "explanation": "Sorry, I couldn't generate an explanation right now. Please try again."
+            }
+    
+    def get_hint(self, problem: Dict, hint_level: int = 1, user_code: str = "") -> Dict:
+        """
+        Give progressive hints (level 1 = gentle, level 3 = almost solution).
+        """
+        hint_descriptions = {
+            1: "Give a very gentle hint - just point them in the right direction without giving away the approach",
+            2: "Give a medium hint - suggest the algorithm/approach to use but don't give code",
+            3: "Give a strong hint - explain the solution approach step by step, but let them write the code"
+        }
+        
+        hint_instruction = hint_descriptions.get(hint_level, hint_descriptions[1])
+        
+        code_context = ""
+        if user_code and len(user_code.strip()) > 20:
+            code_context = f"""
+The student has written this code so far:
+```
+{user_code}
+```
+Take their current approach into account when giving hints.
+"""
+
+        prompt = f"""You are a supportive coding tutor giving hints to a student.
+
+PROBLEM:
+Title: {problem.get('title')}
+Difficulty: {problem.get('difficulty')}  
+Topic: {problem.get('topic')}
+Description: {problem.get('description')}
+Expected Complexity: {problem.get('expected_complexity')}
+{code_context}
+
+HINT LEVEL: {hint_level}/3
+{hint_instruction}
+
+Important:
+- Do NOT give the complete solution code
+- Be encouraging and supportive
+- Use simple language
+- If they're on the right track, encourage them
+- Format with markdown"""
+
+        try:
+            result = self._call_llm(prompt, temperature=0.6, max_tokens=500)
+            return {
+                "success": True,
+                "hint": result,
+                "level": hint_level,
+                "type": "hint"
+            }
+        except Exception as e:
+            return {
+                "success": False,
+                "error": str(e),
+                "hint": "Sorry, I couldn't generate a hint right now. Please try again."
+            }
+    
+    def get_solution_approach(self, problem: Dict) -> Dict:
+        """
+        Explain the optimal solution approach without giving full code.
+        """
+        prompt = f"""You are a coding tutor explaining how to solve a problem.
+
+PROBLEM:
+Title: {problem.get('title')}
+Difficulty: {problem.get('difficulty')}
+Topic: {problem.get('topic')}
+Description: {problem.get('description')}
+Expected Complexity: {problem.get('expected_complexity')}
+
+Explain the OPTIMAL solution approach:
+1. 🧠 **Intuition**: What's the key insight to solve this?
+2. 📝 **Algorithm**: Step-by-step approach (in plain English)
+3. ⚡ **Why it's optimal**: Explain the time/space complexity
+4. 🎯 **Key points to remember**: Common mistakes to avoid
+
+Do NOT provide the complete code solution. Let the student implement it themselves.
+Use markdown formatting."""
+
+        try:
+            result = self._call_llm(prompt, temperature=0.4, max_tokens=700)
+            return {
+                "success": True,
+                "approach": result,
+                "type": "approach"
+            }
+        except Exception as e:
+            return {
+                "success": False,
+                "error": str(e),
+                "approach": "Sorry, I couldn't generate the approach right now."
+            }
+    
+    def ask_doubt(self, problem: Dict, question: str, user_code: str = "") -> Dict:
+        """
+        Answer a specific doubt/question from the student about the problem or their code.
+        """
+        code_context = ""
+        if user_code and len(user_code.strip()) > 10:
+            code_context = f"""
+Student's current code:
+```
+{user_code}
+```
+"""
+
+        prompt = f"""You are a helpful coding tutor. A student is working on a problem and has a question.
+
+PROBLEM:
+Title: {problem.get('title')}
+Topic: {problem.get('topic')}
+Description: {problem.get('description')}
+{code_context}
+
+STUDENT'S QUESTION:
+{question}
+
+Please answer their question:
+- Be helpful and encouraging
+- If they're confused about a concept, explain it simply
+- If they have a bug, help them find it (don't just give the fix)
+- If they're stuck, guide them step by step
+- Use simple language and examples
+- Format with markdown
+
+IMPORTANT: Guide them to the answer, don't just give them the solution code."""
+
+        try:
+            result = self._call_llm(prompt, temperature=0.5, max_tokens=600)
+            return {
+                "success": True,
+                "answer": result,
+                "type": "doubt"
+            }
+        except Exception as e:
+            return {
+                "success": False,
+                "error": str(e),
+                "answer": "Sorry, I couldn't answer your question right now. Please try again."
+            }
+    
+    def debug_code(self, problem: Dict, user_code: str, error_message: str = "") -> Dict:
+        """
+        Help debug the student's code.
+        """
+        error_context = ""
+        if error_message:
+            error_context = f"Error message: {error_message}"
+
+        prompt = f"""You are a coding tutor helping a student debug their code.
+
+PROBLEM:
+Title: {problem.get('title')}
+Description: {problem.get('description')}
+
+STUDENT'S CODE:
+```
+{user_code}
+```
+{error_context}
+
+Help the student find and fix the bug:
+1. 🔍 **Issue Found**: What's wrong with the code?
+2. 💡 **Why it happens**: Explain why this causes a problem
+3. 🛠️ **How to fix**: Guide them to fix it (don't just give corrected code)
+4. ✅ **Prevention tip**: How to avoid this mistake in future
+
+Be supportive - bugs are normal! Use markdown formatting."""
+
+        try:
+            result = self._call_llm(prompt, temperature=0.4, max_tokens=600)
+            return {
+                "success": True,
+                "debug_help": result,
+                "type": "debug"
+            }
+        except Exception as e:
+            return {
+                "success": False,
+                "error": str(e),
+                "debug_help": "Sorry, I couldn't analyze your code right now."
+            }

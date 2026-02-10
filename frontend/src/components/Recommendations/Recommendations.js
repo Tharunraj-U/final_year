@@ -1,11 +1,12 @@
 import React from 'react';
+import { Target, Lightbulb } from 'lucide-react';
 import './Recommendations.css';
 
 const Recommendations = ({ recommendations, onSelectProblem }) => {
   if (!recommendations || recommendations.length === 0) {
     return (
       <div className="recommendations">
-        <h2>🎯 Recommended Problems</h2>
+        <h2><Target size={22} /> Recommended Problems</h2>
         <p className="no-data">Complete some problems to get personalized recommendations!</p>
       </div>
     );
@@ -24,7 +25,7 @@ const Recommendations = ({ recommendations, onSelectProblem }) => {
 
   return (
     <div className="recommendations">
-      <h2>🎯 Recommended Problems</h2>
+      <h2><Target size={22} /> Recommended Problems</h2>
       <div className="recommendations-list">
         {recommendations.map((rec, index) => (
           <div 
@@ -40,7 +41,7 @@ const Recommendations = ({ recommendations, onSelectProblem }) => {
             </div>
             <h3 className="rec-title">{rec.title}</h3>
             <span className="rec-topic">{formatTopic(rec.topic)}</span>
-            <p className="rec-reason">💡 {rec.reason}</p>
+            <p className="rec-reason"><Lightbulb size={14} /> {rec.reason}</p>
           </div>
         ))}
       </div>

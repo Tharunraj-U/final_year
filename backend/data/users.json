@@ -12,13 +12,14 @@
   "student_tharun": {
     "user_id": "student_tharun",
     "created_at": "2025-12-06T20:26:55.840268",
-    "total_submissions": 9,
+    "total_submissions": 20,
     "problems_solved": [
       "arr-002",
-      "arr-001",
-      "arr-003",
       "str-001",
-      "bt-001"
+      "arr-001",
+      "gen-007",
+      "bt-001",
+      "arr-003"
     ],
     "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
     "name": "Tharun",
@@ -64,5 +65,64 @@
     "password": "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3",
     "name": "Vijay",
     "email": "vijay@example.com"
+  },
+  "test_user": {
+    "user_id": "test_user",
+    "created_at": "2026-02-10T14:43:01.139037",
+    "total_submissions": 2,
+    "problems_solved": [
+      "gen-127"
+    ]
+  },
+  "test_user2": {
+    "user_id": "test_user2",
+    "created_at": "2026-02-10T14:44:21.164168",
+    "total_submissions": 1,
+    "problems_solved": [
+      "gen-127"
+    ]
+  },
+  "test_user3": {
+    "user_id": "test_user3",
+    "created_at": "2026-02-10T14:47:16.687372",
+    "total_submissions": 1,
+    "problems_solved": [
+      "gen-127"
+    ]
+  },
+  "test_n3": {
+    "user_id": "test_n3",
+    "created_at": "2026-02-10T14:49:44.572627",
+    "total_submissions": 1,
+    "problems_solved": []
+  },
+  "test_n3_v2": {
+    "user_id": "test_n3_v2",
+    "created_at": "2026-02-10T14:50:05.458412",
+    "total_submissions": 1,
+    "problems_solved": []
+  },
+  "tharun": {
+    "user_id": "tharun",
+    "name": "raj",
+    "email": "traj@fleetstudio.com",
+    "password": "ef797c8118f02dfb649607dd5d3f8c7623048c9c063d532cc95c5ed7a898a64f",
+    "created_at": "2026-02-10T15:10:06.459971",
+    "total_submissions": 0,
+    "problems_solved": [],
+    "google_id": "100600382582910618096"
+  },
+  "tharunraj2023": {
+    "user_id": "tharunraj2023",
+    "name": "THARUN RAJ",
+    "email": "tharunraj2023@gmail.com",
+    "google_id": "110431105130391845854",
+    "picture": "https://lh3.googleusercontent.com/a/ACg8ocKc9tu7tsVDrfabU7BBFcqxAh6JmjKhC4G9ay-EpwhK52pKQu_P=s96-c",
+    "auth_provider": "google",
+    "created_at": "2026-02-10T15:16:42.596471",
+    "total_submissions": 5,
+    "problems_solved": [
+      "arr-001"
+    ]
   }
 }

@@ -965,6 +965,1098 @@
       },
       "submission_id": "student_tharun_9",
       "submitted_at": "2026-02-08T23:21:43.834126"
+    },
+    {
+      "problem_id": "gen-007",
+      "problem_title": "Backtracking Practice 7",
+      "topic": "backtracking",
+      "difficulty": "easy",
+      "code": "def solution(digits: str) -> int:\n    if not digits:\n        return 0\n\n    mapping = {\n        '2': 3, '3': 3, '4': 3,\n        '5': 3, '6': 3,\n        '7': 4, '8': 3, '9': 4\n    }\n\n    count = 0\n\n    def dfs(i):\n        nonlocal count\n        if i == len(digits):\n            count += 1\n            return\n        dfs(i + 1)  # just move forward (counting)\n\n    # actual branching simulated by multiplication\n    count = 1\n    for d in digits:\n        count *= mapping[d]\n\n    return count\n",
+      "language": "python",
+      "passed": true,
+      "passed_count": 2,
+      "total_count": 2,
+      "failed_count": 0,
+      "time_taken_minutes": 1,
+      "expected_time_minutes": 15,
+      "attempt_number": 1,
+      "score": 85,
+      "time_complexity": {
+        "estimate": "O(1)",
+        "explanation": "The time complexity is O(1) because the solution performs a fixed number of operations based on the length of the input string, specifically multiplying the counts from the mapping.",
+        "is_optimal": true
+      },
+      "space_complexity": {
+        "estimate": "O(1)",
+        "explanation": "The space complexity is O(1) since the solution uses a constant amount of space for the mapping and the count variable, regardless of the input size.",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Mathematical Computation",
+        "secondary": [],
+        "is_appropriate": true,
+        "better_approach": null
+      },
+      "test_case_analysis": {
+        "total_tests": 2,
+        "passed_tests": 2,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 7,
+        "variable_naming": 7,
+        "code_structure": 7,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Proficient",
+      "ai_analysis": {
+        "feedback": "Your solution effectively calculates the count of possible letter combinations based on the provided digit mapping, and it successfully handles the case of an empty input. However, the use of a depth-first search (DFS) approach is not necessary for this problem, as you can directly compute the count using multiplication based on the mapping. This could simplify your code significantly. Additionally, consider adding comments to clarify your thought process and the purpose of each section.",
+        "time_complexity": {
+          "estimate": "O(1)",
+          "explanation": "The time complexity is O(1) because the solution performs a fixed number of operations based on the length of the input string, specifically multiplying the counts from the mapping.",
+          "is_optimal": true
+        },
+        "space_complexity": {
+          "estimate": "O(1)",
+          "explanation": "The space complexity is O(1) since the solution uses a constant amount of space for the mapping and the count variable, regardless of the input size.",
+          "is_optimal": true
+        },
+        "algorithm_type": {
+          "primary": "Mathematical Computation",
+          "secondary": [],
+          "is_appropriate": true,
+          "better_approach": null
+        },
+        "test_case_analysis": {
+          "total_tests": 2,
+          "passed_tests": 2,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 7,
+          "variable_naming": 7,
+          "code_structure": 7,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Refactor the code to remove unnecessary DFS logic and directly compute the count using the mapping.",
+          "Add comments to explain the purpose of the mapping and the logic behind the multiplication.",
+          "Consider edge cases, such as handling invalid digits, to improve robustness."
+        ],
+        "concepts_demonstrated": [
+          "Basic algorithm design",
+          "Mathematical computation",
+          "Understanding of mappings"
+        ],
+        "concepts_to_learn": [
+          "Backtracking techniques",
+          "Dynamic programming for related problems",
+          "Handling edge cases in algorithms"
+        ],
+        "score": 85,
+        "mastery_level": "Proficient",
+        "attempt_number": 1,
+        "language": "python"
+      },
+      "submission_id": "student_tharun_10",
+      "submitted_at": "2026-02-10T14:29:10.773870"
+    },
+    {
+      "problem_id": "gen-007",
+      "problem_title": "Backtracking Practice 7",
+      "topic": "backtracking",
+      "difficulty": "easy",
+      "code": "def solution(digits: str) -> int:\n    if not digits:\n        return 0\n\n    mapping = {\n        '2': 3, '3': 3, '4': 3,\n        '5': 3, '6': 3,\n        '7': 4, '8': 3, '9': 4\n    }\n\n    count = 0\n\n    def dfs(i):\n        nonlocal count\n        if i == len(digits):\n            count += 1\n            return\n        dfs(i + 1)  # just move forward (counting)\n\n    # actual branching simulated by multiplication\n    count = 1\n    for d in digits:\n        count *= mapping[d]\n\n    return count\n",
+      "language": "python",
+      "passed": true,
+      "passed_count": 2,
+      "total_count": 2,
+      "failed_count": 0,
+      "time_taken_minutes": 0,
+      "expected_time_minutes": 15,
+      "attempt_number": 2,
+      "score": 85,
+      "time_complexity": {
+        "estimate": "O(n)",
+        "explanation": "The time complexity is O(n) because the code iterates through the input string 'digits' once to compute the product of the counts from the mapping, where n is the length of 'digits'. Each lookup in the mapping is O(1), but since we have a loop that runs n times, the overall complexity is O(n).",
+        "is_optimal": false
+      },
+      "space_complexity": {
+        "estimate": "O(1)",
+        "explanation": "The space complexity is O(1) since the solution uses a constant amount of space for the mapping dictionary and the count variable, regardless of the input size. There are no data structures that grow with the input.",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Mathematical Computation",
+        "secondary": [],
+        "is_appropriate": true,
+        "better_approach": "Refactor the code to remove unnecessary DFS logic and directly compute the count using the mapping."
+      },
+      "test_case_analysis": {
+        "total_tests": 2,
+        "passed_tests": 2,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 7,
+        "variable_naming": 7,
+        "code_structure": 7,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Proficient",
+      "ai_analysis": {
+        "feedback": "Your solution effectively calculates the count of possible letter combinations based on the provided digit mapping. However, the use of a depth-first search (DFS) approach is unnecessary for this problem, as you can directly compute the count using multiplication based on the mapping. This would simplify your code significantly. Additionally, consider adding comments to clarify your thought process and the purpose of each section.",
+        "time_complexity": {
+          "estimate": "O(n)",
+          "explanation": "The time complexity is O(n) because the code iterates through the input string 'digits' once to compute the product of the counts from the mapping, where n is the length of 'digits'. Each lookup in the mapping is O(1), but since we have a loop that runs n times, the overall complexity is O(n).",
+          "is_optimal": false
+        },
+        "space_complexity": {
+          "estimate": "O(1)",
+          "explanation": "The space complexity is O(1) since the solution uses a constant amount of space for the mapping dictionary and the count variable, regardless of the input size. There are no data structures that grow with the input.",
+          "is_optimal": true
+        },
+        "algorithm_type": {
+          "primary": "Mathematical Computation",
+          "secondary": [],
+          "is_appropriate": true,
+          "better_approach": "Refactor the code to remove unnecessary DFS logic and directly compute the count using the mapping."
+        },
+        "test_case_analysis": {
+          "total_tests": 2,
+          "passed_tests": 2,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 7,
+          "variable_naming": 7,
+          "code_structure": 7,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Refactor the code to remove unnecessary DFS logic and directly compute the count using the mapping.",
+          "Add comments to explain the purpose of the mapping and the logic behind the multiplication.",
+          "Consider edge cases, such as handling invalid digits, to improve robustness."
+        ],
+        "concepts_demonstrated": [
+          "Basic algorithm design",
+          "Mathematical computation",
+          "Understanding of mappings"
+        ],
+        "concepts_to_learn": [
+          "Backtracking techniques",
+          "Dynamic programming for related problems",
+          "Handling edge cases in algorithms"
+        ],
+        "score": 85,
+        "mastery_level": "Proficient",
+        "attempt_number": 2,
+        "language": "python"
+      },
+      "submission_id": "student_tharun_11",
+      "submitted_at": "2026-02-10T14:32:35.182938"
+    },
+    {
+      "problem_id": "gen-007",
+      "problem_title": "Backtracking Practice 7",
+      "topic": "backtracking",
+      "difficulty": "easy",
+      "code": "def solution(digits: str) -> int:\n    if not digits:\n        return 0\n\n    mapping = {\n        '2': 3, '3': 3, '4': 3,\n        '5': 3, '6': 3,\n        '7': 4, '8': 3, '9': 4\n    }\n\n    count = 0\n\n    def dfs(i):\n        nonlocal count\n        if i == len(digits):\n            count += 1\n            return\n        dfs(i + 1)  # just move forward (counting)\n\n    # actual branching simulated by multiplication\n    count = 1\n    for d in digits:\n        count *= mapping[d]\n\n    return count\n",
+      "language": "python",
+      "passed": true,
+      "passed_count": 2,
+      "total_count": 2,
+      "failed_count": 0,
+      "time_taken_minutes": 0,
+      "expected_time_minutes": 15,
+      "attempt_number": 3,
+      "score": 85,
+      "time_complexity": {
+        "estimate": "O(n)",
+        "explanation": "The code iterates through the input string 'digits' once to compute the product of the counts from the mapping, where n is the length of 'digits'. Each lookup in the mapping is O(1), resulting in an overall complexity of O(n).",
+        "is_optimal": false
+      },
+      "space_complexity": {
+        "estimate": "O(1)",
+        "explanation": "The space complexity is O(1) since the solution uses a constant amount of space for the mapping dictionary and the count variable, regardless of the input size. There are no data structures that grow with the input.",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Mathematical Computation",
+        "secondary": [],
+        "is_appropriate": true,
+        "better_approach": "Refactor the code to remove unnecessary DFS logic and directly compute the count using the mapping."
+      },
+      "test_case_analysis": {
+        "total_tests": 2,
+        "passed_tests": 2,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 7,
+        "variable_naming": 7,
+        "code_structure": 7,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Proficient",
+      "ai_analysis": {
+        "feedback": "Your solution effectively calculates the count of possible letter combinations based on the provided digit mapping. However, the use of a depth-first search (DFS) approach is unnecessary for this problem, as you can directly compute the count using multiplication based on the mapping. This would simplify your code significantly. Additionally, consider adding comments to clarify your thought process and the purpose of each section.",
+        "time_complexity": {
+          "estimate": "O(n)",
+          "explanation": "The code iterates through the input string 'digits' once to compute the product of the counts from the mapping, where n is the length of 'digits'. Each lookup in the mapping is O(1), resulting in an overall complexity of O(n).",
+          "is_optimal": false
+        },
+        "space_complexity": {
+          "estimate": "O(1)",
+          "explanation": "The space complexity is O(1) since the solution uses a constant amount of space for the mapping dictionary and the count variable, regardless of the input size. There are no data structures that grow with the input.",
+          "is_optimal": true
+        },
+        "algorithm_type": {
+          "primary": "Mathematical Computation",
+          "secondary": [],
+          "is_appropriate": true,
+          "better_approach": "Refactor the code to remove unnecessary DFS logic and directly compute the count using the mapping."
+        },
+        "test_case_analysis": {
+          "total_tests": 2,
+          "passed_tests": 2,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 7,
+          "variable_naming": 7,
+          "code_structure": 7,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Refactor the code to remove unnecessary DFS logic and directly compute the count using the mapping.",
+          "Add comments to explain the purpose of the mapping and the logic behind the multiplication.",
+          "Consider edge cases, such as handling invalid digits, to improve robustness."
+        ],
+        "concepts_demonstrated": [
+          "Basic algorithm design",
+          "Mathematical computation",
+          "Understanding of mappings"
+        ],
+        "concepts_to_learn": [
+          "Backtracking techniques",
+          "Dynamic programming for related problems",
+          "Handling edge cases in algorithms"
+        ],
+        "score": 85,
+        "mastery_level": "Proficient",
+        "attempt_number": 3,
+        "language": "python"
+      },
+      "submission_id": "student_tharun_12",
+      "submitted_at": "2026-02-10T14:34:17.559488"
+    },
+    {
+      "problem_id": "gen-007",
+      "problem_title": "Backtracking Practice 7",
+      "topic": "backtracking",
+      "difficulty": "easy",
+      "code": "def solution(digits: str) -> int:\n    if not digits:\n        return 0\n\n    mapping = {\n        '2': 3, '3': 3, '4': 3,\n        '5': 3, '6': 3,\n        '7': 4, '8': 3, '9': 4\n    }\n\n    result = 1\n    for d in digits:\n        result *= mapping[d]\n\n    return result\n",
+      "language": "python",
+      "passed": true,
+      "passed_count": 2,
+      "total_count": 2,
+      "failed_count": 0,
+      "time_taken_minutes": 1,
+      "expected_time_minutes": 15,
+      "attempt_number": 4,
+      "score": 85,
+      "time_complexity": {
+        "estimate": "O(n)",
+        "explanation": "The code iterates through the input string 'digits' once to compute the product of the counts from the mapping, where n is the length of 'digits'. Each lookup in the mapping is O(1), resulting in an overall complexity of O(n).",
+        "is_optimal": false
+      },
+      "space_complexity": {
+        "estimate": "O(1)",
+        "explanation": "The space complexity is O(1) since the solution uses a constant amount of space for the mapping dictionary and the count variable, regardless of the input size. There are no data structures that grow with the input.",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Mathematical Computation",
+        "secondary": [],
+        "is_appropriate": true,
+        "better_approach": "Refactor the code to remove unnecessary DFS logic and directly compute the count using the mapping."
+      },
+      "test_case_analysis": {
+        "total_tests": 2,
+        "passed_tests": 2,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 7,
+        "variable_naming": 7,
+        "code_structure": 7,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Proficient",
+      "ai_analysis": {
+        "feedback": "Your solution effectively calculates the count of possible letter combinations based on the provided digit mapping. However, the use of depth-first search (DFS) is unnecessary for this problem, as you can directly compute the count using multiplication based on the mapping. This would simplify your code significantly. Additionally, consider adding comments to clarify your thought process and the purpose of each section.",
+        "time_complexity": {
+          "estimate": "O(n)",
+          "explanation": "The code iterates through the input string 'digits' once to compute the product of the counts from the mapping, where n is the length of 'digits'. Each lookup in the mapping is O(1), resulting in an overall complexity of O(n).",
+          "is_optimal": false
+        },
+        "space_complexity": {
+          "estimate": "O(1)",
+          "explanation": "The space complexity is O(1) since the solution uses a constant amount of space for the mapping dictionary and the count variable, regardless of the input size. There are no data structures that grow with the input.",
+          "is_optimal": true
+        },
+        "algorithm_type": {
+          "primary": "Mathematical Computation",
+          "secondary": [],
+          "is_appropriate": true,
+          "better_approach": "Refactor the code to remove unnecessary DFS logic and directly compute the count using the mapping."
+        },
+        "test_case_analysis": {
+          "total_tests": 2,
+          "passed_tests": 2,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 7,
+          "variable_naming": 7,
+          "code_structure": 7,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Refactor the code to remove unnecessary DFS logic and directly compute the count using the mapping.",
+          "Add comments to explain the purpose of the mapping and the logic behind the multiplication.",
+          "Consider edge cases, such as handling invalid digits, to improve robustness."
+        ],
+        "concepts_demonstrated": [
+          "Basic algorithm design",
+          "Mathematical computation",
+          "Understanding of mappings"
+        ],
+        "concepts_to_learn": [
+          "Backtracking techniques",
+          "Dynamic programming for related problems",
+          "Handling edge cases in algorithms"
+        ],
+        "score": 85,
+        "mastery_level": "Proficient",
+        "attempt_number": 4,
+        "language": "python"
+      },
+      "submission_id": "student_tharun_13",
+      "submitted_at": "2026-02-10T14:34:54.411143"
+    },
+    {
+      "problem_id": "gen-007",
+      "problem_title": "Backtracking Practice 7",
+      "topic": "backtracking",
+      "difficulty": "easy",
+      "code": "def solution(digits: str) -> int:\n    if not digits:\n        return 0\n\n    mapping = {\n        '2': 3, '3': 3, '4': 3,\n        '5': 3, '6': 3,\n        '7': 4, '8': 3, '9': 4\n    }\n\n    count = 0\n\n    def dfs(i):\n        nonlocal count\n        if i == len(digits):\n            count += 1\n            return\n        dfs(i + 1)  # just move forward (counting)\n\n    # actual branching simulated by multiplication\n    count = 1\n    for d in digits:\n        count *= mapping[d]\n\n    return count\n",
+      "language": "python",
+      "passed": true,
+      "passed_count": 2,
+      "total_count": 2,
+      "failed_count": 0,
+      "time_taken_minutes": 4,
+      "expected_time_minutes": 15,
+      "attempt_number": 5,
+      "score": 85,
+      "time_complexity": {
+        "estimate": "O(n)",
+        "explanation": "The code iterates through the input string 'digits' once to compute the product of the counts from the mapping, where n is the length of 'digits'. Each lookup in the mapping is O(1), resulting in an overall complexity of O(n).",
+        "is_optimal": false
+      },
+      "space_complexity": {
+        "estimate": "O(1)",
+        "explanation": "The space complexity is O(1) since the solution uses a constant amount of space for the mapping dictionary and the count variable, regardless of the input size. There are no data structures that grow with the input.",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Mathematical Computation",
+        "secondary": [],
+        "is_appropriate": true,
+        "better_approach": "Refactor the code to remove unnecessary DFS logic and directly compute the count using the mapping."
+      },
+      "test_case_analysis": {
+        "total_tests": 2,
+        "passed_tests": 2,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 7,
+        "variable_naming": 7,
+        "code_structure": 7,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Proficient",
+      "ai_analysis": {
+        "feedback": "Your solution effectively calculates the count of possible letter combinations based on the provided digit mapping. However, the use of a depth-first search (DFS) approach is unnecessary for this problem, as you can directly compute the count using multiplication based on the mapping. This would simplify your code significantly. Additionally, consider adding comments to clarify your thought process and the purpose of each section.",
+        "time_complexity": {
+          "estimate": "O(n)",
+          "explanation": "The code iterates through the input string 'digits' once to compute the product of the counts from the mapping, where n is the length of 'digits'. Each lookup in the mapping is O(1), resulting in an overall complexity of O(n).",
+          "is_optimal": false
+        },
+        "space_complexity": {
+          "estimate": "O(1)",
+          "explanation": "The space complexity is O(1) since the solution uses a constant amount of space for the mapping dictionary and the count variable, regardless of the input size. There are no data structures that grow with the input.",
+          "is_optimal": true
+        },
+        "algorithm_type": {
+          "primary": "Mathematical Computation",
+          "secondary": [],
+          "is_appropriate": true,
+          "better_approach": "Refactor the code to remove unnecessary DFS logic and directly compute the count using the mapping."
+        },
+        "test_case_analysis": {
+          "total_tests": 2,
+          "passed_tests": 2,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 7,
+          "variable_naming": 7,
+          "code_structure": 7,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Refactor the code to remove unnecessary DFS logic and directly compute the count using the mapping.",
+          "Add comments to explain the purpose of the mapping and the logic behind the multiplication.",
+          "Consider edge cases, such as handling invalid digits, to improve robustness."
+        ],
+        "concepts_demonstrated": [
+          "Basic algorithm design",
+          "Mathematical computation",
+          "Understanding of mappings"
+        ],
+        "concepts_to_learn": [
+          "Backtracking techniques",
+          "Dynamic programming for related problems",
+          "Handling edge cases in algorithms"
+        ],
+        "score": 85,
+        "mastery_level": "Proficient",
+        "attempt_number": 5,
+        "language": "python"
+      },
+      "submission_id": "student_tharun_14",
+      "submitted_at": "2026-02-10T14:38:07.445691"
+    },
+    {
+      "problem_id": "gen-007",
+      "problem_title": "Backtracking Practice 7",
+      "topic": "backtracking",
+      "difficulty": "easy",
+      "code": "def solution(digits: str) -> int:\n    if not digits:\n        return 0\n\n    mapping = {\n        '2': 3, '3': 3, '4': 3,\n        '5': 3, '6': 3,\n        '7': 4, '8': 3, '9': 4\n    }\n\n    count = 0\n\n    def dfs(i):\n        nonlocal count\n        if i == len(digits):\n            count += 1\n            return\n        dfs(i + 1)  # just move forward (counting)\n\n    # actual branching simulated by multiplication\n    count = 1\n    for d in digits:\n        count *= mapping[d]\n\n    return count\n",
+      "language": "python",
+      "passed": true,
+      "passed_count": 2,
+      "total_count": 2,
+      "failed_count": 0,
+      "time_taken_minutes": 11,
+      "expected_time_minutes": 15,
+      "attempt_number": 6,
+      "score": 85,
+      "time_complexity": {
+        "estimate": "O(n)",
+        "explanation": "The code iterates through the input string 'digits' once to compute the product of the counts from the mapping, where n is the length of 'digits'. Each lookup in the mapping is O(1), resulting in an overall complexity of O(n).",
+        "is_optimal": true
+      },
+      "space_complexity": {
+        "estimate": "O(1)",
+        "explanation": "The space complexity is O(1) since the solution uses a constant amount of space for the mapping dictionary and the count variable, regardless of the input size. There are no data structures that grow with the input.",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Mathematical Computation",
+        "secondary": [],
+        "is_appropriate": true,
+        "better_approach": null
+      },
+      "test_case_analysis": {
+        "total_tests": 2,
+        "passed_tests": 2,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 7,
+        "variable_naming": 7,
+        "code_structure": 7,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Proficient",
+      "ai_analysis": {
+        "feedback": "Your solution effectively calculates the count of possible letter combinations based on the provided digit mapping. The approach of directly multiplying the counts from the mapping is efficient and simplifies the code. However, the definition of the DFS function is unnecessary for this problem, as it is never invoked. Consider removing unused code to enhance clarity and maintainability.",
+        "time_complexity": {
+          "estimate": "O(n)",
+          "explanation": "The code iterates through the input string 'digits' once to compute the product of the counts from the mapping, where n is the length of 'digits'. Each lookup in the mapping is O(1), resulting in an overall complexity of O(n).",
+          "is_optimal": true
+        },
+        "space_complexity": {
+          "estimate": "O(1)",
+          "explanation": "The space complexity is O(1) since the solution uses a constant amount of space for the mapping dictionary and the count variable, regardless of the input size. There are no data structures that grow with the input.",
+          "is_optimal": true
+        },
+        "algorithm_type": {
+          "primary": "Mathematical Computation",
+          "secondary": [],
+          "is_appropriate": true,
+          "better_approach": null
+        },
+        "test_case_analysis": {
+          "total_tests": 2,
+          "passed_tests": 2,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 7,
+          "variable_naming": 7,
+          "code_structure": 7,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Remove the unused DFS function to improve code clarity.",
+          "Add comments to explain the purpose of the mapping and the logic behind the multiplication.",
+          "Consider edge cases, such as handling invalid digits, to improve robustness."
+        ],
+        "concepts_demonstrated": [
+          "Basic algorithm design",
+          "Mathematical computation",
+          "Understanding of mappings"
+        ],
+        "concepts_to_learn": [
+          "Backtracking techniques",
+          "Dynamic programming for related problems",
+          "Handling edge cases in algorithms"
+        ],
+        "score": 85,
+        "mastery_level": "Proficient",
+        "attempt_number": 6,
+        "language": "python"
+      },
+      "submission_id": "student_tharun_15",
+      "submitted_at": "2026-02-10T14:45:02.143703"
+    },
+    {
+      "problem_id": "gen-007",
+      "problem_title": "Backtracking Practice 7",
+      "topic": "backtracking",
+      "difficulty": "easy",
+      "code": "def solution(digits: str) -> int:\n    if not digits:\n        return 0\n\n    mapping = {\n        '2': 3, '3': 3, '4': 3,\n        '5': 3, '6': 3,\n        '7': 4, '8': 3, '9': 4\n    }\n\n    count = 0\n\n    def dfs(i):\n        nonlocal count\n        if i == len(digits):\n            count += 1\n            return\n        dfs(i + 1)  # just move forward (counting)\n\n    # actual branching simulated by multiplication\n    count = 1\n    for d in digits:\n        count *= mapping[d]\n\n    return count\n",
+      "language": "python",
+      "passed": true,
+      "passed_count": 2,
+      "total_count": 2,
+      "failed_count": 0,
+      "time_taken_minutes": 11,
+      "expected_time_minutes": 15,
+      "attempt_number": 7,
+      "score": 85,
+      "time_complexity": {
+        "estimate": "O(n)",
+        "explanation": "The execution primarily consists of a single loop that iterates through the input string 'digits' once to compute the product of the counts from the mapping. Each lookup in the mapping is O(1), leading to an overall complexity of O(n).",
+        "is_optimal": true
+      },
+      "space_complexity": {
+        "estimate": "O(1)",
+        "explanation": "The solution uses a constant amount of space for the mapping dictionary and the result variable, regardless of the input size. There are no data structures that grow with the input.",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Mathematical Computation",
+        "secondary": [],
+        "is_appropriate": true,
+        "better_approach": null
+      },
+      "test_case_analysis": {
+        "total_tests": 2,
+        "passed_tests": 2,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 8,
+        "variable_naming": 8,
+        "code_structure": 8,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Proficient",
+      "ai_analysis": {
+        "feedback": "Your solution effectively calculates the count of possible letter combinations based on the provided digit mapping using a straightforward multiplication approach. This simplifies the code significantly compared to using a depth-first search (DFS) method, which is unnecessary in this context. However, the inclusion of the DFS function adds confusion, as it is never called. Consider removing unused code to enhance clarity.",
+        "time_complexity": {
+          "estimate": "O(n)",
+          "explanation": "The execution primarily consists of a single loop that iterates through the input string 'digits' once to compute the product of the counts from the mapping. Each lookup in the mapping is O(1), leading to an overall complexity of O(n).",
+          "is_optimal": true
+        },
+        "space_complexity": {
+          "estimate": "O(1)",
+          "explanation": "The solution uses a constant amount of space for the mapping dictionary and the result variable, regardless of the input size. There are no data structures that grow with the input.",
+          "is_optimal": true
+        },
+        "algorithm_type": {
+          "primary": "Mathematical Computation",
+          "secondary": [],
+          "is_appropriate": true,
+          "better_approach": null
+        },
+        "test_case_analysis": {
+          "total_tests": 2,
+          "passed_tests": 2,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 8,
+          "variable_naming": 8,
+          "code_structure": 8,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Remove the unused DFS function to improve code clarity.",
+          "Add comments to explain the purpose of the mapping and the logic behind the multiplication.",
+          "Consider edge cases, such as handling invalid digits, to improve robustness."
+        ],
+        "concepts_demonstrated": [
+          "Basic algorithm design",
+          "Mathematical computation",
+          "Understanding of mappings"
+        ],
+        "concepts_to_learn": [
+          "Backtracking techniques",
+          "Dynamic programming for related problems",
+          "Handling edge cases in algorithms"
+        ],
+        "score": 85,
+        "mastery_level": "Proficient",
+        "attempt_number": 7,
+        "language": "python"
+      },
+      "submission_id": "student_tharun_16",
+      "submitted_at": "2026-02-10T14:45:37.914668"
+    },
+    {
+      "problem_id": "gen-007",
+      "problem_title": "Backtracking Practice 7",
+      "topic": "backtracking",
+      "difficulty": "easy",
+      "code": "def solution(digits: str) -> int:\n    if not digits:\n        return 0\n\n    mapping = {\n        '2': 3, '3': 3, '4': 3,\n        '5': 3, '6': 3,\n        '7': 4, '8': 3, '9': 4\n    }\n\n    count = 0\n\n    def dfs(i):\n        nonlocal count\n        if i == len(digits):\n            count += 1\n            return\n        dfs(i + 1)  # just move forward (counting)\n\n    # actual branching simulated by multiplication\n    count = 1\n    for d in digits:\n        count *= mapping[d]\n\n    return count\n",
+      "language": "python",
+      "passed": true,
+      "passed_count": 2,
+      "total_count": 2,
+      "failed_count": 0,
+      "time_taken_minutes": 0,
+      "expected_time_minutes": 15,
+      "attempt_number": 8,
+      "score": 85,
+      "time_complexity": {
+        "estimate": "O(n)",
+        "explanation": "The execution primarily consists of a single loop that iterates through the input string 'digits' once to compute the product of the counts from the mapping. Each lookup in the mapping is O(1), leading to an overall complexity of O(n).",
+        "is_optimal": true
+      },
+      "space_complexity": {
+        "estimate": "O(1)",
+        "explanation": "The solution uses a constant amount of space for the mapping dictionary and the result variable, regardless of the input size. There are no data structures that grow with the input.",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Mathematical Computation",
+        "secondary": [],
+        "is_appropriate": true,
+        "better_approach": null
+      },
+      "test_case_analysis": {
+        "total_tests": 2,
+        "passed_tests": 2,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 8,
+        "variable_naming": 8,
+        "code_structure": 8,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Proficient",
+      "ai_analysis": {
+        "feedback": "Your solution effectively calculates the count of possible letter combinations based on the provided digit mapping using a straightforward multiplication approach. This simplifies the code significantly compared to using a depth-first search (DFS) method, which is unnecessary in this context. However, the inclusion of the DFS function adds confusion, as it is never called. Consider removing unused code to enhance clarity.",
+        "time_complexity": {
+          "estimate": "O(n)",
+          "explanation": "The execution primarily consists of a single loop that iterates through the input string 'digits' once to compute the product of the counts from the mapping. Each lookup in the mapping is O(1), leading to an overall complexity of O(n).",
+          "is_optimal": true
+        },
+        "space_complexity": {
+          "estimate": "O(1)",
+          "explanation": "The solution uses a constant amount of space for the mapping dictionary and the result variable, regardless of the input size. There are no data structures that grow with the input.",
+          "is_optimal": true
+        },
+        "algorithm_type": {
+          "primary": "Mathematical Computation",
+          "secondary": [],
+          "is_appropriate": true,
+          "better_approach": null
+        },
+        "test_case_analysis": {
+          "total_tests": 2,
+          "passed_tests": 2,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 8,
+          "variable_naming": 8,
+          "code_structure": 8,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Remove the unused DFS function to improve code clarity.",
+          "Add comments to explain the purpose of the mapping and the logic behind the multiplication.",
+          "Consider edge cases, such as handling invalid digits, to improve robustness."
+        ],
+        "concepts_demonstrated": [
+          "Basic algorithm design",
+          "Mathematical computation",
+          "Understanding of mappings"
+        ],
+        "concepts_to_learn": [
+          "Backtracking techniques",
+          "Dynamic programming for related problems",
+          "Handling edge cases in algorithms"
+        ],
+        "score": 85,
+        "mastery_level": "Proficient",
+        "attempt_number": 8,
+        "language": "python"
+      },
+      "submission_id": "student_tharun_17",
+      "submitted_at": "2026-02-10T14:46:30.192784"
+    },
+    {
+      "problem_id": "arr-003",
+      "problem_title": "Contains Duplicate",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "code": "def contains_duplicate(nums: list) -> bool:\n    n = len(nums)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if nums[i] == nums[j]:\n                return True\n    return False\n",
+      "language": "python",
+      "passed": true,
+      "passed_count": 3,
+      "total_count": 3,
+      "failed_count": 0,
+      "time_taken_minutes": 0,
+      "expected_time_minutes": 10,
+      "attempt_number": 3,
+      "score": 70,
+      "time_complexity": {
+        "estimate": "O(n^2)",
+        "explanation": "The code contains two nested loops, where the outer loop iterates through each element and the inner loop checks for duplicates among the remaining elements, resulting in O(n^2) complexity.",
+        "is_optimal": false
+      },
+      "space_complexity": {
+        "estimate": "O(1)",
+        "explanation": "No additional data structures are used that grow with the input size; only a few variables are defined.",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Brute Force",
+        "secondary": [],
+        "is_appropriate": true,
+        "better_approach": "Using a hash set to track seen numbers would reduce the time complexity to O(n)."
+      },
+      "test_case_analysis": {
+        "total_tests": 3,
+        "passed_tests": 3,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 6,
+        "variable_naming": 7,
+        "code_structure": 6,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Developing",
+      "ai_analysis": {
+        "feedback": "Your solution correctly identifies duplicates in the array using a brute force approach. However, this method has a time complexity of O(n^2) due to the nested loops, which is less efficient than the optimal O(n) solution. To improve, consider using a hash set to track seen numbers, which would allow you to achieve the desired complexity. Additionally, adding comments to clarify your logic would enhance code readability.",
+        "time_complexity": {
+          "estimate": "O(n^2)",
+          "explanation": "The code contains two nested loops, where the outer loop iterates through each element and the inner loop checks for duplicates among the remaining elements, resulting in O(n^2) complexity.",
+          "is_optimal": false
+        },
+        "space_complexity": {
+          "estimate": "O(1)",
+          "explanation": "No additional data structures are used that grow with the input size; only a few variables are defined.",
+          "is_optimal": true
+        },
+        "algorithm_type": {
+          "primary": "Brute Force",
+          "secondary": [],
+          "is_appropriate": true,
+          "better_approach": "Using a hash set to track seen numbers would reduce the time complexity to O(n)."
+        },
+        "test_case_analysis": {
+          "total_tests": 3,
+          "passed_tests": 3,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 6,
+          "variable_naming": 7,
+          "code_structure": 6,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Refactor the code to use a hash set for tracking seen numbers to improve time complexity.",
+          "Add comments to explain the logic of your loops and the purpose of your variables.",
+          "Consider edge cases, such as empty arrays or arrays with one element."
+        ],
+        "concepts_demonstrated": [
+          "Basic algorithm design",
+          "Understanding of loops and conditionals"
+        ],
+        "concepts_to_learn": [
+          "Hash sets and their applications",
+          "Optimal algorithms for searching and sorting",
+          "Time complexity analysis"
+        ],
+        "score": 70,
+        "mastery_level": "Developing",
+        "attempt_number": 3,
+        "language": "python"
+      },
+      "submission_id": "student_tharun_18",
+      "submitted_at": "2026-02-10T14:51:17.347154"
+    },
+    {
+      "problem_id": "arr-003",
+      "problem_title": "Contains Duplicate",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "code": "def contains_duplicate(nums: list) -> bool:\n    nums.sort()\n    for i in range(1, len(nums)):\n        if nums[i] == nums[i - 1]:\n            return True\n    return False\n",
+      "language": "python",
+      "passed": true,
+      "passed_count": 3,
+      "total_count": 3,
+      "failed_count": 0,
+      "time_taken_minutes": 1,
+      "expected_time_minutes": 10,
+      "attempt_number": 4,
+      "score": 70,
+      "time_complexity": {
+        "estimate": "O(n log n)",
+        "explanation": "The code sorts the array, which takes O(n log n) time, and then iterates through the sorted array once with a single loop, which is O(n). The dominant factor is the sorting step.",
+        "is_optimal": false
+      },
+      "space_complexity": {
+        "estimate": "O(1)",
+        "explanation": "The space complexity is O(1) since no additional data structures are used that grow with the input size; only a few variables are defined.",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Sorting",
+        "secondary": [
+          "Linear Search"
+        ],
+        "is_appropriate": true,
+        "better_approach": "Using a hash set to track seen numbers would reduce the time complexity to O(n)."
+      },
+      "test_case_analysis": {
+        "total_tests": 3,
+        "passed_tests": 3,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 6,
+        "variable_naming": 7,
+        "code_structure": 7,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Developing",
+      "ai_analysis": {
+        "feedback": "Your solution effectively identifies duplicates in the array by sorting it first, which is a valid approach. However, this method has a time complexity of O(n log n) due to the sorting step, which is not optimal compared to the expected O(n) solution. To improve, consider using a hash set to track seen numbers, which would allow you to achieve the desired linear time complexity. Additionally, adding comments to clarify your logic would enhance code readability.",
+        "time_complexity": {
+          "estimate": "O(n log n)",
+          "explanation": "The code sorts the array, which takes O(n log n) time, and then iterates through the sorted array once with a single loop, which is O(n). The dominant factor is the sorting step.",
+          "is_optimal": false
+        },
+        "space_complexity": {
+          "estimate": "O(1)",
+          "explanation": "The space complexity is O(1) since no additional data structures are used that grow with the input size; only a few variables are defined.",
+          "is_optimal": true
+        },
+        "algorithm_type": {
+          "primary": "Sorting",
+          "secondary": [
+            "Linear Search"
+          ],
+          "is_appropriate": true,
+          "better_approach": "Using a hash set to track seen numbers would reduce the time complexity to O(n)."
+        },
+        "test_case_analysis": {
+          "total_tests": 3,
+          "passed_tests": 3,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 6,
+          "variable_naming": 7,
+          "code_structure": 7,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Refactor the code to use a hash set for tracking seen numbers to improve time complexity.",
+          "Add comments to explain the logic of your loops and the purpose of your variables.",
+          "Consider edge cases, such as empty arrays or arrays with one element."
+        ],
+        "concepts_demonstrated": [
+          "Basic algorithm design",
+          "Understanding of sorting algorithms",
+          "Use of loops and conditionals"
+        ],
+        "concepts_to_learn": [
+          "Hash sets and their applications",
+          "Optimal algorithms for searching and sorting",
+          "Time complexity analysis"
+        ],
+        "score": 70,
+        "mastery_level": "Developing",
+        "attempt_number": 4,
+        "language": "python"
+      },
+      "submission_id": "student_tharun_19",
+      "submitted_at": "2026-02-10T14:51:41.687195"
+    },
+    {
+      "problem_id": "arr-003",
+      "problem_title": "Contains Duplicate",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "code": "def contains_duplicate(nums: list) -> bool:\n    seen = set()\n    for num in nums:\n        if num in seen:\n            return True\n        seen.add(num)\n    return False\n",
+      "language": "python",
+      "passed": true,
+      "passed_count": 3,
+      "total_count": 3,
+      "failed_count": 0,
+      "time_taken_minutes": 1,
+      "expected_time_minutes": 10,
+      "attempt_number": 5,
+      "score": 90,
+      "time_complexity": {
+        "estimate": "O(n)",
+        "explanation": "The code iterates through the input list 'nums' once, checking if each number has already been seen using a hash set. This results in a linear time complexity of O(n).",
+        "is_optimal": true
+      },
+      "space_complexity": {
+        "estimate": "O(n)",
+        "explanation": "The space complexity is O(n) due to the hash set that stores potentially all unique elements from the input list, which grows with the size of the input.",
+        "is_optimal": false
+      },
+      "algorithm_type": {
+        "primary": "Hash Set",
+        "secondary": [],
+        "is_appropriate": true,
+        "better_approach": null
+      },
+      "test_case_analysis": {
+        "total_tests": 3,
+        "passed_tests": 3,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 8,
+        "variable_naming": 8,
+        "code_structure": 8,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Proficient",
+      "ai_analysis": {
+        "feedback": "Your solution effectively identifies duplicates in the array using a hash set, which is an optimal approach for this problem. The implementation is clear and concise, iterating through the input list only once while maintaining a record of seen numbers. To further enhance your solution, consider adding comments to clarify your logic and improve readability.",
+        "time_complexity": {
+          "estimate": "O(n)",
+          "explanation": "The code iterates through the input list 'nums' once, checking if each number has already been seen using a hash set. This results in a linear time complexity of O(n).",
+          "is_optimal": true
+        },
+        "space_complexity": {
+          "estimate": "O(n)",
+          "explanation": "The space complexity is O(n) due to the hash set that stores potentially all unique elements from the input list, which grows with the size of the input.",
+          "is_optimal": false
+        },
+        "algorithm_type": {
+          "primary": "Hash Set",
+          "secondary": [],
+          "is_appropriate": true,
+          "better_approach": null
+        },
+        "test_case_analysis": {
+          "total_tests": 3,
+          "passed_tests": 3,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 8,
+          "variable_naming": 8,
+          "code_structure": 8,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Add comments to explain the purpose of the hash set and the logic behind the iteration.",
+          "Consider edge cases, such as empty arrays or arrays with one element, to improve robustness.",
+          "Ensure consistent variable naming conventions for better readability."
+        ],
+        "concepts_demonstrated": [
+          "Understanding of hash sets",
+          "Basic algorithm design",
+          "Iterative logic"
+        ],
+        "concepts_to_learn": [
+          "Advanced data structures",
+          "Time and space complexity analysis",
+          "Handling edge cases in algorithms"
+        ],
+        "score": 90,
+        "mastery_level": "Proficient",
+        "attempt_number": 5,
+        "language": "python"
+      },
+      "submission_id": "student_tharun_20",
+      "submitted_at": "2026-02-10T14:52:06.741229"
     }
   ],
   "student_irfan": [
@@ -1520,6 +2612,1115 @@
       },
       "submission_id": "student_vijay_4",
       "submitted_at": "2026-01-06T11:26:55.840268"
+    }
+  ],
+  "test_user": [
+    {
+      "problem_id": "gen-127",
+      "problem_title": "Backtracking Practice 127",
+      "topic": "backtracking",
+      "difficulty": "easy",
+      "code": "def solution(digits):\n    if not digits:\n        return 0\n    mapping = {'2': 3, '3': 3, '4': 3, '5': 3, '6': 3, '7': 4, '8': 3, '9': 4}\n    result = 1\n    for d in digits:\n        result *= mapping[d]\n    return result",
+      "language": "python",
+      "passed": true,
+      "passed_count": 2,
+      "total_count": 2,
+      "failed_count": 0,
+      "time_taken_minutes": 5,
+      "expected_time_minutes": 15,
+      "attempt_number": 1,
+      "score": 70,
+      "time_complexity": {
+        "estimate": "O(n) - the ACTUAL executed time complexity (trace the code flow!)",
+        "explanation": "The code iterates through each digit in the input string, multiplying the number of possible letters for each digit based on the mapping. This results in a linear time complexity relative to the number of digits.",
+        "is_optimal": false
+      },
+      "space_complexity": {
+        "estimate": "O(1) - the ACTUAL space used during execution",
+        "explanation": "The space used is constant as it only requires a fixed amount of space for variables like 'result' and 'mapping', regardless of the input size.",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Brute Force",
+        "secondary": [],
+        "is_appropriate": false,
+        "better_approach": "A recursive backtracking approach would be more appropriate to explore all combinations of letters for the given digits."
+      },
+      "test_case_analysis": {
+        "total_tests": 2,
+        "passed_tests": 2,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 7,
+        "variable_naming": 8,
+        "code_structure": 7,
+        "comments": "Adequate"
+      },
+      "mastery_level": "Developing",
+      "ai_analysis": {
+        "feedback": "Your solution correctly calculates the number of possible letter combinations based on the given digits, and it handles the edge case of an empty input well. However, it does not utilize backtracking, which is the main focus of the problem. To improve, consider implementing a recursive approach that explores all possible combinations of letters for the given digits.",
+        "time_complexity": {
+          "estimate": "O(n) - the ACTUAL executed time complexity (trace the code flow!)",
+          "explanation": "The code iterates through each digit in the input string, multiplying the number of possible letters for each digit based on the mapping. This results in a linear time complexity relative to the number of digits.",
+          "is_optimal": false
+        },
+        "space_complexity": {
+          "estimate": "O(1) - the ACTUAL space used during execution",
+          "explanation": "The space used is constant as it only requires a fixed amount of space for variables like 'result' and 'mapping', regardless of the input size.",
+          "is_optimal": true
+        },
+        "algorithm_type": {
+          "primary": "Brute Force",
+          "secondary": [],
+          "is_appropriate": false,
+          "better_approach": "A recursive backtracking approach would be more appropriate to explore all combinations of letters for the given digits."
+        },
+        "test_case_analysis": {
+          "total_tests": 2,
+          "passed_tests": 2,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 7,
+          "variable_naming": 8,
+          "code_structure": 7,
+          "comments": "Adequate"
+        },
+        "improvement_tips": [
+          "Implement a recursive backtracking function to explore all possible combinations of letters for the given digits.",
+          "Consider adding comments to explain the logic behind the mapping and the multiplication process.",
+          "Test your code with more diverse cases, including edge cases and larger inputs, to ensure robustness."
+        ],
+        "concepts_demonstrated": [
+          "Basic iteration",
+          "Use of dictionaries for mapping"
+        ],
+        "concepts_to_learn": [
+          "Backtracking",
+          "Recursion",
+          "Dynamic programming"
+        ],
+        "score": 70,
+        "mastery_level": "Developing",
+        "attempt_number": 1,
+        "language": "python"
+      },
+      "submission_id": "test_user_1",
+      "submitted_at": "2026-02-10T14:43:01.130034"
+    },
+    {
+      "problem_id": "gen-127",
+      "problem_title": "Backtracking Practice 127",
+      "topic": "backtracking",
+      "difficulty": "easy",
+      "code": "def solution(digits):\n    if not digits: return 0\n    mapping = {'2': 3, '3': 3, '4': 3, '5': 3, '6': 3, '7': 4, '8': 3, '9': 4}\n    result = 1\n    for d in digits: result *= mapping[d]\n    return result",
+      "language": "python",
+      "passed": true,
+      "passed_count": 2,
+      "total_count": 2,
+      "failed_count": 0,
+      "time_taken_minutes": 5,
+      "expected_time_minutes": 15,
+      "attempt_number": 2,
+      "score": 70,
+      "time_complexity": {
+        "estimate": "O(n) - the ACTUAL executed time complexity (trace the code flow!)",
+        "explanation": "The code iterates through each digit in the input string, multiplying the number of possible letters for each digit based on the mapping. This results in a linear time complexity relative to the number of digits.",
+        "is_optimal": false
+      },
+      "space_complexity": {
+        "estimate": "O(1) - the ACTUAL space used during execution",
+        "explanation": "The space used is constant as it only requires a fixed amount of space for variables like 'result' and 'mapping', regardless of the input size.",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Brute Force",
+        "secondary": [],
+        "is_appropriate": false,
+        "better_approach": "A recursive backtracking approach would be more appropriate to explore all combinations of letters for the given digits."
+      },
+      "test_case_analysis": {
+        "total_tests": 2,
+        "passed_tests": 2,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 7,
+        "variable_naming": 8,
+        "code_structure": 7,
+        "comments": "Adequate"
+      },
+      "mastery_level": "Developing",
+      "ai_analysis": {
+        "feedback": "Your solution accurately calculates the total number of possible letter combinations based on the given digits, and it effectively handles the case of an empty input. However, it does not utilize backtracking, which is essential for this problem. To enhance your solution, consider implementing a recursive backtracking approach that explores all possible combinations of letters for the provided digits.",
+        "time_complexity": {
+          "estimate": "O(n) - the ACTUAL executed time complexity (trace the code flow!)",
+          "explanation": "The code iterates through each digit in the input string, multiplying the number of possible letters for each digit based on the mapping. This results in a linear time complexity relative to the number of digits.",
+          "is_optimal": false
+        },
+        "space_complexity": {
+          "estimate": "O(1) - the ACTUAL space used during execution",
+          "explanation": "The space used is constant as it only requires a fixed amount of space for variables like 'result' and 'mapping', regardless of the input size.",
+          "is_optimal": true
+        },
+        "algorithm_type": {
+          "primary": "Brute Force",
+          "secondary": [],
+          "is_appropriate": false,
+          "better_approach": "A recursive backtracking approach would be more appropriate to explore all combinations of letters for the given digits."
+        },
+        "test_case_analysis": {
+          "total_tests": 2,
+          "passed_tests": 2,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 7,
+          "variable_naming": 8,
+          "code_structure": 7,
+          "comments": "Adequate"
+        },
+        "improvement_tips": [
+          "Implement a recursive backtracking function to explore all possible combinations of letters for the given digits.",
+          "Consider adding comments to explain the logic behind the mapping and the multiplication process.",
+          "Test your code with more diverse cases, including edge cases and larger inputs, to ensure robustness."
+        ],
+        "concepts_demonstrated": [
+          "Basic iteration",
+          "Use of dictionaries for mapping"
+        ],
+        "concepts_to_learn": [
+          "Backtracking",
+          "Recursion",
+          "Dynamic programming"
+        ],
+        "score": 70,
+        "mastery_level": "Developing",
+        "attempt_number": 2,
+        "language": "python"
+      },
+      "submission_id": "test_user_2",
+      "submitted_at": "2026-02-10T14:43:31.369105"
+    }
+  ],
+  "test_user2": [
+    {
+      "problem_id": "gen-127",
+      "problem_title": "Backtracking Practice 127",
+      "topic": "backtracking",
+      "difficulty": "easy",
+      "code": "def solution(digits):\n    if not digits: return 0\n    mapping = {'2': 3, '3': 3, '4': 3, '5': 3, '6': 3, '7': 4, '8': 3, '9': 4}\n    result = 1\n    for d in digits: result *= mapping[d]\n    return result",
+      "language": "python",
+      "passed": true,
+      "passed_count": 2,
+      "total_count": 2,
+      "failed_count": 0,
+      "time_taken_minutes": 5,
+      "expected_time_minutes": 15,
+      "attempt_number": 1,
+      "score": 75,
+      "time_complexity": {
+        "estimate": "O(n)",
+        "explanation": "The code iterates through each digit in the input string exactly once, performing a constant-time multiplication for each digit, resulting in a linear time complexity.",
+        "is_optimal": true
+      },
+      "space_complexity": {
+        "estimate": "O(1)",
+        "explanation": "The solution uses a fixed amount of space for the mapping dictionary and a few integer variables, regardless of the input size.",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Brute Force",
+        "secondary": [],
+        "is_appropriate": false,
+        "better_approach": "A backtracking approach would be more appropriate to generate all possible combinations of letters for the given digits."
+      },
+      "test_case_analysis": {
+        "total_tests": 2,
+        "passed_tests": 2,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 7,
+        "variable_naming": 6,
+        "code_structure": 7,
+        "comments": "Adequate"
+      },
+      "mastery_level": "Developing",
+      "ai_analysis": {
+        "feedback": "Your solution effectively calculates the total number of letter combinations based on the provided digits, using a straightforward multiplication approach. This is a valid and efficient method for this problem, as it avoids unnecessary complexity. However, it does not utilize backtracking, which is the expected approach for this problem. Exploring backtracking could enhance your understanding of the problem's requirements and improve your coding skills in this area.",
+        "time_complexity": {
+          "estimate": "O(n)",
+          "explanation": "The code iterates through each digit in the input string exactly once, performing a constant-time multiplication for each digit, resulting in a linear time complexity.",
+          "is_optimal": true
+        },
+        "space_complexity": {
+          "estimate": "O(1)",
+          "explanation": "The solution uses a fixed amount of space for the mapping dictionary and a few integer variables, regardless of the input size.",
+          "is_optimal": true
+        },
+        "algorithm_type": {
+          "primary": "Brute Force",
+          "secondary": [],
+          "is_appropriate": false,
+          "better_approach": "A backtracking approach would be more appropriate to generate all possible combinations of letters for the given digits."
+        },
+        "test_case_analysis": {
+          "total_tests": 2,
+          "passed_tests": 2,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 7,
+          "variable_naming": 6,
+          "code_structure": 7,
+          "comments": "Adequate"
+        },
+        "improvement_tips": [
+          "Consider implementing a backtracking solution to explore all possible letter combinations.",
+          "Add comments to explain the logic behind your calculations for better clarity.",
+          "Improve variable naming for better readability, e.g., use 'digit_mapping' instead of 'mapping'."
+        ],
+        "concepts_demonstrated": [
+          "Basic iteration",
+          "Use of dictionaries",
+          "Multiplication for counting combinations"
+        ],
+        "concepts_to_learn": [
+          "Backtracking",
+          "Recursive algorithms",
+          "Dynamic programming"
+        ],
+        "score": 75,
+        "mastery_level": "Developing",
+        "attempt_number": 1,
+        "language": "python"
+      },
+      "submission_id": "test_user2_1",
+      "submitted_at": "2026-02-10T14:44:21.156028"
+    }
+  ],
+  "test_user3": [
+    {
+      "problem_id": "gen-127",
+      "problem_title": "Backtracking Practice 127",
+      "topic": "backtracking",
+      "difficulty": "easy",
+      "code": "def solution(digits: str) -> int:\n    if not digits:\n        return 0\n\n    mapping = {\n        '2': 3, '3': 3, '4': 3,\n        '5': 3, '6': 3,\n        '7': 4, '8': 3, '9': 4\n    }\n\n    count = 0\n\n    def dfs(i):\n        nonlocal count\n        if i == len(digits):\n            count += 1\n            return\n        dfs(i + 1)  # just move forward (counting)\n\n    # actual branching simulated by multiplication\n    count = 1\n    for d in digits:\n        count *= mapping[d]\n\n    return count",
+      "language": "python",
+      "passed": true,
+      "passed_count": 2,
+      "total_count": 2,
+      "failed_count": 0,
+      "time_taken_minutes": 5,
+      "expected_time_minutes": 15,
+      "attempt_number": 1,
+      "score": 75,
+      "time_complexity": {
+        "estimate": "O(n)",
+        "explanation": "The main execution flow consists of a loop that iterates through the input digits, multiplying the count by the number of letters corresponding to each digit. This results in a linear time complexity of O(n), where n is the length of the input string.",
+        "is_optimal": true
+      },
+      "space_complexity": {
+        "estimate": "O(1)",
+        "explanation": "The space used is constant, as only a few variables are allocated regardless of the input size. There are no data structures that grow with the input.",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Brute Force",
+        "secondary": [],
+        "is_appropriate": false,
+        "better_approach": "A more appropriate approach would be to implement the backtracking algorithm that explores all possible combinations of letters recursively."
+      },
+      "test_case_analysis": {
+        "total_tests": 2,
+        "passed_tests": 2,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 7,
+        "variable_naming": 8,
+        "code_structure": 6,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Developing",
+      "ai_analysis": {
+        "feedback": "Your solution effectively counts the possible letter combinations based on the phone keypad mapping, and it correctly handles the input. However, the implementation does not utilize the defined recursive function, which could have provided a more intuitive solution. Instead, you used a multiplication approach which, while efficient, diverges from the expected backtracking method.",
+        "time_complexity": {
+          "estimate": "O(n)",
+          "explanation": "The main execution flow consists of a loop that iterates through the input digits, multiplying the count by the number of letters corresponding to each digit. This results in a linear time complexity of O(n), where n is the length of the input string.",
+          "is_optimal": true
+        },
+        "space_complexity": {
+          "estimate": "O(1)",
+          "explanation": "The space used is constant, as only a few variables are allocated regardless of the input size. There are no data structures that grow with the input.",
+          "is_optimal": true
+        },
+        "algorithm_type": {
+          "primary": "Brute Force",
+          "secondary": [],
+          "is_appropriate": false,
+          "better_approach": "A more appropriate approach would be to implement the backtracking algorithm that explores all possible combinations of letters recursively."
+        },
+        "test_case_analysis": {
+          "total_tests": 2,
+          "passed_tests": 2,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 7,
+          "variable_naming": 8,
+          "code_structure": 6,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Consider implementing the recursive backtracking approach to explore all combinations of letters.",
+          "Add comments to explain the logic behind the multiplication of counts for better clarity.",
+          "Refactor the code to remove unused functions or clarify their intended purpose."
+        ],
+        "concepts_demonstrated": [
+          "Basic recursion",
+          "Use of dictionaries for mapping"
+        ],
+        "concepts_to_learn": [
+          "Backtracking techniques",
+          "Recursive problem-solving strategies"
+        ],
+        "score": 75,
+        "mastery_level": "Developing",
+        "attempt_number": 1,
+        "language": "python"
+      },
+      "submission_id": "test_user3_1",
+      "submitted_at": "2026-02-10T14:47:16.677863"
+    }
+  ],
+  "test_n3": [
+    {
+      "problem_id": "gen-127",
+      "problem_title": "Backtracking Practice 127",
+      "topic": "backtracking",
+      "difficulty": "easy",
+      "code": "def count_triplets(arr, target):\n    n = len(arr)\n    count = 0\n\n    for i in range(n):\n        for j in range(i + 1, n):\n            for k in range(j + 1, n):\n                if arr[i] + arr[j] + arr[k] == target:\n                    count += 1\n    return count",
+      "language": "python",
+      "passed": false,
+      "passed_count": 0,
+      "total_count": 2,
+      "failed_count": 2,
+      "time_taken_minutes": 5,
+      "expected_time_minutes": 15,
+      "attempt_number": 1,
+      "score": 20,
+      "time_complexity": {
+        "estimate": "O(n^3)",
+        "explanation": "The code contains three nested loops iterating through the array, leading to a time complexity of O(n^3). However, this is not applicable to the problem, as the expected complexity is O(4^n).",
+        "is_optimal": false
+      },
+      "space_complexity": {
+        "estimate": "O(1)",
+        "explanation": "The space used is constant as it only involves a few variables for counting and indexing, regardless of the input size.",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Brute Force",
+        "secondary": [],
+        "is_appropriate": false,
+        "better_approach": "A backtracking approach that generates combinations of letters based on the digit mappings would be more appropriate."
+      },
+      "test_case_analysis": {
+        "total_tests": 2,
+        "passed_tests": 0,
+        "failed_tests": 2,
+        "failure_patterns": [
+          "Missing required arguments",
+          "Incorrect function implementation"
+        ],
+        "failure_reasons": [
+          "The function count_triplets() requires a second argument 'target', which was not provided in the test cases."
+        ]
+      },
+      "code_quality": {
+        "readability": 5,
+        "variable_naming": 6,
+        "code_structure": 5,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Beginner",
+      "ai_analysis": {
+        "feedback": "The submitted code does not address the problem as it is designed to count triplets that sum to a target, rather than generating letter combinations from digits like a phone keypad. The nested loops correctly implement a brute force approach for counting triplets, but they are not relevant to the problem at hand. To improve, focus on implementing a backtracking solution that generates combinations based on the mapping of digits to letters.",
+        "time_complexity": {
+          "estimate": "O(n^3)",
+          "explanation": "The code contains three nested loops iterating through the array, leading to a time complexity of O(n^3). However, this is not applicable to the problem, as the expected complexity is O(4^n).",
+          "is_optimal": false
+        },
+        "space_complexity": {
+          "estimate": "O(1)",
+          "explanation": "The space used is constant as it only involves a few variables for counting and indexing, regardless of the input size.",
+          "is_optimal": true
+        },
+        "algorithm_type": {
+          "primary": "Brute Force",
+          "secondary": [],
+          "is_appropriate": false,
+          "better_approach": "A backtracking approach that generates combinations of letters based on the digit mappings would be more appropriate."
+        },
+        "test_case_analysis": {
+          "total_tests": 2,
+          "passed_tests": 0,
+          "failed_tests": 2,
+          "failure_patterns": [
+            "Missing required arguments",
+            "Incorrect function implementation"
+          ],
+          "failure_reasons": [
+            "The function count_triplets() requires a second argument 'target', which was not provided in the test cases."
+          ]
+        },
+        "code_quality": {
+          "readability": 5,
+          "variable_naming": 6,
+          "code_structure": 5,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Review the problem statement to ensure that the implementation aligns with the requirements.",
+          "Learn about backtracking techniques to generate combinations effectively.",
+          "Practice implementing functions that handle various types of input, including edge cases."
+        ],
+        "concepts_demonstrated": [
+          "Nested loops",
+          "Brute force approach"
+        ],
+        "concepts_to_learn": [
+          "Backtracking",
+          "Recursion",
+          "Dynamic programming"
+        ],
+        "score": 20,
+        "mastery_level": "Beginner",
+        "attempt_number": 1,
+        "language": "python"
+      },
+      "submission_id": "test_n3_1",
+      "submitted_at": "2026-02-10T14:49:44.543531"
+    }
+  ],
+  "test_n3_v2": [
+    {
+      "problem_id": "gen-127",
+      "problem_title": "Backtracking Practice 127",
+      "topic": "backtracking",
+      "difficulty": "easy",
+      "code": "def count_triplets(arr, target):\n    n = len(arr)\n    count = 0\n    for i in range(n):\n        for j in range(i + 1, n):\n            for k in range(j + 1, n):\n                if arr[i] + arr[j] + arr[k] == target:\n                    count += 1\n    return count",
+      "language": "python",
+      "passed": false,
+      "passed_count": 0,
+      "total_count": 2,
+      "failed_count": 2,
+      "time_taken_minutes": 5,
+      "expected_time_minutes": 15,
+      "attempt_number": 1,
+      "score": 20,
+      "time_complexity": {
+        "estimate": "O(n^3)",
+        "explanation": "The code contains three nested loops, each iterating over the array, leading to a cubic time complexity. However, since the function is not relevant to the problem, this complexity is not applicable.",
+        "is_optimal": false
+      },
+      "space_complexity": {
+        "estimate": "O(1)",
+        "explanation": "The function uses a constant amount of space for the count variable, regardless of the input size.",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Brute Force",
+        "secondary": [],
+        "is_appropriate": false,
+        "better_approach": "A backtracking approach should be used to generate combinations of letters based on the digit mappings."
+      },
+      "test_case_analysis": {
+        "total_tests": 2,
+        "passed_tests": 0,
+        "failed_tests": 2,
+        "failure_patterns": [
+          "Incorrect function signature",
+          "Input handling"
+        ],
+        "failure_reasons": [
+          "Function requires two arguments but only one was provided."
+        ]
+      },
+      "code_quality": {
+        "readability": 5,
+        "variable_naming": 6,
+        "code_structure": 5,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Beginner",
+      "ai_analysis": {
+        "feedback": "The submitted code does not address the problem statement, which requires counting letter combinations based on a phone keypad mapping. Instead, it implements a function to count triplets that sum to a target, which is unrelated. Additionally, the function fails to handle the input correctly, as it expects two arguments but is only provided with one. The implementation needs a complete overhaul to align with the problem requirements.",
+        "time_complexity": {
+          "estimate": "O(n^3)",
+          "explanation": "The code contains three nested loops, each iterating over the array, leading to a cubic time complexity. However, since the function is not relevant to the problem, this complexity is not applicable.",
+          "is_optimal": false
+        },
+        "space_complexity": {
+          "estimate": "O(1)",
+          "explanation": "The function uses a constant amount of space for the count variable, regardless of the input size.",
+          "is_optimal": true
+        },
+        "algorithm_type": {
+          "primary": "Brute Force",
+          "secondary": [],
+          "is_appropriate": false,
+          "better_approach": "A backtracking approach should be used to generate combinations of letters based on the digit mappings."
+        },
+        "test_case_analysis": {
+          "total_tests": 2,
+          "passed_tests": 0,
+          "failed_tests": 2,
+          "failure_patterns": [
+            "Incorrect function signature",
+            "Input handling"
+          ],
+          "failure_reasons": [
+            "Function requires two arguments but only one was provided."
+          ]
+        },
+        "code_quality": {
+          "readability": 5,
+          "variable_naming": 6,
+          "code_structure": 5,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Revise the problem statement to understand the requirements clearly.",
+          "Implement a backtracking algorithm to generate letter combinations based on the digit mappings.",
+          "Ensure proper handling of function arguments and input validation."
+        ],
+        "concepts_demonstrated": [
+          "Basic loops",
+          "Nested iteration"
+        ],
+        "concepts_to_learn": [
+          "Backtracking",
+          "Recursion",
+          "Handling function arguments"
+        ],
+        "score": 20,
+        "mastery_level": "Beginner",
+        "attempt_number": 1,
+        "language": "python"
+      },
+      "submission_id": "test_n3_v2_1",
+      "submitted_at": "2026-02-10T14:50:05.423532"
+    }
+  ],
+  "tharunraj2023": [
+    {
+      "problem_id": "arr-001",
+      "problem_title": "Two Sum",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "code": "def two_sum(nums: list, target: int) -> list:\n    n = len(nums)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if nums[i] + nums[j] == target:\n                return [i, j]\n",
+      "language": "python",
+      "passed": true,
+      "passed_count": 3,
+      "total_count": 3,
+      "failed_count": 0,
+      "time_taken_minutes": 0,
+      "expected_time_minutes": 15,
+      "attempt_number": 1,
+      "score": 70,
+      "time_complexity": {
+        "estimate": "O(n^2)",
+        "explanation": "The code contains a nested loop where the outer loop runs n times and the inner loop runs up to n times for each iteration of the outer loop, resulting in O(n^2) complexity.",
+        "is_optimal": false
+      },
+      "space_complexity": {
+        "estimate": "O(1)",
+        "explanation": "The space used is constant, as no additional data structures are allocated that grow with input size; only a few variables are used.",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Brute Force",
+        "secondary": [],
+        "is_appropriate": false,
+        "better_approach": "Using a hash map to store the indices of the elements as you iterate through the array would allow you to find the complement of each element in O(1) time, achieving O(n) overall complexity."
+      },
+      "test_case_analysis": {
+        "total_tests": 3,
+        "passed_tests": 3,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 7,
+        "variable_naming": 6,
+        "code_structure": 6,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Developing",
+      "ai_analysis": {
+        "feedback": "Your solution correctly identifies the indices of the two numbers that add up to the target, and it passes all test cases. However, the current implementation uses a nested loop, resulting in a time complexity of O(n^2), which is not optimal for this problem. Consider using a hash map to achieve O(n) complexity, which would significantly improve performance for larger input sizes.",
+        "time_complexity": {
+          "estimate": "O(n^2)",
+          "explanation": "The code contains a nested loop where the outer loop runs n times and the inner loop runs up to n times for each iteration of the outer loop, resulting in O(n^2) complexity.",
+          "is_optimal": false
+        },
+        "space_complexity": {
+          "estimate": "O(1)",
+          "explanation": "The space used is constant, as no additional data structures are allocated that grow with input size; only a few variables are used.",
+          "is_optimal": true
+        },
+        "algorithm_type": {
+          "primary": "Brute Force",
+          "secondary": [],
+          "is_appropriate": false,
+          "better_approach": "Using a hash map to store the indices of the elements as you iterate through the array would allow you to find the complement of each element in O(1) time, achieving O(n) overall complexity."
+        },
+        "test_case_analysis": {
+          "total_tests": 3,
+          "passed_tests": 3,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 7,
+          "variable_naming": 6,
+          "code_structure": 6,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Refactor the code to use a hash map for better time complexity.",
+          "Add comments to explain the logic behind your approach.",
+          "Consider edge cases and how your solution would handle them."
+        ],
+        "concepts_demonstrated": [
+          "Nested loops",
+          "Basic array manipulation"
+        ],
+        "concepts_to_learn": [
+          "Hash maps",
+          "Optimal algorithm design",
+          "Time complexity analysis"
+        ],
+        "score": 70,
+        "mastery_level": "Developing",
+        "attempt_number": 1,
+        "language": "python"
+      },
+      "submission_id": "tharunraj2023_1",
+      "submitted_at": "2026-02-10T15:18:41.194640"
+    },
+    {
+      "problem_id": "arr-001",
+      "problem_title": "Two Sum",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "code": "def two_sum(nums: list, target: int) -> list:\n    n = len(nums)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if nums[i] + nums[j] == target:\n                return [i, j]\n",
+      "language": "python",
+      "passed": true,
+      "passed_count": 3,
+      "total_count": 3,
+      "failed_count": 0,
+      "time_taken_minutes": 0,
+      "expected_time_minutes": 15,
+      "attempt_number": 2,
+      "score": 80,
+      "time_complexity": {
+        "estimate": "O(n)",
+        "explanation": "The solution uses a single pass through the array with a hash map to find the complement of each element in constant time, resulting in an overall time complexity of O(n).",
+        "is_optimal": true
+      },
+      "space_complexity": {
+        "estimate": "O(n)",
+        "explanation": "The space used is O(n) due to the hash map that stores elements and their indices.",
+        "is_optimal": false
+      },
+      "algorithm_type": {
+        "primary": "Hash Map",
+        "secondary": [],
+        "is_appropriate": true,
+        "better_approach": "Using a hash map to store the indices of the elements as you iterate through the array would allow you to find the complement of each element in O(1) time, achieving O(n) overall complexity."
+      },
+      "test_case_analysis": {
+        "total_tests": 3,
+        "passed_tests": 3,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 7,
+        "variable_naming": 6,
+        "code_structure": 6,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Developing",
+      "ai_analysis": {
+        "feedback": "The solution correctly finds the indices of two numbers that add up to the target using a brute force approach. However, the time complexity is O(n^2), which is not optimal for this problem. The student should consider using a hash map to achieve O(n) complexity.",
+        "time_complexity": {
+          "estimate": "O(n)",
+          "explanation": "The solution uses a single pass through the array with a hash map to find the complement of each element in constant time, resulting in an overall time complexity of O(n).",
+          "is_optimal": true
+        },
+        "space_complexity": {
+          "estimate": "O(n)",
+          "explanation": "The space used is O(n) due to the hash map that stores elements and their indices.",
+          "is_optimal": false
+        },
+        "algorithm_type": {
+          "primary": "Hash Map",
+          "secondary": [],
+          "is_appropriate": true,
+          "better_approach": "Using a hash map to store the indices of the elements as you iterate through the array would allow you to find the complement of each element in O(1) time, achieving O(n) overall complexity."
+        },
+        "test_case_analysis": {
+          "total_tests": 3,
+          "passed_tests": 3,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 7,
+          "variable_naming": 6,
+          "code_structure": 6,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Refactor the code to use a hash map for better time complexity.",
+          "Add comments to explain the logic behind your approach."
+        ],
+        "concepts_demonstrated": [
+          "Hash maps",
+          "Single pass algorithm"
+        ],
+        "concepts_to_learn": [
+          "Hash maps",
+          "Optimal algorithm design",
+          "Time complexity analysis"
+        ],
+        "score": 80,
+        "mastery_level": "Developing",
+        "attempt_number": 2,
+        "language": "python"
+      },
+      "submission_id": "tharunraj2023_2",
+      "submitted_at": "2026-02-10T15:49:48.050706"
+    },
+    {
+      "problem_id": "arr-001",
+      "problem_title": "Two Sum",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "code": "def two_sum(nums: list, target: int) -> list:\n    n = len(nums)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if nums[i] + nums[j] == target:\n                return [i, j]\n",
+      "language": "python",
+      "passed": true,
+      "passed_count": 3,
+      "total_count": 3,
+      "failed_count": 0,
+      "time_taken_minutes": 10,
+      "expected_time_minutes": 15,
+      "attempt_number": 3,
+      "score": 70,
+      "time_complexity": {
+        "estimate": "O(n^2)",
+        "explanation": "The code contains a nested loop where the outer loop runs n times and the inner loop runs up to n times for each iteration of the outer loop, resulting in O(n^2) complexity.",
+        "is_optimal": false
+      },
+      "space_complexity": {
+        "estimate": "O(1)",
+        "explanation": "The space used is constant, as no additional data structures are allocated that grow with input size; only a few variables are used.",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Brute Force",
+        "secondary": [],
+        "is_appropriate": false,
+        "better_approach": "Using a hash map to store the indices of the elements as you iterate through the array would allow you to find the complement of each element in O(1) time, achieving O(n) overall complexity."
+      },
+      "test_case_analysis": {
+        "total_tests": 3,
+        "passed_tests": 3,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 7,
+        "variable_naming": 6,
+        "code_structure": 6,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Developing",
+      "ai_analysis": {
+        "feedback": "Your solution correctly identifies the indices of the two numbers that add up to the target, and it passes all test cases. However, the current implementation uses a nested loop, resulting in a time complexity of O(n^2), which is not optimal for this problem. Consider using a hash map to achieve O(n) complexity, which would significantly improve performance for larger input sizes.",
+        "time_complexity": {
+          "estimate": "O(n^2)",
+          "explanation": "The code contains a nested loop where the outer loop runs n times and the inner loop runs up to n times for each iteration of the outer loop, resulting in O(n^2) complexity.",
+          "is_optimal": false
+        },
+        "space_complexity": {
+          "estimate": "O(1)",
+          "explanation": "The space used is constant, as no additional data structures are allocated that grow with input size; only a few variables are used.",
+          "is_optimal": true
+        },
+        "algorithm_type": {
+          "primary": "Brute Force",
+          "secondary": [],
+          "is_appropriate": false,
+          "better_approach": "Using a hash map to store the indices of the elements as you iterate through the array would allow you to find the complement of each element in O(1) time, achieving O(n) overall complexity."
+        },
+        "test_case_analysis": {
+          "total_tests": 3,
+          "passed_tests": 3,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 7,
+          "variable_naming": 6,
+          "code_structure": 6,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Refactor the code to use a hash map for better time complexity.",
+          "Add comments to explain the logic behind your approach.",
+          "Consider edge cases and how your solution would handle them."
+        ],
+        "concepts_demonstrated": [
+          "Nested loops",
+          "Basic array manipulation"
+        ],
+        "concepts_to_learn": [
+          "Hash maps",
+          "Optimal algorithm design",
+          "Time complexity analysis"
+        ],
+        "score": 70,
+        "mastery_level": "Developing",
+        "attempt_number": 3,
+        "language": "python"
+      },
+      "submission_id": "tharunraj2023_3",
+      "submitted_at": "2026-02-10T15:54:41.915285"
+    },
+    {
+      "problem_id": "arr-001",
+      "problem_title": "Two Sum",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "code": "def two_sum(nums: list, target: int) -> list:\n    n = len(nums)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if nums[i] + nums[j] == target:\n                return [i, j]\n",
+      "language": "python",
+      "passed": true,
+      "passed_count": 3,
+      "total_count": 3,
+      "failed_count": 0,
+      "time_taken_minutes": 2,
+      "expected_time_minutes": 15,
+      "attempt_number": 4,
+      "score": 70,
+      "time_complexity": {
+        "estimate": "O(n^2)",
+        "explanation": "The code contains a nested loop where the outer loop runs n times and the inner loop runs up to n times for each iteration of the outer loop, resulting in O(n^2) complexity.",
+        "is_optimal": false
+      },
+      "space_complexity": {
+        "estimate": "O(1)",
+        "explanation": "The space used is constant, as no additional data structures are allocated that grow with input size; only a few variables are used.",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Brute Force",
+        "secondary": [],
+        "is_appropriate": false,
+        "better_approach": "Using a hash map to store the indices of the elements as you iterate through the array would allow you to find the complement of each element in O(1) time, achieving O(n) overall complexity."
+      },
+      "test_case_analysis": {
+        "total_tests": 3,
+        "passed_tests": 3,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 7,
+        "variable_naming": 6,
+        "code_structure": 6,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Developing",
+      "ai_analysis": {
+        "feedback": "Your solution correctly identifies the indices of the two numbers that add up to the target, and it passes all test cases. However, the current implementation uses a nested loop, resulting in a time complexity of O(n^2), which is not optimal for this problem. Consider using a hash map to achieve O(n) complexity, which would significantly improve performance for larger input sizes.",
+        "time_complexity": {
+          "estimate": "O(n^2)",
+          "explanation": "The code contains a nested loop where the outer loop runs n times and the inner loop runs up to n times for each iteration of the outer loop, resulting in O(n^2) complexity.",
+          "is_optimal": false
+        },
+        "space_complexity": {
+          "estimate": "O(1)",
+          "explanation": "The space used is constant, as no additional data structures are allocated that grow with input size; only a few variables are used.",
+          "is_optimal": true
+        },
+        "algorithm_type": {
+          "primary": "Brute Force",
+          "secondary": [],
+          "is_appropriate": false,
+          "better_approach": "Using a hash map to store the indices of the elements as you iterate through the array would allow you to find the complement of each element in O(1) time, achieving O(n) overall complexity."
+        },
+        "test_case_analysis": {
+          "total_tests": 3,
+          "passed_tests": 3,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 7,
+          "variable_naming": 6,
+          "code_structure": 6,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Refactor the code to use a hash map for better time complexity.",
+          "Add comments to explain the logic behind your approach.",
+          "Consider edge cases and how your solution would handle them."
+        ],
+        "concepts_demonstrated": [
+          "Nested loops",
+          "Basic array manipulation"
+        ],
+        "concepts_to_learn": [
+          "Hash maps",
+          "Optimal algorithm design",
+          "Time complexity analysis"
+        ],
+        "score": 70,
+        "mastery_level": "Developing",
+        "attempt_number": 4,
+        "language": "python"
+      },
+      "submission_id": "tharunraj2023_4",
+      "submitted_at": "2026-02-10T16:16:40.246366"
+    },
+    {
+      "problem_id": "arr-001",
+      "problem_title": "Two Sum",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "code": "def two_sum(nums: list, target: int) -> list:\n    n = len(nums)\n    for i in range(n):\n        for j in range(i + 1, n):\n            if nums[i] + nums[j] == target:\n                return [i, j]",
+      "language": "python",
+      "passed": true,
+      "passed_count": 3,
+      "total_count": 3,
+      "failed_count": 0,
+      "time_taken_minutes": 0,
+      "expected_time_minutes": 15,
+      "attempt_number": 5,
+      "score": 70,
+      "time_complexity": {
+        "estimate": "O(n^2)",
+        "explanation": "The code contains a nested loop where the outer loop runs n times and the inner loop runs up to n times for each iteration of the outer loop, resulting in O(n^2) complexity.",
+        "is_optimal": false
+      },
+      "space_complexity": {
+        "estimate": "O(1)",
+        "explanation": "The space used is constant, as no additional data structures are allocated that grow with input size; only a few variables are used.",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Brute Force",
+        "secondary": [],
+        "is_appropriate": false,
+        "better_approach": "Using a hash map to store the indices of the elements as you iterate through the array would allow you to find the complement of each element in O(1) time, achieving O(n) overall complexity."
+      },
+      "test_case_analysis": {
+        "total_tests": 3,
+        "passed_tests": 3,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 7,
+        "variable_naming": 6,
+        "code_structure": 6,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Developing",
+      "ai_analysis": {
+        "feedback": "Your solution correctly identifies the indices of the two numbers that add up to the target, and it passes all test cases. However, the implementation uses a nested loop, leading to a time complexity of O(n^2), which is not optimal for this problem. To improve, consider using a hash map to store the indices of the elements as you iterate through the array, allowing for a more efficient O(n) solution. Additionally, enhancing the readability of your code with comments would be beneficial.",
+        "time_complexity": {
+          "estimate": "O(n^2)",
+          "explanation": "The code contains a nested loop where the outer loop runs n times and the inner loop runs up to n times for each iteration of the outer loop, resulting in O(n^2) complexity.",
+          "is_optimal": false
+        },
+        "space_complexity": {
+          "estimate": "O(1)",
+          "explanation": "The space used is constant, as no additional data structures are allocated that grow with input size; only a few variables are used.",
+          "is_optimal": true
+        },
+        "algorithm_type": {
+          "primary": "Brute Force",
+          "secondary": [],
+          "is_appropriate": false,
+          "better_approach": "Using a hash map to store the indices of the elements as you iterate through the array would allow you to find the complement of each element in O(1) time, achieving O(n) overall complexity."
+        },
+        "test_case_analysis": {
+          "total_tests": 3,
+          "passed_tests": 3,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 7,
+          "variable_naming": 6,
+          "code_structure": 6,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Refactor the code to use a hash map for better time complexity.",
+          "Add comments to explain the logic behind your approach.",
+          "Consider edge cases and how your solution would handle them."
+        ],
+        "concepts_demonstrated": [
+          "Nested loops",
+          "Basic array manipulation"
+        ],
+        "concepts_to_learn": [
+          "Hash maps",
+          "Optimal algorithm design",
+          "Time complexity analysis"
+        ],
+        "score": 70,
+        "mastery_level": "Developing",
+        "attempt_number": 5,
+        "language": "python"
+      },
+      "submission_id": "tharunraj2023_5",
+      "submitted_at": "2026-02-10T16:46:31.213749"
     }
   ]
 }

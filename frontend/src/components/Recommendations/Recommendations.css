@@ -1,18 +1,19 @@
 .recommendations {
-  background: white;
+  background: #1a1a1a;
   border-radius: 16px;
   padding: 1.5rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid #2a2a2a;
 }
 
 .recommendations h2 {
   font-size: 1.25rem;
-  color: #1a1a2e;
+  color: #ff6b00;
   margin-bottom: 1.5rem;
 }
 
 .no-data {
-  color: #6b7280;
+  color: #888;
   text-align: center;
   padding: 2rem;
 }
@@ -25,15 +26,16 @@
 
 .recommendation-card {
   padding: 1.25rem;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #2a2a2a;
   border-radius: 12px;
   cursor: pointer;
   transition: all 0.2s;
+  background: #141414;
 }
 
 .recommendation-card:hover {
-  border-color: #667eea;
-  background: #f9fafb;
+  border-color: #ff6b00;
+  background: #1e1e1e;
   transform: translateX(4px);
 }
 
@@ -51,18 +53,18 @@
 }
 
 .difficulty-easy {
-  background: #d1fae5;
-  color: #065f46;
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
 }
 
 .difficulty-medium {
-  background: #fef3c7;
-  color: #92400e;
+  background: rgba(255, 107, 0, 0.2);
+  color: #ff6b00;
 }
 
 .difficulty-hard {
-  background: #fee2e2;
-  color: #991b1b;
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
 }
 
 .complexity-badge {
@@ -70,26 +72,27 @@
   border-radius: 20px;
   font-size: 0.7rem;
   font-weight: 500;
-  background: #e0e7ff;
-  color: #3730a3;
+  background: rgba(255, 107, 0, 0.15);
+  color: #ff8533;
 }
 
 .rec-title {
   font-size: 1.1rem;
-  color: #1a1a2e;
+  color: #fff;
   margin-bottom: 0.25rem;
 }
 
 .rec-topic {
   font-size: 0.85rem;
-  color: #6b7280;
+  color: #888;
 }
 
 .rec-reason {
   margin-top: 0.75rem;
   font-size: 0.85rem;
-  color: #4b5563;
-  background: #f9fafb;
+  color: #b0b0b0;
+  background: #0a0a0a;
   padding: 0.5rem 0.75rem;
   border-radius: 8px;
+  border: 1px solid #2a2a2a;
 }

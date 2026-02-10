@@ -5,6 +5,7 @@ LeetCode-style problem solving with GPT-powered recommendations.
 
 import json
 import os
+from datetime import datetime, timedelta
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from dotenv import load_dotenv
@@ -15,6 +16,7 @@ from .services.data_store import DataStore
 from .services.code_executor import CodeExecutor
 from .services.google_oauth import google_oauth_service
 from .services.email_service import email_service
+from .services.mongodb_store import MongoDBStore
 
 load_dotenv()
 
@@ -27,18 +29,36 @@ data_store = DataStore()
 code_executor = CodeExecutor()
 ai_service = AIService()
 
+# Initialize MongoDB store for persistent storage
+try:
+    mongodb_store = MongoDBStore()
+    print("✅ MongoDB connected successfully")
+    USE_MONGODB = True
+except Exception as e:
+    print(f"⚠️ MongoDB connection failed: {e}")
+    print("📁 Falling back to JSON file storage")
+    mongodb_store = None
+    USE_MONGODB = False
 
-def load_problem_bank(filepath: str = "data/problems.json"):
+# Get the base directory for data files
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+DATA_DIR = os.path.join(BASE_DIR, "data")
+
+
+def load_problem_bank(filepath: str = None):
     """Load problems from JSON file."""
+    if filepath is None:
+        filepath = os.path.join(DATA_DIR, "problems.json")
+    
     try:
-        with open(filepath, "r") as f:
+        with open(filepath, "r", encoding="utf-8") as f:
             problems_data = json.load(f)
             problem_bank.load_from_list(problems_data)
-            print(f"Loaded {len(problem_bank)} problems")
+            print(f"✅ Loaded {len(problem_bank)} problems from {filepath}")
     except FileNotFoundError:
-        print(f"Warning: {filepath} not found. Using empty problem bank.")
+        print(f"⚠️ Warning: {filepath} not found. Using empty problem bank.")
     except json.JSONDecodeError as e:
-        print(f"Error loading problems: {e}")
+        print(f"❌ Error loading problems: {e}")
 
 
 @app.route("/api/health", methods=["GET"])
@@ -467,7 +487,18 @@ def submit_code():
             'ai_analysis': ai_analysis
         }
         
+        # Save to JSON data store
         saved_submission = data_store.add_submission(user_id, submission)
+        
+        # Also save to MongoDB if available
+        if USE_MONGODB and mongodb_store:
+            try:
+                mongodb_store.add_submission(user_id, submission.copy())
+                # Clear draft on successful submission
+                if result['passed']:
+                    mongodb_store.delete_code_draft(user_id, problem_id)
+            except Exception as e:
+                print(f"MongoDB save error (non-critical): {e}")
         
         return jsonify({
             'submission': saved_submission,
@@ -504,6 +535,117 @@ def get_recommendations():
     except Exception as e:
         import traceback
         traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+
+
+# ==================== SUBMISSION HISTORY ====================
+
+@app.route("/api/user/<user_id>/problem/<problem_id>/submissions", methods=["GET"])
+def get_problem_submissions(user_id, problem_id):
+    """Get all submissions for a specific problem by a user."""
+    submissions = data_store.get_problem_submissions(user_id, problem_id)
+    return jsonify({
+        "submissions": submissions,
+        "total": len(submissions)
+    })
+
+
+# ==================== AI HELP / TUTOR ====================
+
+@app.route("/api/ai/explain", methods=["POST"])
+def ai_explain_problem():
+    """Get AI explanation of a problem."""
+    try:
+        data = request.get_json()
+        problem_id = data.get("problem_id")
+        
+        problem = problem_bank.get_problem(problem_id)
+        if not problem:
+            return jsonify({"error": "Problem not found"}), 404
+        
+        result = ai_service.get_problem_explanation(problem.to_dict())
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/ai/hint", methods=["POST"])
+def ai_get_hint():
+    """Get a hint for solving a problem."""
+    try:
+        data = request.get_json()
+        problem_id = data.get("problem_id")
+        hint_level = data.get("level", 1)
+        user_code = data.get("code", "")
+        
+        problem = problem_bank.get_problem(problem_id)
+        if not problem:
+            return jsonify({"error": "Problem not found"}), 404
+        
+        result = ai_service.get_hint(problem.to_dict(), hint_level, user_code)
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/ai/approach", methods=["POST"])
+def ai_solution_approach():
+    """Get the solution approach for a problem."""
+    try:
+        data = request.get_json()
+        problem_id = data.get("problem_id")
+        
+        problem = problem_bank.get_problem(problem_id)
+        if not problem:
+            return jsonify({"error": "Problem not found"}), 404
+        
+        result = ai_service.get_solution_approach(problem.to_dict())
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/ai/ask", methods=["POST"])
+def ai_ask_doubt():
+    """Ask a doubt/question about the problem or code."""
+    try:
+        data = request.get_json()
+        problem_id = data.get("problem_id")
+        question = data.get("question", "")
+        user_code = data.get("code", "")
+        
+        if not question.strip():
+            return jsonify({"error": "Please provide a question"}), 400
+        
+        problem = problem_bank.get_problem(problem_id)
+        if not problem:
+            return jsonify({"error": "Problem not found"}), 404
+        
+        result = ai_service.ask_doubt(problem.to_dict(), question, user_code)
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/ai/debug", methods=["POST"])
+def ai_debug_code():
+    """Get AI help to debug code."""
+    try:
+        data = request.get_json()
+        problem_id = data.get("problem_id")
+        user_code = data.get("code", "")
+        error_message = data.get("error", "")
+        
+        if not user_code.strip():
+            return jsonify({"error": "Please provide code to debug"}), 400
+        
+        problem = problem_bank.get_problem(problem_id)
+        if not problem:
+            return jsonify({"error": "Problem not found"}), 404
+        
+        result = ai_service.debug_code(problem.to_dict(), user_code, error_message)
+        return jsonify(result)
+    except Exception as e:
         return jsonify({"error": str(e)}), 500
 
 
@@ -677,6 +819,152 @@ def list_topics():
     })
 
 
+# ==================== CODE DRAFTS (Auto-save) ====================
+
+@app.route("/api/drafts/<user_id>/<problem_id>", methods=["POST", "GET", "DELETE", "OPTIONS"])
+def handle_code_draft(user_id, problem_id):
+    """Handle code draft for auto-save functionality."""
+    if request.method == "OPTIONS":
+        return jsonify({}), 200
+        
+    if not USE_MONGODB or not mongodb_store:
+        return jsonify({"error": "MongoDB not available"}), 503
+    
+    try:
+        if request.method == "POST":
+            # Save draft
+            data = request.get_json()
+            code = data.get("code", "")
+            language = data.get("language", "python")
+            
+            draft = mongodb_store.save_code_draft(user_id, problem_id, code, language)
+            return jsonify({
+                "success": True,
+                "draft": draft,
+                "message": "Draft saved"
+            })
+            
+        elif request.method == "GET":
+            # Get draft
+            draft = mongodb_store.get_code_draft(user_id, problem_id)
+            if draft:
+                return jsonify(draft)
+            return jsonify({"code": None}), 404
+            
+        elif request.method == "DELETE":
+            # Delete draft
+            mongodb_store.delete_code_draft(user_id, problem_id)
+            return jsonify({"success": True, "message": "Draft deleted"})
+            
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/drafts/<user_id>", methods=["GET"])
+def get_all_drafts(user_id):
+    """Get all code drafts for a user."""
+    if not USE_MONGODB or not mongodb_store:
+        return jsonify({"drafts": []})
+    
+    try:
+        drafts = mongodb_store.get_all_drafts(user_id)
+        return jsonify({
+            "count": len(drafts),
+            "drafts": drafts
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+# ==================== CODING HISTORY (MongoDB) ====================
+
+@app.route("/api/coding-history/<user_id>", methods=["GET"])
+def get_coding_history(user_id):
+    """Get detailed coding history with full code."""
+    if not USE_MONGODB or not mongodb_store:
+        # Fallback to JSON data store
+        history = data_store.get_submission_history(user_id, 100)
+        return jsonify({
+            "count": len(history),
+            "history": history
+        })
+    
+    try:
+        limit = request.args.get("limit", 100, type=int)
+        history = mongodb_store.get_coding_history(user_id, limit)
+        return jsonify({
+            "count": len(history),
+            "history": history
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/coding-history/<user_id>/<problem_id>", methods=["GET"])
+def get_problem_coding_history(user_id, problem_id):
+    """Get all attempts for a specific problem."""
+    if not USE_MONGODB or not mongodb_store:
+        return jsonify({"history": []})
+    
+    try:
+        history = mongodb_store.get_problem_history(user_id, problem_id)
+        return jsonify({
+            "count": len(history),
+            "history": history
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+# ==================== ENHANCED STREAK (NeetCode-style) ====================
+
+@app.route("/api/user/<user_id>/streak-details", methods=["GET"])
+def get_streak_details(user_id):
+    """Get detailed streak info with calendar data (NeetCode-style)."""
+    if USE_MONGODB and mongodb_store:
+        try:
+            streak_data = mongodb_store.get_user_streak(user_id)
+            
+            # Calculate additional stats
+            submissions = mongodb_store.get_user_submissions(user_id)
+            today = datetime.now()
+            
+            # Weekly activity
+            week_ago = today - timedelta(days=7)
+            week_submissions = [s for s in submissions if s.get('submitted_at') and 
+                               datetime.fromisoformat(s['submitted_at'].replace('Z', '')) > week_ago]
+            
+            # Monthly activity
+            month_ago = today - timedelta(days=30)
+            month_submissions = [s for s in submissions if s.get('submitted_at') and 
+                                datetime.fromisoformat(s['submitted_at'].replace('Z', '')) > month_ago]
+            
+            # Get practice dates for heatmap
+            practice_dates = streak_data.get('practice_dates', [])
+            
+            return jsonify({
+                "current_streak": streak_data.get('streak', 0),
+                "last_practice_date": streak_data.get('last_practice_date'),
+                "practice_dates": practice_dates,
+                "weekly_submissions": len(week_submissions),
+                "monthly_submissions": len(month_submissions),
+                "total_practice_days": len(practice_dates)
+            })
+        except Exception as e:
+            print(f"Streak details error: {e}")
+    
+    # Fallback
+    stats = data_store.get_user_stats(user_id)
+    return jsonify({
+        "current_streak": stats.get('streak', 0),
+        "last_practice_date": stats.get('last_submission_date'),
+        "practice_dates": [],
+        "weekly_submissions": 0,
+        "monthly_submissions": 0,
+        "total_practice_days": 0
+    })
+
+
 # ==================== CUSTOM PROBLEMS ====================
 
 @app.route("/api/problems/custom", methods=["POST"])
@@ -732,29 +1020,29 @@ def add_custom_problem():
 
 def save_custom_problem(problem_data: dict):
     """Save custom problem to a separate JSON file."""
-    custom_file = "data/custom_problems.json"
+    custom_file = os.path.join(DATA_DIR, "custom_problems.json")
     try:
-        with open(custom_file, "r") as f:
+        with open(custom_file, "r", encoding="utf-8") as f:
             custom_problems = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError):
         custom_problems = []
     
     custom_problems.append(problem_data)
     
-    with open(custom_file, "w") as f:
+    with open(custom_file, "w", encoding="utf-8") as f:
         json.dump(custom_problems, f, indent=2)
 
 
 def load_custom_problems():
     """Load custom problems from file."""
-    custom_file = "data/custom_problems.json"
+    custom_file = os.path.join(DATA_DIR, "custom_problems.json")
     try:
-        with open(custom_file, "r") as f:
+        with open(custom_file, "r", encoding="utf-8") as f:
             custom_problems = json.load(f)
             for data in custom_problems:
                 problem = Problem.from_dict(data)
                 problem_bank.add_problem(problem)
-            print(f"Loaded {len(custom_problems)} custom problems")
+            print(f"✅ Loaded {len(custom_problems)} custom problems")
     except (FileNotFoundError, json.JSONDecodeError):
         pass
 

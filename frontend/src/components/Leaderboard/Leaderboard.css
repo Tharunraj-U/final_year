@@ -4,7 +4,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.7);
+  background: rgba(0, 0, 0, 0.8);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -13,14 +13,15 @@
 }
 
 .leaderboard-modal {
-  background: white;
+  background: #1a1a1a;
   border-radius: 20px;
   width: 90%;
   max-width: 600px;
   max-height: 85vh;
   overflow: hidden;
   animation: slideUp 0.3s ease;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  border: 1px solid #2a2a2a;
 }
 
 @keyframes slideUp {
@@ -39,7 +40,7 @@
   justify-content: space-between;
   align-items: center;
   padding: 24px;
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: linear-gradient(135deg, #ff6b00 0%, #e55d00 100%);
   color: white;
 }
 
@@ -51,8 +52,8 @@
 .timeframe-tabs {
   display: flex;
   gap: 0;
-  background: #f8f9fa;
-  border-bottom: 1px solid #e0e0e0;
+  background: #141414;
+  border-bottom: 1px solid #2a2a2a;
 }
 
 .timeframe-tabs button {
@@ -60,7 +61,7 @@
   padding: 12px 16px;
   border: none;
   background: none;
-  color: #666;
+  color: #888;
   font-size: 14px;
   font-weight: 500;
   cursor: pointer;
@@ -69,14 +70,14 @@
 }
 
 .timeframe-tabs button:hover {
-  background: #f0f0f0;
-  color: #333;
+  background: #1e1e1e;
+  color: #fff;
 }
 
 .timeframe-tabs button.active {
-  color: #f5576c;
-  border-bottom-color: #f5576c;
-  background: white;
+  color: #ff6b00;
+  border-bottom-color: #ff6b00;
+  background: #1a1a1a;
 }
 
 .leaderboard-content {
@@ -95,8 +96,8 @@
 .spinner {
   width: 40px;
   height: 40px;
-  border: 4px solid #e0e0e0;
-  border-top-color: #f5576c;
+  border: 4px solid #2a2a2a;
+  border-top-color: #ff6b00;
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -116,34 +117,35 @@
   align-items: center;
   gap: 16px;
   padding: 16px;
-  background: #f8f9fa;
+  background: #141414;
   border-radius: 12px;
   transition: all 0.3s ease;
+  border: 1px solid #2a2a2a;
 }
 
 .leaderboard-item:hover {
   transform: translateX(4px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
 }
 
 .leaderboard-item.gold {
-  background: linear-gradient(135deg, #fff9e6 0%, #ffeeba 100%);
+  background: linear-gradient(135deg, #3d3200 0%, #4a3d00 100%);
   border: 2px solid #ffc107;
 }
 
 .leaderboard-item.silver {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%);
   border: 2px solid #adb5bd;
 }
 
 .leaderboard-item.bronze {
-  background: linear-gradient(135deg, #fff5f0 0%, #ffe8db 100%);
+  background: linear-gradient(135deg, #3d2d1d 0%, #4a3520 100%);
   border: 2px solid #cd7f32;
 }
 
 .leaderboard-item.current-user {
-  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
-  border: 2px solid #2196f3;
+  background: linear-gradient(135deg, rgba(255, 107, 0, 0.15) 0%, rgba(255, 107, 0, 0.1) 100%);
+  border: 2px solid #ff6b00;
 }
 
 .rank-badge {
@@ -151,7 +153,7 @@
   min-width: 50px;
   text-align: center;
   font-weight: bold;
-  color: #666;
+  color: #888;
 }
 
 .user-avatar {
@@ -161,9 +163,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: white;
+  background: #2a2a2a;
   border-radius: 50%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .user-info {
@@ -175,14 +177,14 @@
 
 .username {
   font-weight: 600;
-  color: #333;
+  color: #fff;
   display: flex;
   align-items: center;
   gap: 8px;
 }
 
 .you-badge {
-  background: #2196f3;
+  background: #ff6b00;
   color: white;
   padding: 2px 8px;
   border-radius: 10px;
@@ -192,7 +194,7 @@
 
 .stats {
   font-size: 13px;
-  color: #666;
+  color: #888;
 }
 
 .user-score {
@@ -203,75 +205,23 @@
   display: block;
   font-size: 20px;
   font-weight: 700;
-  color: #333;
+  color: #ff6b00;
 }
 
 .score-label {
   font-size: 12px;
-  color: #999;
+  color: #888;
 }
 
 .leaderboard-footer {
   padding: 16px 24px;
-  background: #f8f9fa;
-  border-top: 1px solid #e0e0e0;
+  background: #141414;
+  border-top: 1px solid #2a2a2a;
   text-align: center;
 }
 
 .leaderboard-footer p {
   margin: 0;
-  color: #666;
+  color: #888;
   font-size: 14px;
-}
-
-/* Dark mode */
-.dark-mode .leaderboard-modal {
-  background: #1a1a2e;
-}
-
-.dark-mode .timeframe-tabs {
-  background: #16213e;
-  border-color: #333;
-}
-
-.dark-mode .timeframe-tabs button {
-  color: #aaa;
-}
-
-.dark-mode .timeframe-tabs button:hover {
-  background: #1a1a2e;
-  color: #fff;
-}
-
-.dark-mode .timeframe-tabs button.active {
-  background: #1a1a2e;
-}
-
-.dark-mode .leaderboard-item {
-  background: #16213e;
-}
-
-.dark-mode .leaderboard-item.gold {
-  background: linear-gradient(135deg, #3d3d00 0%, #4a4a00 100%);
-}
-
-.dark-mode .leaderboard-item.silver {
-  background: linear-gradient(135deg, #2d2d2d 0%, #3d3d3d 100%);
-}
-
-.dark-mode .leaderboard-item.bronze {
-  background: linear-gradient(135deg, #3d2d1d 0%, #4a3d2d 100%);
-}
-
-.dark-mode .username {
-  color: #fff;
-}
-
-.dark-mode .score-value {
-  color: #fff;
-}
-
-.dark-mode .leaderboard-footer {
-  background: #16213e;
-  border-color: #333;
 }

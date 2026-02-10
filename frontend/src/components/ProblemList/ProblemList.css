@@ -15,8 +15,15 @@
 
 .problem-list-header h2 {
   margin: 0;
-  color: #333;
+  color: #ff6b00;
   font-size: 24px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.problem-list-header h2 svg {
+  color: #ff6b00;
 }
 
 .header-controls {
@@ -26,24 +33,43 @@
   flex-wrap: wrap;
 }
 
+.search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.search-box .search-icon {
+  position: absolute;
+  left: 12px;
+  color: #666;
+  pointer-events: none;
+}
+
 .search-box input {
-  padding: 10px 16px;
-  border: 1px solid #ddd;
+  padding: 10px 16px 10px 40px;
+  border: 1px solid #2a2a2a;
   border-radius: 8px;
   font-size: 14px;
   width: 220px;
   transition: border-color 0.2s, box-shadow 0.2s;
+  background: #1a1a1a;
+  color: #fff;
+}
+
+.search-box input::placeholder {
+  color: #666;
 }
 
 .search-box input:focus {
   outline: none;
-  border-color: #3498db;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+  border-color: #ff6b00;
+  box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.1);
 }
 
 .view-toggle {
   display: flex;
-  border: 1px solid #ddd;
+  border: 1px solid #2a2a2a;
   border-radius: 8px;
   overflow: hidden;
 }
@@ -51,36 +77,49 @@
 .view-toggle button {
   padding: 10px 16px;
   border: none;
-  background: #fff;
+  background: #1a1a1a;
   cursor: pointer;
   font-size: 14px;
   transition: all 0.2s;
+  color: #e0e0e0;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.view-toggle button svg {
+  opacity: 0.7;
+}
+
+.view-toggle button.active svg {
+  opacity: 1;
 }
 
 .view-toggle button:first-child {
-  border-right: 1px solid #ddd;
+  border-right: 1px solid #2a2a2a;
 }
 
 .view-toggle button.active {
-  background: #3498db;
+  background: #ff6b00;
   color: white;
 }
 
 .view-toggle button:hover:not(.active) {
-  background: #f5f5f5;
+  background: #2a2a2a;
 }
 
 .difficulty-filter {
   padding: 10px 16px;
-  border: 1px solid #ddd;
+  border: 1px solid #2a2a2a;
   border-radius: 8px;
-  background-color: #fff;
+  background-color: #1a1a1a;
   font-size: 14px;
   cursor: pointer;
+  color: #e0e0e0;
 }
 
 .difficulty-filter:hover {
-  border-color: #3498db;
+  border-color: #ff6b00;
 }
 
 /* Stats Summary */
@@ -88,10 +127,11 @@
   display: flex;
   gap: 20px;
   padding: 15px 20px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background: linear-gradient(135deg, #1a1a1a 0%, #141414 100%);
   border-radius: 12px;
   margin-bottom: 20px;
   flex-wrap: wrap;
+  border: 1px solid #2a2a2a;
 }
 
 .stat-item {
@@ -99,7 +139,7 @@
   flex-direction: column;
   align-items: center;
   padding: 0 15px;
-  border-right: 1px solid #ddd;
+  border-right: 1px solid #2a2a2a;
 }
 
 .stat-item:last-child {
@@ -109,28 +149,28 @@
 .stat-number {
   font-size: 24px;
   font-weight: bold;
-  color: #2c3e50;
+  color: #fff;
 }
 
 .stat-number.solved {
-  color: #27ae60;
+  color: #22c55e;
 }
 
 .stat-item.easy .stat-number {
-  color: #27ae60;
+  color: #22c55e;
 }
 
 .stat-item.medium .stat-number {
-  color: #f39c12;
+  color: #ff6b00;
 }
 
 .stat-item.hard .stat-number {
-  color: #e74c3c;
+  color: #ef4444;
 }
 
 .stat-label {
   font-size: 12px;
-  color: #666;
+  color: #888;
   text-transform: uppercase;
   margin-top: 2px;
 }
@@ -150,29 +190,30 @@
 
 .expand-controls button {
   padding: 8px 16px;
-  border: 1px solid #ddd;
+  border: 1px solid #2a2a2a;
   border-radius: 6px;
-  background: #fff;
+  background: #1a1a1a;
   cursor: pointer;
   font-size: 13px;
   transition: all 0.2s;
+  color: #e0e0e0;
 }
 
 .expand-controls button:hover {
-  background: #f5f5f5;
-  border-color: #3498db;
+  background: #2a2a2a;
+  border-color: #ff6b00;
 }
 
 .topic-section {
-  border: 1px solid #e0e0e0;
+  border: 1px solid #2a2a2a;
   border-radius: 12px;
   overflow: hidden;
-  background: #fff;
+  background: #1a1a1a;
   transition: box-shadow 0.2s;
 }
 
 .topic-section:hover {
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 
 .topic-header {
@@ -180,14 +221,14 @@
   justify-content: space-between;
   align-items: center;
   padding: 16px 20px;
-  background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+  background: linear-gradient(135deg, #1e1e1e 0%, #141414 100%);
   cursor: pointer;
   border-left: 4px solid;
   transition: background 0.2s;
 }
 
 .topic-header:hover {
-  background: linear-gradient(135deg, #f5f5f5 0%, #ececec 100%);
+  background: linear-gradient(135deg, #242424 0%, #1a1a1a 100%);
 }
 
 .topic-title {
@@ -203,13 +244,13 @@
 .topic-name {
   font-size: 18px;
   font-weight: 600;
-  color: #2c3e50;
+  color: #fff;
 }
 
 .topic-count {
   font-size: 14px;
   color: #888;
-  background: #e9ecef;
+  background: #2a2a2a;
   padding: 3px 10px;
   border-radius: 20px;
 }
@@ -222,7 +263,7 @@
 
 .stat-solved {
   font-size: 14px;
-  color: #27ae60;
+  color: #22c55e;
   font-weight: 500;
 }
 
@@ -244,20 +285,20 @@
 }
 
 .difficulty-dots .dot.easy {
-  background: #27ae60;
+  background: #22c55e;
 }
 
 .difficulty-dots .dot.medium {
-  background: #f39c12;
+  background: #ff6b00;
 }
 
 .difficulty-dots .dot.hard {
-  background: #e74c3c;
+  background: #ef4444;
 }
 
 .expand-icon {
   font-size: 12px;
-  color: #666;
+  color: #888;
   transition: transform 0.3s;
 }
 
@@ -268,14 +309,14 @@
 .topic-problems {
   display: flex;
   flex-direction: column;
-  border-top: 1px solid #e0e0e0;
+  border-top: 1px solid #2a2a2a;
 }
 
 .problem-card {
   display: flex;
   align-items: center;
   padding: 14px 20px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid #2a2a2a;
   cursor: pointer;
   transition: background 0.2s;
   gap: 15px;
@@ -286,7 +327,7 @@
 }
 
 .problem-card:hover {
-  background: #f8f9fa;
+  background: #242424;
 }
 
 .problem-status {
@@ -303,7 +344,7 @@
 
 .problem-title {
   font-weight: 500;
-  color: #2c3e50;
+  color: #fff;
   font-size: 15px;
 }
 
@@ -316,9 +357,9 @@
 .problem-tags .tag {
   font-size: 11px;
   padding: 2px 8px;
-  background: #e9ecef;
+  background: #2a2a2a;
   border-radius: 4px;
-  color: #666;
+  color: #888;
 }
 
 .problem-difficulty {
@@ -330,49 +371,49 @@
 }
 
 .problem-difficulty.difficulty-easy {
-  background: rgba(39, 174, 96, 0.1);
-  color: #27ae60;
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
 }
 
 .problem-difficulty.difficulty-medium {
-  background: rgba(243, 156, 18, 0.1);
-  color: #f39c12;
+  background: rgba(255, 107, 0, 0.15);
+  color: #ff6b00;
 }
 
 .problem-difficulty.difficulty-hard {
-  background: rgba(231, 76, 60, 0.1);
-  color: #e74c3c;
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
 }
 
 /* List View */
 .loading {
   text-align: center;
   padding: 40px;
-  color: #666;
+  color: #888;
 }
 
 .problems-table {
-  border: 1px solid #e0e0e0;
+  border: 1px solid #2a2a2a;
   border-radius: 12px;
   overflow: hidden;
-  background: #fff;
+  background: #1a1a1a;
 }
 
 .table-header {
   display: grid;
   grid-template-columns: 60px 1fr 180px 100px;
   padding: 14px 20px;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background: linear-gradient(135deg, #1e1e1e 0%, #141414 100%);
   font-weight: 600;
-  color: #333;
-  border-bottom: 1px solid #e0e0e0;
+  color: #ff6b00;
+  border-bottom: 1px solid #2a2a2a;
 }
 
 .table-row {
   display: grid;
   grid-template-columns: 60px 1fr 180px 100px;
   padding: 14px 20px;
-  border-bottom: 1px solid #f0f0f0;
+  border-bottom: 1px solid #2a2a2a;
   cursor: pointer;
   transition: background-color 0.2s;
 }
@@ -382,7 +423,7 @@
 }
 
 .table-row:hover {
-  background-color: #f8f9fa;
+  background-color: #242424;
 }
 
 .col-status {
@@ -390,23 +431,20 @@
 }
 
 .solved-icon {
-  color: #27ae60;
-  font-weight: bold;
-  font-size: 18px;
+  color: #22c55e;
 }
 
 .unsolved-icon {
-  color: #bdc3c7;
-  font-size: 18px;
+  color: #555;
 }
 
 .col-title {
-  color: #2c3e50;
+  color: #fff;
   font-weight: 500;
 }
 
 .col-topic {
-  color: #666;
+  color: #888;
   font-size: 14px;
 }
 
@@ -416,15 +454,15 @@
 }
 
 .difficulty-easy {
-  color: #27ae60;
+  color: #22c55e;
 }
 
 .difficulty-medium {
-  color: #f39c12;
+  color: #ff6b00;
 }
 
 .difficulty-hard {
-  color: #e74c3c;
+  color: #ef4444;
 }
 
 /* Responsive */

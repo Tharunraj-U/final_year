@@ -9,3 +9,5 @@ export { default as SubmissionHistory } from './SubmissionHistory/SubmissionHist
 export { default as ComparisonDemo } from './ComparisonDemo/ComparisonDemo';
 export { default as CustomProblem } from './CustomProblem/CustomProblem';
 export { default as Auth } from './Auth/Auth';
+export { default as CodingHistory } from './CodingHistory/CodingHistory';
+export { default as AIHelper } from './AIHelper/AIHelper';

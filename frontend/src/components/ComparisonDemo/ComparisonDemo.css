@@ -11,12 +11,12 @@
 
 .demo-header h2 {
   font-size: 28px;
-  color: #2c3e50;
+  color: #ff6b00;
   margin-bottom: 10px;
 }
 
 .demo-header > p {
-  color: #666;
+  color: #888;
   font-size: 16px;
   max-width: 700px;
   margin: 0 auto 20px;
@@ -45,7 +45,7 @@
 
 .explanation-item strong {
   display: block;
-  color: #2c3e50;
+  color: #fff;
   font-size: 14px;
   margin-bottom: 2px;
 }
@@ -53,7 +53,7 @@
 .explanation-item p {
   margin: 0;
   font-size: 12px;
-  color: #666;
+  color: #888;
   line-height: 1.4;
 }
 
@@ -67,16 +67,18 @@
 
 /* User Cards */
 .user-comparison-card {
-  background: #fff;
+  background: #1a1a1a;
   border-radius: 16px;
-  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
   overflow: hidden;
   transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid #2a2a2a;
 }
 
 .user-comparison-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  border-color: #ff6b00;
 }
 
 .user-header {
@@ -84,13 +86,13 @@
   align-items: center;
   gap: 15px;
   padding: 20px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff6b00 0%, #e55d00 100%);
   color: white;
 }
 
 .user-avatar {
   font-size: 40px;
-  background: rgba(255, 255, 255, 0.2);
+  background: rgba(0, 0, 0, 0.2);
   padding: 10px;
   border-radius: 50%;
 }
@@ -110,8 +112,8 @@
 .user-metrics {
   display: flex;
   padding: 15px 20px;
-  background: #f8f9fa;
-  border-bottom: 1px solid #e0e0e0;
+  background: #141414;
+  border-bottom: 1px solid #2a2a2a;
 }
 
 .metric {
@@ -123,12 +125,12 @@
   display: block;
   font-size: 24px;
   font-weight: bold;
-  color: #3498db;
+  color: #ff6b00;
 }
 
 .metric-label {
   font-size: 12px;
-  color: #666;
+  color: #888;
   text-transform: uppercase;
 }
 
@@ -146,7 +148,7 @@
 .analysis-section h4 {
   margin: 0 0 8px;
   font-size: 13px;
-  color: #666;
+  color: #888;
 }
 
 .tags {
@@ -163,17 +165,17 @@
 }
 
 .tag.strength {
-  background: rgba(39, 174, 96, 0.1);
-  color: #27ae60;
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
 }
 
 .tag.weakness {
-  background: rgba(231, 76, 60, 0.1);
-  color: #e74c3c;
+  background: rgba(239, 68, 68, 0.15);
+  color: #ef4444;
 }
 
 .empty-state {
-  color: #999;
+  color: #666;
   font-size: 12px;
   font-style: italic;
 }
@@ -181,19 +183,20 @@
 /* Learning Path */
 .learning-path-section {
   padding: 15px 20px;
-  background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+  background: linear-gradient(135deg, #1a1a1a 0%, #141414 100%);
+  border-top: 1px solid #2a2a2a;
 }
 
 .learning-path-section h4 {
   margin: 0 0 8px;
   font-size: 13px;
-  color: #666;
+  color: #ff6b00;
 }
 
 .learning-path-section p {
   margin: 0;
   font-size: 13px;
-  color: #444;
+  color: #b0b0b0;
   line-height: 1.5;
 }
 
@@ -205,7 +208,7 @@
 .recommended-problems h4 {
   margin: 0 0 12px;
   font-size: 14px;
-  color: #2c3e50;
+  color: #fff;
 }
 
 .recommended-problems ul {
@@ -216,14 +219,15 @@
 
 .problem-item {
   padding: 12px;
-  border: 1px solid #e0e0e0;
+  border: 1px solid #2a2a2a;
   border-radius: 8px;
   margin-bottom: 10px;
   transition: border-color 0.2s;
+  background: #141414;
 }
 
 .problem-item:hover {
-  border-color: #3498db;
+  border-color: #ff6b00;
 }
 
 .problem-item:last-child {
@@ -239,7 +243,7 @@
 .problem-number {
   width: 24px;
   height: 24px;
-  background: #3498db;
+  background: #ff6b00;
   color: white;
   border-radius: 50%;
   display: flex;
@@ -253,7 +257,7 @@
 .problem-title {
   flex: 1;
   font-weight: 500;
-  color: #2c3e50;
+  color: #fff;
   font-size: 14px;
 }
 
@@ -266,7 +270,7 @@
 .problem-reason {
   margin: 8px 0 0 34px;
   font-size: 12px;
-  color: #666;
+  color: #888;
   line-height: 1.4;
 }
 
@@ -274,18 +278,19 @@
 .demo-footer {
   text-align: center;
   padding: 20px;
-  background: linear-gradient(135deg, #e8f4fc 0%, #d4e8f7 100%);
+  background: linear-gradient(135deg, #1a1a1a 0%, #141414 100%);
   border-radius: 12px;
+  border: 1px solid #2a2a2a;
 }
 
 .demo-footer p {
   margin: 0 0 15px;
-  color: #2c3e50;
+  color: #e0e0e0;
 }
 
 .refresh-btn {
   padding: 12px 24px;
-  background: #3498db;
+  background: #ff6b00;
   color: white;
   border: none;
   border-radius: 8px;
@@ -296,7 +301,7 @@
 }
 
 .refresh-btn:hover {
-  background: #2980b9;
+  background: #e55d00;
 }
 
 /* Loading State */
@@ -308,8 +313,8 @@
 .spinner {
   width: 40px;
   height: 40px;
-  border: 4px solid #e0e0e0;
-  border-top-color: #3498db;
+  border: 4px solid #2a2a2a;
+  border-top-color: #ff6b00;
   border-radius: 50%;
   animation: spin 1s linear infinite;
   margin: 0 auto 15px;
@@ -320,7 +325,7 @@
 }
 
 .loading-state p {
-  color: #666;
+  color: #888;
 }
 
 /* Responsive */

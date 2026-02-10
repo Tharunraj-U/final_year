@@ -184,6 +184,56 @@ export const getSubmissionHistory = async (limit = 50) => {
   return response.data;
 };
 
+// Get submissions for a specific problem
+export const getProblemSubmissions = async (problemId) => {
+  const response = await api.get(`/user/${getUserId()}/problem/${problemId}/submissions`);
+  return response.data;
+};
+
+// ==================== AI HELP / TUTOR ====================
+
+// Get AI explanation of a problem
+export const getAIExplanation = async (problemId) => {
+  const response = await api.post('/ai/explain', { problem_id: problemId });
+  return response.data;
+};
+
+// Get a hint for solving a problem
+export const getAIHint = async (problemId, level = 1, code = '') => {
+  const response = await api.post('/ai/hint', {
+    problem_id: problemId,
+    level: level,
+    code: code
+  });
+  return response.data;
+};
+
+// Get the solution approach
+export const getAISolutionApproach = async (problemId) => {
+  const response = await api.post('/ai/approach', { problem_id: problemId });
+  return response.data;
+};
+
+// Ask a doubt/question
+export const askAIDoubt = async (problemId, question, code = '') => {
+  const response = await api.post('/ai/ask', {
+    problem_id: problemId,
+    question: question,
+    code: code
+  });
+  return response.data;
+};
+
+// Get AI debug help
+export const getAIDebugHelp = async (problemId, code, error = '') => {
+  const response = await api.post('/ai/debug', {
+    problem_id: problemId,
+    code: code,
+    error: error
+  });
+  return response.data;
+};
+
 // Clear user data
 export const clearUserData = async () => {
   const response = await api.delete(`/user/${getUserId()}`);
@@ -278,6 +328,122 @@ export const sendWeeklyReport = async () => {
 export const previewWeeklyReport = async () => {
   const response = await api.get(`/reports/preview/${getUserId()}`);
   return response.data;
+};
+
+// ==================== CODE DRAFTS (Auto-save) ====================
+
+// Save code draft
+export const saveCodeDraft = async (problemId, code, language = 'python') => {
+  try {
+    const userId = getUserId();
+    if (!userId) return null;
+    
+    const response = await api.post(`/drafts/${userId}/${problemId}`, {
+      code,
+      language
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error saving draft:', error);
+    return null;
+  }
+};
+
+// Get code draft
+export const getCodeDraft = async (problemId) => {
+  try {
+    const userId = getUserId();
+    if (!userId) return null;
+    
+    const response = await api.get(`/drafts/${userId}/${problemId}`);
+    return response.data;
+  } catch (error) {
+    if (error.response?.status !== 404) {
+      console.error('Error fetching draft:', error);
+    }
+    return null;
+  }
+};
+
+// Delete code draft
+export const deleteCodeDraft = async (problemId) => {
+  try {
+    const userId = getUserId();
+    if (!userId) return null;
+    
+    const response = await api.delete(`/drafts/${userId}/${problemId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error deleting draft:', error);
+    return null;
+  }
+};
+
+// Get all user drafts
+export const getAllDrafts = async () => {
+  try {
+    const userId = getUserId();
+    if (!userId) return [];
+    
+    const response = await api.get(`/drafts/${userId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching drafts:', error);
+    return { drafts: [] };
+  }
+};
+
+// ==================== CODING HISTORY ====================
+
+// Get full coding history with code
+export const getCodingHistory = async (limit = 100) => {
+  try {
+    const userId = getUserId();
+    if (!userId) return { history: [] };
+    
+    const response = await api.get(`/coding-history/${userId}?limit=${limit}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching coding history:', error);
+    return { history: [] };
+  }
+};
+
+// Get coding history for a specific problem
+export const getProblemHistory = async (problemId) => {
+  try {
+    const userId = getUserId();
+    if (!userId) return { history: [] };
+    
+    const response = await api.get(`/coding-history/${userId}/${problemId}`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching problem history:', error);
+    return { history: [] };
+  }
+};
+
+// ==================== STREAK DETAILS (NeetCode-style) ====================
+
+// Get detailed streak info with calendar data
+export const getStreakDetails = async () => {
+  try {
+    const userId = getUserId();
+    if (!userId) return { current_streak: 0, practice_dates: [] };
+    
+    const response = await api.get(`/user/${userId}/streak-details`);
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching streak details:', error);
+    return {
+      current_streak: 0,
+      last_practice_date: null,
+      practice_dates: [],
+      weekly_submissions: 0,
+      monthly_submissions: 0,
+      total_practice_days: 0
+    };
+  }
 };
 
 export default api;

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { addCustomProblem } from '../../services/api';
+import { ArrowLeft, FileText, ClipboardList, Code, Plus, Trash2, CheckCircle, XCircle, Loader } from 'lucide-react';
 import './CustomProblem.css';
 
 const TOPICS = [
@@ -116,25 +117,25 @@ const CustomProblem = ({ onBack, onProblemCreated }) => {
   return (
     <div className="custom-problem">
       <div className="custom-problem-header">
-        <button className="back-btn" onClick={onBack}>← Back</button>
-        <h2>📝 Create Custom Problem</h2>
+        <button className="back-btn" onClick={onBack}><ArrowLeft size={18} /> Back</button>
+        <h2><FileText size={22} /> Create Custom Problem</h2>
       </div>
 
       {success && (
         <div className="success-banner">
-          ✅ Problem created successfully! You can find it in the problem list.
+          <CheckCircle size={18} /> Problem created successfully! You can find it in the problem list.
         </div>
       )}
 
       {error && (
         <div className="error-banner">
-          ❌ {error}
+          <XCircle size={18} /> {error}
         </div>
       )}
 
       <form onSubmit={handleSubmit} className="problem-form">
         <div className="form-section">
-          <h3>📋 Basic Information</h3>
+          <h3><ClipboardList size={18} /> Basic Information</h3>
           
           <div className="form-row">
             <div className="form-group">

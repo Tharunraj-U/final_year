@@ -326,6 +326,16 @@ class DataStore:
         submissions = self.get_user_submissions(user_id)
         return list(set(s['problem_id'] for s in submissions if s.get('passed')))
     
+    def get_problem_submissions(self, user_id: str, problem_id: str) -> List[Dict]:
+        """Get all submissions for a specific problem by a user."""
+        submissions = self.get_user_submissions(user_id)
+        problem_subs = [s for s in submissions if s.get('problem_id') == problem_id]
+        return sorted(
+            problem_subs,
+            key=lambda x: x.get('submitted_at', ''),
+            reverse=True
+        )
+    
     def get_submission_history(self, user_id: str, limit: int = 50) -> List[Dict]:
         """Get recent submission history."""
         submissions = self.get_user_submissions(user_id)

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getRecommendations, getUserStats } from '../../services/api';
+import { BarChart3, Bot, Dumbbell, TrendingUp, Target, Clock, BookOpen, ArrowRight } from 'lucide-react';
 import './AIRecommendations.css';
 
 const AIRecommendations = ({ onSelectProblem, refreshTrigger }) => {
@@ -44,7 +45,10 @@ const AIRecommendations = ({ onSelectProblem, refreshTrigger }) => {
   if (loading) {
     return (
       <div className="ai-recommendations loading">
-        <div className="loading-spinner">🤖 AI is analyzing your progress...</div>
+        <div className="loading-container">
+          <div className="loading-spinner-circle"></div>
+          <p>Loading recommendations...</p>
+        </div>
       </div>
     );
   }
@@ -63,7 +67,7 @@ const AIRecommendations = ({ onSelectProblem, refreshTrigger }) => {
       {/* User Stats */}
       {stats && (
         <div className="stats-section">
-          <h3>📊 Your Progress</h3>
+          <h3><BarChart3 size={20} /> Your Progress</h3>
           <div className="stats-grid">
             <div className="stat-card">
               <span className="stat-value">{stats.total_submissions || 0}</span>
@@ -101,7 +105,7 @@ const AIRecommendations = ({ onSelectProblem, refreshTrigger }) => {
       {/* AI Recommendations */}
       {recommendations && (
         <div className="recommendations-section">
-          <h3>🤖 AI Recommendations</h3>
+          <h3><Bot size={20} /> AI Recommendations</h3>
           
           {recommendations.message && (
             <div className="ai-message">
@@ -116,7 +120,7 @@ const AIRecommendations = ({ onSelectProblem, refreshTrigger }) => {
               
               {recommendations.strengths && (
                 <div className="strengths">
-                  <h5>💪 Strengths</h5>
+                  <h5><Dumbbell size={16} /> Strengths</h5>
                   {Array.isArray(recommendations.strengths) ? (
                     <ul>
                       {recommendations.strengths.map((s, i) => (
@@ -141,7 +145,7 @@ const AIRecommendations = ({ onSelectProblem, refreshTrigger }) => {
               
               {recommendations.weaknesses && (
                 <div className="weaknesses">
-                  <h5>📈 Areas to Improve</h5>
+                  <h5><TrendingUp size={16} /> Areas to Improve</h5>
                   {Array.isArray(recommendations.weaknesses) ? (
                     <ul>
                       {recommendations.weaknesses.map((w, i) => (
@@ -166,7 +170,7 @@ const AIRecommendations = ({ onSelectProblem, refreshTrigger }) => {
 
               {recommendations.next_steps && recommendations.next_steps.length > 0 && (
                 <div className="next-steps">
-                  <h5>🎯 Next Steps</h5>
+                  <h5><Target size={16} /> Next Steps</h5>
                   <ol>
                     {recommendations.next_steps.map((step, i) => (
                       <li key={i}>{step}</li>
@@ -177,7 +181,7 @@ const AIRecommendations = ({ onSelectProblem, refreshTrigger }) => {
 
               {recommendations.estimated_time_to_next_level && (
                 <div className="time-estimate">
-                  <h5>⏱️ Time to Next Level</h5>
+                  <h5><Clock size={16} /> Time to Next Level</h5>
                   <p>{recommendations.estimated_time_to_next_level}</p>
                 </div>
               )}
@@ -186,7 +190,7 @@ const AIRecommendations = ({ onSelectProblem, refreshTrigger }) => {
 
           {recommendations.learning_path && (
             <div className="learning-path">
-              <h4>📚 Suggested Learning Path</h4>
+              <h4><BookOpen size={18} /> Suggested Learning Path</h4>
               {typeof recommendations.learning_path === 'string' ? (
                 <p>{recommendations.learning_path}</p>
               ) : (

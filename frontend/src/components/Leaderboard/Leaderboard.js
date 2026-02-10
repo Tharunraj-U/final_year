@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getLeaderboard } from '../../services/api';
+import { Medal, X, Flame } from 'lucide-react';
 import './Leaderboard.css';
 
 const Leaderboard = ({ currentUser, onClose }) => {
@@ -50,8 +51,8 @@ const Leaderboard = ({ currentUser, onClose }) => {
     <div className="leaderboard-overlay">
       <div className="leaderboard-modal">
         <div className="leaderboard-header">
-          <h2>🏅 Leaderboard</h2>
-          <button className="close-btn" onClick={onClose}>×</button>
+          <h2><Medal size={22} /> Leaderboard</h2>
+          <button className="close-btn" onClick={onClose}><X size={20} /></button>
         </div>
 
         <div className="timeframe-tabs">
@@ -120,7 +121,7 @@ const Leaderboard = ({ currentUser, onClose }) => {
         </div>
 
         <div className="leaderboard-footer">
-          <p>🔥 Keep solving problems to climb the ranks!</p>
+          <p><Flame size={16} /> Keep solving problems to climb the ranks!</p>
         </div>
       </div>
     </div>

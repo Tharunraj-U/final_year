@@ -1,14 +1,15 @@
 .stats-dashboard {
-  background: white;
+  background: #1a1a1a;
   border-radius: 20px;
   padding: 24px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid #2a2a2a;
 }
 
 .dashboard-title {
   margin: 0 0 24px 0;
   font-size: 20px;
-  color: #333;
+  color: #ff6b00;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -22,43 +23,55 @@
 }
 
 .stat-card {
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  background: linear-gradient(135deg, #1e1e1e 0%, #141414 100%);
   border-radius: 16px;
   padding: 20px;
   text-align: center;
   position: relative;
   overflow: hidden;
   transition: all 0.3s ease;
+  border: 1px solid #2a2a2a;
 }
 
 .stat-card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
 }
 
 .stat-card.problems {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff6b00 0%, #e55d00 100%);
   color: white;
+  border: none;
 }
 
 .stat-card.submissions {
-  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
   color: white;
+  border: none;
 }
 
 .stat-card.accuracy {
-  background: linear-gradient(135deg, #ee0979 0%, #ff6a00 100%);
+  background: linear-gradient(135deg, #f97316 0%, #ea580c 100%);
   color: white;
+  border: none;
 }
 
 .stat-card.score {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: linear-gradient(135deg, #a855f7 0%, #9333ea 100%);
   color: white;
+  border: none;
 }
 
 .stat-icon {
   font-size: 28px;
   margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stat-icon svg {
+  opacity: 0.9;
 }
 
 .stat-value {
@@ -127,16 +140,17 @@
 }
 
 .difficulty-breakdown {
-  background: #f8f9fa;
+  background: #141414;
   border-radius: 12px;
   padding: 20px;
   margin-bottom: 24px;
+  border: 1px solid #2a2a2a;
 }
 
 .difficulty-breakdown h4 {
   margin: 0 0 16px 0;
   font-size: 14px;
-  color: #666;
+  color: #888;
   font-weight: 600;
 }
 
@@ -158,7 +172,7 @@
   align-items: center;
   gap: 8px;
   font-size: 13px;
-  color: #555;
+  color: #b0b0b0;
 }
 
 .diff-dot {
@@ -167,14 +181,14 @@
   border-radius: 50%;
 }
 
-.diff-dot.easy { background: #27ae60; }
-.diff-dot.medium { background: #f39c12; }
-.diff-dot.hard { background: #e74c3c; }
+.diff-dot.easy { background: #22c55e; }
+.diff-dot.medium { background: #ff6b00; }
+.diff-dot.hard { background: #ef4444; }
 
 .diff-bar {
   flex: 1;
   height: 10px;
-  background: #e0e0e0;
+  background: #2a2a2a;
   border-radius: 5px;
   overflow: hidden;
 }
@@ -185,98 +199,18 @@
   transition: width 1s ease;
 }
 
-.diff-fill.easy { background: linear-gradient(90deg, #27ae60, #2ecc71); }
-.diff-fill.medium { background: linear-gradient(90deg, #f39c12, #f1c40f); }
-.diff-fill.hard { background: linear-gradient(90deg, #e74c3c, #c0392b); }
+.diff-fill.easy { background: linear-gradient(90deg, #22c55e, #16a34a); }
+.diff-fill.medium { background: linear-gradient(90deg, #ff6b00, #e55d00); }
+.diff-fill.hard { background: linear-gradient(90deg, #ef4444, #dc2626); }
 
 .diff-count {
   width: 30px;
   text-align: right;
   font-weight: 600;
-  color: #333;
-}
-
-.weekly-activity {
-  background: #f8f9fa;
-  border-radius: 12px;
-  padding: 20px;
-}
-
-.weekly-activity h4 {
-  margin: 0 0 16px 0;
-  font-size: 14px;
-  color: #666;
-  font-weight: 600;
-}
-
-.activity-graph {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  height: 100px;
-  gap: 8px;
-}
-
-.activity-bar-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  height: 100%;
-}
-
-.activity-bar {
-  width: 100%;
-  max-width: 40px;
-  background: linear-gradient(180deg, #667eea 0%, #764ba2 100%);
-  border-radius: 4px 4px 0 0;
-  transition: height 0.5s ease;
-  animation: growUp 1s ease forwards;
-  transform-origin: bottom;
-}
-
-@keyframes growUp {
-  from { transform: scaleY(0); }
-  to { transform: scaleY(1); }
-}
-
-.day-label {
-  margin-top: 8px;
-  font-size: 11px;
-  color: #888;
-  font-weight: 500;
-}
-
-/* Dark mode */
-.dark-mode .stats-dashboard {
-  background: #1a1a2e;
-}
-
-.dark-mode .dashboard-title {
   color: #fff;
 }
 
-.dark-mode .difficulty-breakdown,
-.dark-mode .weekly-activity {
-  background: #16213e;
-}
-
-.dark-mode .difficulty-breakdown h4,
-.dark-mode .weekly-activity h4 {
-  color: #aaa;
-}
-
-.dark-mode .diff-label {
-  color: #ccc;
-}
-
-.dark-mode .diff-count {
-  color: #fff;
-}
-
-.dark-mode .diff-bar {
-  background: #333;
-}
+/* Dark mode - no longer needed, always dark */
 
 @media (max-width: 900px) {
   .stats-grid {
@@ -292,7 +226,7 @@
 
 /* Weekly Report Section */
 .weekly-report-section {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff6b00 0%, #e55d00 100%);
   border-radius: 12px;
   padding: 24px;
   margin-top: 20px;
@@ -312,8 +246,8 @@
 }
 
 .send-report-btn {
-  background: white;
-  color: #667eea;
+  background: #0a0a0a;
+  color: #ff6b00;
   border: none;
   padding: 12px 24px;
   border-radius: 25px;
@@ -325,7 +259,7 @@
 
 .send-report-btn:hover:not(:disabled) {
   transform: translateY(-2px);
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
 }
 
 .send-report-btn:disabled {
@@ -341,11 +275,11 @@
 }
 
 .report-message.success {
-  background: rgba(39, 174, 96, 0.2);
-  color: #2ecc71;
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
 }
 
 .report-message.error {
-  background: rgba(231, 76, 60, 0.2);
-  color: #ff6b6b;
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
 }

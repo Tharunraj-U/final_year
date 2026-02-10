@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { sendWeeklyReport } from '../../services/api';
+import { BarChart3, FileText, Rocket, Target, Star, Mail, Send } from 'lucide-react';
 import './StatsDashboard.css';
 
 const StatsDashboard = ({ stats }) => {
@@ -66,11 +67,11 @@ const StatsDashboard = ({ stats }) => {
 
   return (
     <div className="stats-dashboard">
-      <h3 className="dashboard-title">📊 Your Statistics</h3>
+      <h3 className="dashboard-title"><BarChart3 size={20} /> Your Statistics</h3>
       
       <div className="stats-grid">
         <div className="stat-card problems">
-          <div className="stat-icon">📝</div>
+          <div className="stat-icon"><FileText size={24} /></div>
           <div className="stat-value">{animatedStats.problems_solved}</div>
           <div className="stat-label">Problems Solved</div>
           <div className="stat-ring">
@@ -89,13 +90,13 @@ const StatsDashboard = ({ stats }) => {
         </div>
 
         <div className="stat-card submissions">
-          <div className="stat-icon">🚀</div>
+          <div className="stat-icon"><Rocket size={24} /></div>
           <div className="stat-value">{animatedStats.total_submissions}</div>
           <div className="stat-label">Total Submissions</div>
         </div>
 
         <div className="stat-card accuracy">
-          <div className="stat-icon">🎯</div>
+          <div className="stat-icon"><Target size={24} /></div>
           <div className="stat-value">{animatedStats.accuracy}%</div>
           <div className="stat-label">Accuracy</div>
           <div className="accuracy-bar">
@@ -107,7 +108,7 @@ const StatsDashboard = ({ stats }) => {
         </div>
 
         <div className="stat-card score">
-          <div className="stat-icon">⭐</div>
+          <div className="stat-icon"><Star size={24} /></div>
           <div className="stat-value">{animatedStats.avg_score}</div>
           <div className="stat-label">Average Score</div>
         </div>
@@ -158,27 +159,9 @@ const StatsDashboard = ({ stats }) => {
         </div>
       </div>
 
-      <div className="weekly-activity">
-        <h4>This Week's Activity</h4>
-        <div className="activity-graph">
-          {['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map((day, i) => {
-            const height = Math.random() * 80 + 20; // Demo data
-            return (
-              <div key={day} className="activity-bar-container">
-                <div 
-                  className="activity-bar" 
-                  style={{ height: `${height}%` }}
-                ></div>
-                <span className="day-label">{day}</span>
-              </div>
-            );
-          })}
-        </div>
-      </div>
-
       {/* Weekly Report Section */}
       <div className="weekly-report-section">
-        <h4>📧 Weekly Progress Report</h4>
+        <h4><Mail size={18} /> Weekly Progress Report</h4>
         <p>Get your progress summary sent to your email!</p>
         {reportMessage && (
           <div className={`report-message ${reportMessage.type}`}>
@@ -200,7 +183,7 @@ const StatsDashboard = ({ stats }) => {
           }}
           disabled={sendingReport}
         >
-          {sendingReport ? '📤 Sending...' : '📤 Send Report Now'}
+          <Send size={16} /> {sendingReport ? 'Sending...' : 'Send Report Now'}
         </button>
       </div>
     </div>

@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Editor from '@monaco-editor/react';
 import ReactMarkdown from 'react-markdown';
-import { getProblem, runCode, submitCode, getRecommendations } from '../../services/api';
+import { getProblem, runCode, submitCode, getRecommendations, saveCodeDraft, getCodeDraft, getProblemSubmissions } from '../../services/api';
+import AIHelper from '../AIHelper/AIHelper';
 import './CodeEditor.css';
 
 const LANGUAGES = [
@@ -29,8 +30,56 @@ const CodeEditor = ({ problemId, onBack, onSubmitSuccess, onSelectProblem }) => 
   const [aiAnalysis, setAiAnalysis] = useState(null);
   const [recommendations, setRecommendations] = useState(null);
   const [activeTab, setActiveTab] = useState('description');
+  const [draftStatus, setDraftStatus] = useState(''); // 'saving', 'saved', ''
+  const [submissionHistory, setSubmissionHistory] = useState([]);
+  const [viewingCode, setViewingCode] = useState(null);
+  const [showAIHelper, setShowAIHelper] = useState(false);
   const startTimeRef = useRef(Date.now());
   const codeByLanguage = useRef({});
+  const autoSaveTimeoutRef = useRef(null);
+
+  // Auto-save debounced function - saves to both API and localStorage
+  const autoSave = useCallback(async (codeToSave, lang) => {
+    if (!codeToSave || codeToSave.trim().length < 10) return;
+    
+    setDraftStatus('saving');
+    
+    // Always save to localStorage as backup
+    const localKey = `code_draft_${problemId}`;
+    localStorage.setItem(localKey, JSON.stringify({
+      code: codeToSave,
+      language: lang,
+      updatedAt: new Date().toISOString()
+    }));
+    
+    try {
+      // Also try to save to API/MongoDB
+      await saveCodeDraft(problemId, codeToSave, lang);
+      setDraftStatus('saved');
+      setTimeout(() => setDraftStatus(''), 2000);
+    } catch (error) {
+      // API failed but localStorage saved
+      console.error('API auto-save failed, saved to local:', error);
+      setDraftStatus('saved locally');
+      setTimeout(() => setDraftStatus(''), 2000);
+    }
+  }, [problemId]);
+
+  // Handle code change with debounced auto-save
+  const handleCodeChange = (value) => {
+    setCode(value);
+    codeByLanguage.current[language] = value;
+    
+    // Clear existing timeout
+    if (autoSaveTimeoutRef.current) {
+      clearTimeout(autoSaveTimeoutRef.current);
+    }
+    
+    // Set new timeout for auto-save (1.5 seconds after user stops typing)
+    autoSaveTimeoutRef.current = setTimeout(() => {
+      autoSave(value, language);
+    }, 1500);
+  };
 
   useEffect(() => {
     // Reset all state when problem changes
@@ -39,11 +88,36 @@ const CodeEditor = ({ problemId, onBack, onSubmitSuccess, onSelectProblem }) => 
     setRecommendations(null);
     setActiveTab('description');
     setLanguage('python');
+    setDraftStatus('');
+    setSubmissionHistory([]);
+    setViewingCode(null);
+    
+    // Clear any pending auto-save
+    if (autoSaveTimeoutRef.current) {
+      clearTimeout(autoSaveTimeoutRef.current);
+    }
     
     loadProblem();
+    loadSubmissionHistory();
     startTimeRef.current = Date.now();
     codeByLanguage.current = {};
+    
+    return () => {
+      // Cleanup timeout on unmount
+      if (autoSaveTimeoutRef.current) {
+        clearTimeout(autoSaveTimeoutRef.current);
+      }
+    };
   }, [problemId]);
+
+  const loadSubmissionHistory = async () => {
+    try {
+      const data = await getProblemSubmissions(problemId);
+      setSubmissionHistory(data.submissions || []);
+    } catch (error) {
+      console.error('Failed to load submission history:', error);
+    }
+  };
 
   const getStarterCode = (lang, funcName) => {
     const generator = STARTER_CODE[lang] || STARTER_CODE.python;
@@ -55,9 +129,42 @@ const CodeEditor = ({ problemId, onBack, onSubmitSuccess, onSelectProblem }) => 
     try {
       const data = await getProblem(problemId);
       setProblem(data);
-      const starterCode = data.starter_code || getStarterCode('python', data.function_name);
-      setCode(starterCode);
-      codeByLanguage.current = { python: starterCode };
+      
+      // Try to load saved draft - first from API, then from localStorage
+      let savedDraft = null;
+      
+      try {
+        savedDraft = await getCodeDraft(problemId);
+      } catch (error) {
+        console.log('API draft fetch failed, checking localStorage');
+      }
+      
+      // If no API draft, check localStorage
+      if (!savedDraft || !savedDraft.code) {
+        const localKey = `code_draft_${problemId}`;
+        const localDraft = localStorage.getItem(localKey);
+        if (localDraft) {
+          try {
+            savedDraft = JSON.parse(localDraft);
+          } catch (e) {
+            console.error('Failed to parse local draft:', e);
+          }
+        }
+      }
+      
+      if (savedDraft && savedDraft.code) {
+        // Use saved draft
+        setCode(savedDraft.code);
+        setLanguage(savedDraft.language || 'python');
+        codeByLanguage.current = { [savedDraft.language || 'python']: savedDraft.code };
+        setDraftStatus('Draft restored');
+        setTimeout(() => setDraftStatus(''), 2000);
+      } else {
+        // Use starter code
+        const starterCode = data.starter_code || getStarterCode('python', data.function_name);
+        setCode(starterCode);
+        codeByLanguage.current = { python: starterCode };
+      }
     } catch (error) {
       console.error('Failed to load problem:', error);
     }
@@ -111,6 +218,9 @@ const CodeEditor = ({ problemId, onBack, onSubmitSuccess, onSelectProblem }) => 
       setResult(data.execution_result);
       setAiAnalysis(data.ai_analysis);
       
+      // Refresh submission history after submission
+      loadSubmissionHistory();
+      
       // Fetch recommendations after submission
       try {
         const recs = await getRecommendations();
@@ -120,6 +230,10 @@ const CodeEditor = ({ problemId, onBack, onSubmitSuccess, onSelectProblem }) => 
       }
       
       if (data.execution_result?.passed) {
+        // Clear draft from localStorage on successful submission
+        const localKey = `code_draft_${problemId}`;
+        localStorage.removeItem(localKey);
+        
         onSubmitSuccess && onSubmitSuccess(data);
       }
     } catch (error) {
@@ -169,6 +283,12 @@ const CodeEditor = ({ problemId, onBack, onSubmitSuccess, onSelectProblem }) => 
             onClick={() => setActiveTab('result')}
           >
             Result
+          </button>
+          <button
+            className={`tab ${activeTab === 'submissions' ? 'active' : ''}`}
+            onClick={() => setActiveTab('submissions')}
+          >
+            Submissions {submissionHistory.length > 0 && `(${submissionHistory.length})`}
           </button>
         </div>
 
@@ -476,6 +596,85 @@ const CodeEditor = ({ problemId, onBack, onSubmitSuccess, onSelectProblem }) => 
               )}
             </div>
           )}
+
+          {/* Submissions History Tab */}
+          {activeTab === 'submissions' && (
+            <div className="submissions-history-tab">
+              <h3>📋 Submission History</h3>
+              
+              {submissionHistory.length === 0 ? (
+                <div className="no-submissions">
+                  <p>No submissions yet for this problem.</p>
+                  <p>Submit your solution to see your history here!</p>
+                </div>
+              ) : (
+                <>
+                  <table className="submissions-table">
+                    <thead>
+                      <tr>
+                        <th>Time (IST)</th>
+                        <th>Status</th>
+                        <th>Score</th>
+                        <th>Lang</th>
+                        <th>Test Cases</th>
+                        <th>Code</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {submissionHistory.map((sub, idx) => (
+                        <tr key={idx} className={sub.passed ? 'passed-row' : 'failed-row'}>
+                          <td className="time-cell">
+                            {new Date(sub.submitted_at).toLocaleString('en-IN', { 
+                              timeZone: 'Asia/Kolkata',
+                              year: 'numeric',
+                              month: '2-digit',
+                              day: '2-digit',
+                              hour: '2-digit',
+                              minute: '2-digit',
+                              second: '2-digit'
+                            })}
+                          </td>
+                          <td className={`status-cell ${sub.passed ? 'correct' : 'wrong'}`}>
+                            {sub.passed ? '✅ Correct' : '❌ Wrong'}
+                          </td>
+                          <td className="score-cell">
+                            <span className={`score-badge ${sub.score >= 80 ? 'high' : sub.score >= 50 ? 'medium' : 'low'}`}>
+                              {sub.score || 0}
+                            </span>
+                          </td>
+                          <td className="lang-cell">{sub.language || 'python'}</td>
+                          <td className="tests-cell">
+                            {sub.passed_count || 0} / {sub.total_count || 0}
+                          </td>
+                          <td className="code-cell">
+                            <button 
+                              className="view-code-btn"
+                              onClick={() => setViewingCode(viewingCode === idx ? null : idx)}
+                            >
+                              {viewingCode === idx ? 'Hide' : 'View'}
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+
+                  {/* Code Viewer Modal */}
+                  {viewingCode !== null && submissionHistory[viewingCode] && (
+                    <div className="code-viewer">
+                      <div className="code-viewer-header">
+                        <h4>Submitted Code</h4>
+                        <button onClick={() => setViewingCode(null)}>✕ Close</button>
+                      </div>
+                      <pre className="code-content">
+                        {submissionHistory[viewingCode].code || 'Code not available'}
+                      </pre>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+          )}
         </div>
       </div>
 
@@ -493,6 +692,11 @@ const CodeEditor = ({ problemId, onBack, onSubmitSuccess, onSelectProblem }) => 
               </button>
             ))}
           </div>
+          {draftStatus && (
+            <span className={`draft-status ${draftStatus === 'saving' ? 'saving' : 'saved'}`}>
+              {draftStatus === 'saving' ? '💾 Saving...' : draftStatus === 'saved' ? '✓ Saved' : draftStatus}
+            </span>
+          )}
         </div>
 
         <div className="editor-wrapper">
@@ -500,7 +704,7 @@ const CodeEditor = ({ problemId, onBack, onSubmitSuccess, onSelectProblem }) => 
             height="100%"
             language={LANGUAGES.find(l => l.id === language)?.monaco || 'python'}
             value={code}
-            onChange={(value) => setCode(value || '')}
+            onChange={(value) => handleCodeChange(value || '')}
             theme="vs-dark"
             options={{
               minimap: { enabled: false },
@@ -514,6 +718,12 @@ const CodeEditor = ({ problemId, onBack, onSubmitSuccess, onSelectProblem }) => 
         </div>
 
         <div className="editor-actions">
+          <button
+            className="ai-help-btn"
+            onClick={() => setShowAIHelper(true)}
+          >
+            🤖 AI Help
+          </button>
           <button
             className="run-btn"
             onClick={handleRun}
@@ -530,6 +740,15 @@ const CodeEditor = ({ problemId, onBack, onSubmitSuccess, onSelectProblem }) => 
           </button>
         </div>
       </div>
+
+      {/* AI Helper Modal */}
+      {showAIHelper && (
+        <AIHelper
+          problemId={problemId}
+          code={code}
+          onClose={() => setShowAIHelper(false)}
+        />
+      )}
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { getDemoUsers } from '../../services/api';
+import { Code2, LayoutDashboard, History, PlusCircle, Bot, Trophy, Medal, Sun, Moon, LogOut, User, ChevronDown } from 'lucide-react';
 import './Header.css';
 
 const Header = ({ 
@@ -40,7 +41,7 @@ const Header = ({
     <header className="header">
       <div className="header-content">
         <div className="logo" onClick={() => onNavClick('problems')}>
-          <span className="logo-icon">🧠</span>
+          <Code2 className="logo-icon" size={28} />
           <h1>CodeMaster AI</h1>
         </div>
         
@@ -49,25 +50,36 @@ const Header = ({
             className={`nav-item ${currentView === 'problems' ? 'active' : ''}`}
             onClick={() => onNavClick('problems')}
           >
-            📝 Problems
+            <Code2 size={18} />
+            <span>Problems</span>
           </button>
           <button 
             className={`nav-item ${currentView === 'dashboard' ? 'active' : ''}`}
             onClick={() => onNavClick('dashboard')}
           >
-            📊 Dashboard
+            <LayoutDashboard size={18} />
+            <span>Dashboard</span>
+          </button>
+          <button 
+            className={`nav-item ${currentView === 'history' ? 'active' : ''}`}
+            onClick={() => onNavClick('history')}
+          >
+            <History size={18} />
+            <span>History</span>
           </button>
           <button 
             className={`nav-item ${currentView === 'custom' ? 'active' : ''}`}
             onClick={() => onNavClick('custom')}
           >
-            ➕ Create
+            <PlusCircle size={18} />
+            <span>Create</span>
           </button>
           <button 
             className={`nav-item ${currentView === 'recommendations' ? 'active' : ''}`}
             onClick={() => onNavClick('recommendations')}
           >
-            🤖 AI Insights
+            <Bot size={18} />
+            <span>AI Insights</span>
           </button>
         </nav>
 
@@ -86,21 +98,21 @@ const Header = ({
             onClick={onShowLeaderboard}
             title="Leaderboard"
           >
-            🏅
+            <Medal size={20} />
           </button>
           <button 
             className="action-btn" 
             onClick={onShowAchievements}
             title="Achievements"
           >
-            🏆
+            <Trophy size={20} />
           </button>
           <button 
             className="action-btn dark-mode-toggle" 
             onClick={onToggleDarkMode}
             title={darkMode ? 'Light Mode' : 'Dark Mode'}
           >
-            {darkMode ? '☀️' : '🌙'}
+            {darkMode ? <Sun size={20} /> : <Moon size={20} />}
           </button>
         </div>
 
@@ -111,13 +123,13 @@ const Header = ({
           >
             <span className="user-emoji">{getUserEmoji()}</span>
             <span className="user-name">{getUserName()}</span>
-            <span className="dropdown-arrow">▼</span>
+            <ChevronDown size={14} className="dropdown-arrow" />
           </div>
           
           {showUserMenu && (
             <div className="user-menu">
               <div className="user-menu-header">
-                <span>👤 {getUserName()}</span>
+                <span><User size={14} /> {getUserName()}</span>
                 <small>{currentUser?.email || currentUser?.user_id}</small>
               </div>
               <div className="user-menu-divider"></div>
@@ -125,14 +137,14 @@ const Header = ({
                 className="user-menu-item"
                 onClick={() => { onNavClick('dashboard'); setShowUserMenu(false); }}
               >
-                <span className="user-emoji">📊</span>
+                <LayoutDashboard size={16} />
                 <span>My Stats</span>
               </div>
               <div 
                 className="user-menu-item"
                 onClick={() => { onShowAchievements(); setShowUserMenu(false); }}
               >
-                <span className="user-emoji">🏆</span>
+                <Trophy size={16} />
                 <span>Achievements</span>
               </div>
               <div className="user-menu-divider"></div>
@@ -140,7 +152,7 @@ const Header = ({
                 className="user-menu-item logout"
                 onClick={handleLogout}
               >
-                <span className="user-emoji">🚪</span>
+                <LogOut size={16} />
                 <span>Logout</span>
               </div>
             </div>

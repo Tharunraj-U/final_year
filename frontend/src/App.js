@@ -6,7 +6,7 @@ import Header from './components/Header/Header';
 import ProblemList from './components/ProblemList/ProblemList';
 import CodeEditor from './components/CodeEditor/CodeEditor';
 import AIRecommendations from './components/AIRecommendations/AIRecommendations';
-import { ComparisonDemo, CustomProblem } from './components';
+import { ComparisonDemo, CustomProblem, CodingHistory } from './components';
 import Auth from './components/Auth/Auth';
 import Achievements from './components/Achievements/Achievements';
 import Leaderboard from './components/Leaderboard/Leaderboard';
@@ -15,9 +15,14 @@ import StatsDashboard from './components/StatsDashboard/StatsDashboard';
 import { getCurrentUser, logout, getDetailedStats, getUserStreak, getUserAchievementStats } from './services/api';
 
 function App() {
+  // Restore view state from localStorage on initial load
   const [currentUser, setCurrentUser] = useState(null);
-  const [currentView, setCurrentView] = useState('problems'); // 'problems', 'editor', 'recommendations', 'comparison', 'custom', 'dashboard'
-  const [selectedProblemId, setSelectedProblemId] = useState(null);
+  const [currentView, setCurrentView] = useState(() => {
+    return localStorage.getItem('currentView') || 'problems';
+  });
+  const [selectedProblemId, setSelectedProblemId] = useState(() => {
+    return localStorage.getItem('selectedProblemId') || null;
+  });
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const [darkMode, setDarkMode] = useState(false);
   const [showAchievements, setShowAchievements] = useState(false);
@@ -25,6 +30,16 @@ function App() {
   const [userStats, setUserStats] = useState(null);
   const [userStreak, setUserStreak] = useState({ streak: 0 });
   const [achievementStats, setAchievementStats] = useState(null);
+
+  // Save view state to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('currentView', currentView);
+    if (selectedProblemId) {
+      localStorage.setItem('selectedProblemId', selectedProblemId);
+    } else {
+      localStorage.removeItem('selectedProblemId');
+    }
+  }, [currentView, selectedProblemId]);
 
   useEffect(() => {
     // Check if user is already logged in
@@ -77,6 +92,9 @@ function App() {
     logout();
     setCurrentUser(null);
     setCurrentView('problems');
+    setSelectedProblemId(null);
+    localStorage.removeItem('currentView');
+    localStorage.removeItem('selectedProblemId');
   };
 
   const handleSelectProblem = (problemId) => {
@@ -158,6 +176,12 @@ function App() {
               setRefreshTrigger(prev => prev + 1);
               setCurrentView('problems');
             }}
+          />
+        )}
+
+        {currentView === 'history' && (
+          <CodingHistory
+            onSelectProblem={handleSelectProblem}
           />
         )}
 

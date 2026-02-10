@@ -1,18 +1,19 @@
 .topic-breakdown {
-  background: white;
+  background: #1a1a1a;
   border-radius: 16px;
   padding: 1.5rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid #2a2a2a;
 }
 
 .topic-breakdown h2 {
   font-size: 1.25rem;
-  color: #1a1a2e;
+  color: #ff6b00;
   margin-bottom: 1.5rem;
 }
 
 .no-data {
-  color: #6b7280;
+  color: #888;
   text-align: center;
   padding: 2rem;
 }
@@ -25,7 +26,7 @@
 
 .topic-item {
   padding-bottom: 1rem;
-  border-bottom: 1px solid #f3f4f6;
+  border-bottom: 1px solid #2a2a2a;
 }
 
 .topic-item:last-child {
@@ -42,7 +43,7 @@
 
 .topic-name {
   font-weight: 600;
-  color: #1a1a2e;
+  color: #fff;
 }
 
 .topic-score {
@@ -52,7 +53,7 @@
 
 .topic-progress-bar {
   height: 8px;
-  background: #f3f4f6;
+  background: #2a2a2a;
   border-radius: 4px;
   overflow: hidden;
   margin-bottom: 0.5rem;
@@ -62,6 +63,7 @@
   height: 100%;
   border-radius: 4px;
   transition: width 0.5s ease;
+  background: linear-gradient(90deg, #ff6b00, #ff8533);
 }
 
 .topic-stats {
@@ -69,5 +71,5 @@
   gap: 1rem;
   flex-wrap: wrap;
   font-size: 0.8rem;
-  color: #6b7280;
+  color: #888;
 }

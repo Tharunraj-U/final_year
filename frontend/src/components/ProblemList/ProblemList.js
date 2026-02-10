@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getProblems, getTopics } from '../../services/api';
+import { Library, Search, FolderOpen, List, ChevronDown, Check, Circle } from 'lucide-react';
 import './ProblemList.css';
 
 // Topic icons and display names
@@ -114,22 +115,23 @@ const ProblemList = ({ onSelectProblem }) => {
   return (
     <div className="problem-list">
       <div className="problem-list-header">
-        <h2>📚 Problem Library</h2>
+        <h2><Library size={22} /> Problem Library</h2>
         <div className="header-controls">
           <div className="search-box">
+            <Search size={16} className="search-icon" />
             <input
               type="text"
-              placeholder="🔍 Search problems..."
+              placeholder="Search problems..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
           <div className="view-toggle">
             <button className={viewMode === 'category' ? 'active' : ''} onClick={() => setViewMode('category')}>
-              📂 Categories
+              <FolderOpen size={16} /> Categories
             </button>
             <button className={viewMode === 'list' ? 'active' : ''} onClick={() => setViewMode('list')}>
-              📋 List
+              <List size={16} /> List
             </button>
           </div>
           <select value={selectedDifficulty} onChange={(e) => setSelectedDifficulty(e.target.value)} className="difficulty-filter">
@@ -191,7 +193,7 @@ const ProblemList = ({ onSelectProblem }) => {
                     }).map((problem) => (
                       <div key={problem.problem_id} className="problem-card" onClick={() => onSelectProblem(problem.problem_id)}>
                         <div className="problem-status">
-                          {problem.solved ? <span className="solved-icon">✓</span> : <span className="unsolved-icon">○</span>}
+                          {problem.solved ? <Check size={16} className="solved-icon" /> : <Circle size={16} className="unsolved-icon" />}
                         </div>
                         <div className="problem-info">
                           <span className="problem-title">{problem.title}</span>

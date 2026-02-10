@@ -1,163 +1,235 @@
-.streak-counter {
-  background: linear-gradient(135deg, #ff9a56 0%, #ff6b6b 100%);
-  border-radius: 16px;
-  padding: 20px;
-  color: white;
+/* Compact Streak Component */
+.streak-container-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Compact Streak Card */
+.streak-card-compact {
+  background: #1a1a1a;
+  border-radius: 14px;
+  padding: 16px 20px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 20px;
-  box-shadow: 0 8px 30px rgba(255, 107, 107, 0.3);
+  border: 1px solid #2a2a2a;
   position: relative;
   overflow: hidden;
 }
 
-.streak-counter::before {
+.streak-card-compact::before {
   content: '';
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
-  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 50%);
-  animation: shimmer 3s infinite;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ff6b00, #ff8533);
 }
 
-@keyframes shimmer {
-  0%, 100% { transform: translate(-25%, -25%); }
-  50% { transform: translate(25%, 25%); }
+.streak-card-compact.legendary::before {
+  background: linear-gradient(90deg, #ffd700, #ffaa00);
 }
 
-.streak-counter.animate {
-  animation: pulse 0.5s ease;
+.streak-card-compact.master::before {
+  background: linear-gradient(90deg, #a855f7, #c084fc);
 }
 
-@keyframes pulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.02); }
+.streak-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
 
-.streak-fire {
-  position: relative;
-  width: 60px;
-  height: 60px;
+.streak-icon-compact {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: rgba(255, 107, 0, 0.15);
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #ff6b00;
 }
 
-.fire {
-  position: absolute;
-  font-size: 32px;
-  animation: flicker 0.5s infinite alternate;
+.streak-info-compact {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
-.fire-1 {
-  animation-delay: 0s;
-}
-
-.fire-2 {
-  animation-delay: 0.1s;
-  transform: translateX(-8px);
-  font-size: 28px;
-}
-
-.fire-3 {
-  animation-delay: 0.2s;
-  transform: translateX(8px);
-  font-size: 28px;
-}
-
-.fire-4 {
-  animation-delay: 0.15s;
-  transform: translateY(-10px);
-  font-size: 24px;
-}
-
-@keyframes flicker {
-  0% { transform: scale(1) translateY(0); }
-  100% { transform: scale(1.1) translateY(-2px); }
-}
-
-.streak-info {
-  flex: 1;
-}
-
-.streak-number {
+.streak-number-compact {
   display: flex;
   align-items: baseline;
-  gap: 8px;
-}
-
-.streak-number .count {
-  font-size: 42px;
-  font-weight: 800;
-  line-height: 1;
-  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
-}
-
-.streak-number .label {
-  font-size: 16px;
-  opacity: 0.9;
-  font-weight: 500;
-}
-
-.streak-message {
-  margin-top: 4px;
-  font-size: 14px;
-  opacity: 0.9;
-}
-
-.streak-calendar {
-  display: flex;
   gap: 6px;
 }
 
-.calendar-day {
-  width: 32px;
-  height: 32px;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.2);
+.streak-number-compact .number {
+  font-size: 28px;
+  font-weight: 800;
+  color: #fff;
+  line-height: 1;
+}
+
+.streak-number-compact .unit {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 500;
+}
+
+.streak-level-compact {
   display: flex;
   align-items: center;
-  justify-content: center;
-  font-size: 14px;
+}
+
+.level-badge {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Compact Stats */
+.streak-stats-compact {
+  display: flex;
+  gap: 16px;
+}
+
+.stat-compact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  min-width: 60px;
+}
+
+.stat-compact svg {
+  color: #ff6b00;
+  opacity: 0.7;
+}
+
+.stat-compact .stat-value {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.stat-compact .stat-label {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+/* Compact Heatmap */
+.activity-heatmap-compact {
+  background: #1a1a1a;
+  border-radius: 14px;
+  padding: 14px 16px;
+  border: 1px solid #2a2a2a;
+}
+
+.heatmap-header-compact {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.heatmap-header-compact h4 {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 12px;
   font-weight: 600;
-  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.calendar-day.active {
-  background: rgba(255, 255, 255, 0.4);
-  transform: scale(1.05);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+.heatmap-header-compact h4 svg {
+  color: #ff6b00;
 }
 
-/* Dark mode adjustments */
-.dark-mode .streak-counter {
-  background: linear-gradient(135deg, #c44536 0%, #772e25 100%);
+.heatmap-legend-compact {
+  display: flex;
+  gap: 3px;
 }
 
+.heatmap-legend-compact .legend-box {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.legend-box.level-0 {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.legend-box.level-1 {
+  background: rgba(255, 107, 0, 0.25);
+}
+
+.legend-box.level-2 {
+  background: rgba(255, 107, 0, 0.5);
+}
+
+.legend-box.level-3 {
+  background: #ff6b00;
+}
+
+.heatmap-grid-compact {
+  display: flex;
+  gap: 3px;
+}
+
+.heatmap-week {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.heatmap-day {
+  width: 11px;
+  height: 11px;
+  border-radius: 2px;
+  background: rgba(255, 255, 255, 0.06);
+  transition: all 0.15s ease;
+}
+
+.heatmap-day:hover {
+  transform: scale(1.3);
+  box-shadow: 0 0 6px rgba(255, 107, 0, 0.4);
+}
+
+.heatmap-day.active {
+  background: #ff6b00;
+}
+
+.heatmap-day.today {
+  outline: 2px solid #fff;
+  outline-offset: -1px;
+}
+
+/* Responsive */
 @media (max-width: 600px) {
-  .streak-counter {
-    flex-wrap: wrap;
-    justify-content: center;
-    text-align: center;
+  .streak-card-compact {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 14px;
   }
-  
-  .streak-info {
+
+  .streak-stats-compact {
     width: 100%;
-    order: 1;
+    justify-content: space-between;
   }
-  
-  .streak-number {
-    justify-content: center;
-  }
-  
-  .streak-calendar {
-    order: 2;
-    margin-top: 10px;
-  }
-  
-  .streak-fire {
-    order: 0;
+
+  .stat-compact {
+    flex: 1;
   }
 }

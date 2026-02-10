@@ -1,17 +1,19 @@
 .score-card {
-  background: white;
+  background: #1a1a1a;
   border-radius: 16px;
   padding: 1.5rem;
   display: flex;
   align-items: center;
   gap: 1rem;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   transition: transform 0.2s, box-shadow 0.2s;
+  border: 1px solid #2a2a2a;
 }
 
 .score-card:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  border-color: #ff6b00;
 }
 
 .score-card-icon {
@@ -25,19 +27,19 @@
 }
 
 .score-card-blue .score-card-icon {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ff6b00 0%, #e55d00 100%);
 }
 
 .score-card-green .score-card-icon {
-  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
 }
 
 .score-card-orange .score-card-icon {
-  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  background: linear-gradient(135deg, #ff8533 0%, #ff6b00 100%);
 }
 
 .score-card-purple .score-card-icon {
-  background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  background: linear-gradient(135deg, #ff6b00 0%, #cc5500 100%);
 }
 
 .score-card-content {
@@ -46,7 +48,7 @@
 
 .score-card-title {
   font-size: 0.875rem;
-  color: #6b7280;
+  color: #888;
   font-weight: 500;
   margin-bottom: 0.25rem;
 }
@@ -54,10 +56,10 @@
 .score-card-value {
   font-size: 1.75rem;
   font-weight: 700;
-  color: #1a1a2e;
+  color: #fff;
 }
 
 .score-card-subtitle {
   font-size: 0.8rem;
-  color: #9ca3af;
+  color: #666;
 }

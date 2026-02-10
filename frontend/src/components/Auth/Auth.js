@@ -26,8 +26,21 @@ const Auth = ({ onLoginSuccess }) => {
   // Load Google Sign-In script
   useEffect(() => {
     const loadGoogleScript = () => {
-      if (window.google) {
+      // Check if Google script already loaded
+      if (window.google?.accounts) {
         initializeGoogle();
+        return;
+      }
+      
+      // Check if script already exists
+      if (document.querySelector('script[src*="accounts.google.com/gsi/client"]')) {
+        // Script exists but not loaded yet, wait for it
+        const checkGoogle = setInterval(() => {
+          if (window.google?.accounts) {
+            clearInterval(checkGoogle);
+            initializeGoogle();
+          }
+        }, 100);
         return;
       }
       
@@ -35,17 +48,32 @@ const Auth = ({ onLoginSuccess }) => {
       script.src = 'https://accounts.google.com/gsi/client';
       script.async = true;
       script.defer = true;
-      script.onload = initializeGoogle;
+      script.onload = () => {
+        // Wait a bit for Google to fully initialize
+        setTimeout(initializeGoogle, 100);
+      };
+      script.onerror = () => {
+        console.error('Failed to load Google Sign-In script');
+      };
       document.body.appendChild(script);
     };
 
     const initializeGoogle = () => {
-      if (window.google && GOOGLE_CLIENT_ID) {
-        window.google.accounts.id.initialize({
-          client_id: GOOGLE_CLIENT_ID,
-          callback: handleGoogleCallback,
-        });
-        setGoogleLoaded(true);
+      if (window.google?.accounts && GOOGLE_CLIENT_ID) {
+        try {
+          window.google.accounts.id.initialize({
+            client_id: GOOGLE_CLIENT_ID,
+            callback: handleGoogleCallback,
+            auto_select: false,
+            cancel_on_tap_outside: true,
+          });
+          setGoogleLoaded(true);
+          console.log('Google Sign-In initialized successfully');
+        } catch (err) {
+          console.error('Failed to initialize Google Sign-In:', err);
+        }
+      } else if (!GOOGLE_CLIENT_ID) {
+        console.warn('Google Client ID not configured');
       }
     };
 
