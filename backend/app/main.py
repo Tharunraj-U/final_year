@@ -529,18 +529,15 @@ def submit_code():
             'ai_analysis': ai_analysis
         }
         
-        # Save to JSON data store
+        # Save submission (uses MongoDB if enabled, otherwise JSON)
         saved_submission = data_store.add_submission(user_id, submission)
         
-        # Also save to MongoDB if available
-        if USE_MONGODB and mongodb_store:
+        # Clear draft on successful submission (MongoDB only)
+        if USE_MONGODB and mongodb_store and result['passed']:
             try:
-                mongodb_store.add_submission(user_id, submission.copy())
-                # Clear draft on successful submission
-                if result['passed']:
-                    mongodb_store.delete_code_draft(user_id, problem_id)
+                mongodb_store.delete_code_draft(user_id, problem_id)
             except Exception as e:
-                print(f"MongoDB save error (non-critical): {e}")
+                print(f"Draft deletion error (non-critical): {e}")
         
         return jsonify({
             'submission': saved_submission,

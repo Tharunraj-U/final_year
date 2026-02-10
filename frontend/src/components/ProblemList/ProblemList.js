@@ -224,18 +224,25 @@ const ProblemList = ({ onSelectProblem }) => {
             <span className="col-topic">Topic</span>
             <span className="col-difficulty">Difficulty</span>
           </div>
-          {filteredProblems.map((problem) => (
-            <div key={problem.problem_id} className="table-row" onClick={() => onSelectProblem(problem.problem_id)}>
-              <span className="col-status">
-                {problem.solved ? <span className="solved-icon">✓</span> : <span className="unsolved-icon">○</span>}
-              </span>
-              <span className="col-title">{problem.title}</span>
-              <span className="col-topic">{getTopicConfig(problem.topic).icon} {getTopicConfig(problem.topic).name}</span>
-              <span className={`col-difficulty ${getDifficultyClass(problem.difficulty)}`}>
-                {problem.difficulty?.charAt(0).toUpperCase() + problem.difficulty?.slice(1)}
-              </span>
-            </div>
-          ))}
+          {filteredProblems.map((problem) => {
+            const config = getTopicConfig(problem.topic);
+            const IconComponent = config.icon;
+            return (
+              <div key={problem.problem_id} className="table-row" onClick={() => onSelectProblem(problem.problem_id)}>
+                <span className="col-status">
+                  {problem.solved ? <span className="solved-icon">✓</span> : <span className="unsolved-icon">○</span>}
+                </span>
+                <span className="col-title">{problem.title}</span>
+                <span className="col-topic">
+                  {IconComponent ? <IconComponent size={16} color={config.color} /> : <Circle size={16} />}
+                  {' '}{config.name}
+                </span>
+                <span className={`col-difficulty ${getDifficultyClass(problem.difficulty)}`}>
+                  {problem.difficulty?.charAt(0).toUpperCase() + problem.difficulty?.slice(1)}
+                </span>
+              </div>
+            );
+          })}
         </div>
       )}
     </div>
