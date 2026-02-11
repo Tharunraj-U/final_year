@@ -9,14 +9,73 @@ const LANGUAGES = [
   { id: 'python', name: 'Python', monaco: 'python' },
   { id: 'javascript', name: 'JavaScript', monaco: 'javascript' },
   { id: 'java', name: 'Java', monaco: 'java' },
+  { id: 'c', name: 'C', monaco: 'c' },
   { id: 'cpp', name: 'C++', monaco: 'cpp' },
 ];
 
-const STARTER_CODE = {
-  python: (funcName, params) => `def ${funcName}(${params}):\n    # Write your code here\n    pass`,
-  javascript: (funcName, params) => `function ${funcName}(${params}) {\n    // Write your code here\n    \n}`,
-  java: (funcName, params) => `class Solution {\n    public Object ${funcName}(${params}) {\n        // Write your code here\n        return null;\n    }\n}`,
-  cpp: (funcName, params) => `class Solution {\npublic:\n    auto ${funcName}(${params}) {\n        // Write your code here\n        \n    }\n};`,
+// -------- Type mapping from Python hints to other languages --------
+const PY_TO_JAVA = { 'list': 'int[]', 'str': 'String', 'int': 'int', 'float': 'double', 'bool': 'boolean' };
+const PY_TO_C    = { 'list': 'int*', 'str': 'char*', 'int': 'int', 'float': 'double', 'bool': 'int' };
+const PY_TO_CPP  = { 'list': 'vector<int>', 'str': 'string', 'int': 'int', 'float': 'double', 'bool': 'bool' };
+const PY_RET_JAVA = { 'list': 'int[]', 'str': 'String', 'int': 'int', 'float': 'double', 'bool': 'boolean' };
+const PY_RET_CPP  = { 'list': 'vector<int>', 'str': 'string', 'int': 'int', 'float': 'double', 'bool': 'bool' };
+const PY_RET_C    = { 'list': 'int*', 'str': 'char*', 'int': 'int', 'float': 'double', 'bool': 'int' };
+
+const JAVA_DEFAULTS = { 'int': '0', 'double': '0.0', 'boolean': 'false', 'String': '""', 'int[]': 'new int[]{}' };
+const C_DEFAULTS    = { 'int': '0', 'double': '0.0', 'char*': '""', 'int*': 'NULL' };
+const CPP_DEFAULTS  = { 'int': '0', 'double': '0.0', 'bool': 'false', 'string': '""', 'vector<int>': '{}' };
+
+/**
+ * Parse the Python starter_code to extract function name, parameters with types, and return type.
+ * e.g. "def two_sum(nums: list, target: int) -> list:" =>
+ *   { funcName: 'two_sum', params: [{name:'nums',type:'list'},{name:'target',type:'int'}], returnType: 'list' }
+ */
+const parsePythonSignature = (starterCode) => {
+  if (!starterCode) return null;
+  const m = starterCode.match(/def\s+(\w+)\(([^)]*)\)\s*(?:->\s*(\w+))?/);
+  if (!m) return null;
+  const funcName = m[1];
+  const returnType = m[3] || 'int';
+  const rawParams = m[2].split(',').map(p => p.trim()).filter(Boolean);
+  const params = rawParams.map(p => {
+    const parts = p.split(':').map(s => s.trim());
+    return { name: parts[0], type: parts[1] || 'int' };
+  });
+  return { funcName, params, returnType };
+};
+
+/** Generate Java starter code from parsed Python signature */
+const genJava = (sig) => {
+  const retType = PY_RET_JAVA[sig.returnType] || 'Object';
+  const params = sig.params.map(p => `${PY_TO_JAVA[p.type] || 'Object'} ${p.name}`).join(', ');
+  const defaultRet = JAVA_DEFAULTS[retType] || 'null';
+  return `import java.util.*;\n\nclass Solution {\n    public ${retType} ${sig.funcName}(${params}) {\n        // Write your code here\n        return ${defaultRet};\n    }\n}`;
+};
+
+/** Generate JavaScript starter code from parsed Python signature */
+const genJS = (sig) => {
+  const params = sig.params.map(p => p.name).join(', ');
+  return `function ${sig.funcName}(${params}) {\n    // Write your code here\n    \n}`;
+};
+
+/** Generate C starter code from parsed Python signature */
+const genC = (sig) => {
+  const retType = PY_RET_C[sig.returnType] || 'int';
+  const paramList = [];
+  sig.params.forEach(p => {
+    paramList.push(`${PY_TO_C[p.type] || 'int'} ${p.name}`);
+    if (p.type === 'list') paramList.push(`int ${p.name}_size`);
+  });
+  const defaultRet = C_DEFAULTS[retType] || '0';
+  return `#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n\n${retType} ${sig.funcName}(${paramList.join(', ')}) {\n    // Write your code here\n    return ${defaultRet};\n}`;
+};
+
+/** Generate C++ starter code from parsed Python signature */
+const genCPP = (sig) => {
+  const retType = PY_RET_CPP[sig.returnType] || 'int';
+  const params = sig.params.map(p => `${PY_TO_CPP[p.type] || 'int'} ${p.name}`).join(', ');
+  const defaultRet = CPP_DEFAULTS[retType] || '0';
+  return `#include <iostream>\n#include <vector>\n#include <string>\n#include <algorithm>\n#include <unordered_map>\n#include <unordered_set>\nusing namespace std;\n\n${retType} ${sig.funcName}(${params}) {\n    // Write your code here\n    return ${defaultRet};\n}`;
 };
 
 const CodeEditor = ({ problemId, onBack, onSubmitSuccess, onSelectProblem }) => {
@@ -37,6 +96,10 @@ const CodeEditor = ({ problemId, onBack, onSubmitSuccess, onSelectProblem }) => 
   const startTimeRef = useRef(Date.now());
   const codeByLanguage = useRef({});
   const autoSaveTimeoutRef = useRef(null);
+  const keystrokeCountRef = useRef(0);
+  const pasteCountRef = useRef(0);
+  const pastedCharsRef = useRef(0);
+  const totalTypedCharsRef = useRef(0);
 
   // Auto-save debounced function - saves to both API and localStorage
   const autoSave = useCallback(async (codeToSave, lang) => {
@@ -67,6 +130,13 @@ const CodeEditor = ({ problemId, onBack, onSubmitSuccess, onSelectProblem }) => 
 
   // Handle code change with debounced auto-save
   const handleCodeChange = (value) => {
+    const oldLen = code.length;
+    const newLen = (value || '').length;
+    const diff = newLen - oldLen;
+    if (diff > 0) {
+      totalTypedCharsRef.current += diff;
+      keystrokeCountRef.current += 1;
+    }
     setCode(value);
     codeByLanguage.current[language] = value;
     
@@ -101,6 +171,10 @@ const CodeEditor = ({ problemId, onBack, onSubmitSuccess, onSelectProblem }) => 
     loadSubmissionHistory();
     startTimeRef.current = Date.now();
     codeByLanguage.current = {};
+    keystrokeCountRef.current = 0;
+    pasteCountRef.current = 0;
+    pastedCharsRef.current = 0;
+    totalTypedCharsRef.current = 0;
     
     return () => {
       // Cleanup timeout on unmount
@@ -119,9 +193,28 @@ const CodeEditor = ({ problemId, onBack, onSubmitSuccess, onSelectProblem }) => 
     }
   };
 
-  const getStarterCode = (lang, funcName) => {
-    const generator = STARTER_CODE[lang] || STARTER_CODE.python;
-    return generator(funcName || 'solution', 'args');
+  const getStarterCode = (lang, funcName, pythonStarterCode) => {
+    // If we have the Python starter_code, parse it and generate proper typed code
+    const sig = parsePythonSignature(pythonStarterCode);
+    if (sig) {
+      switch (lang) {
+        case 'python':  return pythonStarterCode;
+        case 'java':    return genJava(sig);
+        case 'javascript': return genJS(sig);
+        case 'c':       return genC(sig);
+        case 'cpp':     return genCPP(sig);
+        default:        return pythonStarterCode;
+      }
+    }
+    // Fallback if no starter_code available
+    const fallback = {
+      python: `def ${funcName || 'solution'}(args):\n    # Write your code here\n    pass`,
+      javascript: `function ${funcName || 'solution'}(args) {\n    // Write your code here\n    \n}`,
+      java: `import java.util.*;\n\nclass Solution {\n    public int ${funcName || 'solution'}(int[] args) {\n        // Write your code here\n        return 0;\n    }\n}`,
+      c: `#include <stdio.h>\n#include <stdlib.h>\n\nint ${funcName || 'solution'}(int* args, int size) {\n    // Write your code here\n    return 0;\n}`,
+      cpp: `#include <iostream>\n#include <vector>\nusing namespace std;\n\nint ${funcName || 'solution'}(vector<int> args) {\n    // Write your code here\n    return 0;\n}`,
+    };
+    return fallback[lang] || fallback.python;
   };
 
   const loadProblem = async () => {
@@ -161,7 +254,7 @@ const CodeEditor = ({ problemId, onBack, onSubmitSuccess, onSelectProblem }) => 
         setTimeout(() => setDraftStatus(''), 2000);
       } else {
         // Use starter code
-        const starterCode = data.starter_code || getStarterCode('python', data.function_name);
+        const starterCode = data.starter_code || getStarterCode('python', data.function_name, data.starter_code);
         setCode(starterCode);
         codeByLanguage.current = { python: starterCode };
       }
@@ -180,7 +273,7 @@ const CodeEditor = ({ problemId, onBack, onSubmitSuccess, onSelectProblem }) => 
     if (savedCode) {
       setCode(savedCode);
     } else {
-      const starterCode = getStarterCode(newLang, problem?.function_name);
+      const starterCode = getStarterCode(newLang, problem?.function_name, problem?.starter_code);
       setCode(starterCode);
       codeByLanguage.current[newLang] = starterCode;
     }
@@ -214,7 +307,14 @@ const CodeEditor = ({ problemId, onBack, onSubmitSuccess, onSelectProblem }) => 
     const timeTaken = Math.round((Date.now() - startTimeRef.current) / 60000);
     
     try {
-      const data = await submitCode(problemId, code, timeTaken, language);
+      const typingMetrics = {
+        keystroke_count: keystrokeCountRef.current,
+        paste_count: pasteCountRef.current,
+        pasted_chars: pastedCharsRef.current,
+        total_typed_chars: totalTypedCharsRef.current,
+        time_spent_seconds: Math.round((Date.now() - startTimeRef.current) / 1000)
+      };
+      const data = await submitCode(problemId, code, timeTaken, language, typingMetrics);
       setResult(data.execution_result);
       setAiAnalysis(data.ai_analysis);
       
@@ -298,12 +398,27 @@ const CodeEditor = ({ problemId, onBack, onSubmitSuccess, onSelectProblem }) => 
               <ReactMarkdown>{problem.description}</ReactMarkdown>
               
               <div className="problem-meta">
-                <p><strong>Topic:</strong> {problem.topic?.replace('_', ' ')}</p>
-                <p><strong>Expected Time:</strong> {problem.expected_time_minutes} minutes</p>
-                <p><strong>Optimal Complexity:</strong> {problem.expected_complexity}</p>
+                <div className="meta-tags-row">
+                  <span className="meta-tag topic-tag">📂 {problem.topic?.replace(/_/g, ' ')}</span>
+                  <span className="meta-tag difficulty-tag" data-difficulty={problem.difficulty?.toLowerCase()}>
+                    {problem.difficulty === 'easy' ? '🟢' : problem.difficulty === 'medium' ? '🟡' : '🔴'} {problem.difficulty}
+                  </span>
+                  <span className="meta-tag time-tag">⏳ {problem.expected_time_minutes} min</span>
+                  <span className="meta-tag tests-tag">📝 {problem.test_cases?.length || 0} tests</span>
+                </div>
+                <div className="expected-complexity-badges">
+                  <div className="complexity-badge-item">
+                    <span className="complexity-badge-label">⏱ Expected Time Complexity</span>
+                    <span className="complexity-badge-value">{problem.expected_complexity}</span>
+                  </div>
+                  <div className="complexity-badge-item">
+                    <span className="complexity-badge-label">💾 Expected Space Complexity</span>
+                    <span className="complexity-badge-value">{problem.expected_space_complexity || 'O(n)'}</span>
+                  </div>
+                </div>
               </div>
             </div>
-          ) : (
+          ) : activeTab === 'result' ? (
             <div className="result-panel">
               {(running || submitting) && (
                 <div className="running-indicator">
@@ -371,6 +486,35 @@ const CodeEditor = ({ problemId, onBack, onSubmitSuccess, onSelectProblem }) => 
                       </div>
                     )}
                   </div>
+
+                  {/* Score Breakdown */}
+                  {aiAnalysis.score_breakdown && (
+                    <div className="score-breakdown-section">
+                      <h5>📊 Score Breakdown</h5>
+                      <div className="score-breakdown-grid">
+                        {[
+                          { label: 'Correctness', key: 'correctness', max: 25 },
+                          { label: 'Time Efficiency', key: 'time_efficiency', max: 20 },
+                          { label: 'Space Efficiency', key: 'space_efficiency', max: 15 },
+                          { label: 'Code Quality', key: 'code_quality_score', max: 15 },
+                          { label: 'Attempt Bonus', key: 'attempt_bonus', max: 10 },
+                          { label: 'Typing Speed', key: 'typing_speed_score', max: 10 },
+                          { label: 'Originality', key: 'originality_score', max: 5 },
+                        ].map(({ label, key, max }) => (
+                          <div className="score-breakdown-item" key={key}>
+                            <span className="breakdown-label">{label}</span>
+                            <div className="breakdown-bar-container">
+                              <div className="breakdown-bar" style={{width: `${((aiAnalysis.score_breakdown[key] || 0) / max) * 100}%`}}></div>
+                            </div>
+                            <span className="breakdown-value">{aiAnalysis.score_breakdown[key] ?? '-'}/{max}</span>
+                          </div>
+                        ))}
+                      </div>
+                      {aiAnalysis.score_breakdown.copy_paste_detected && (
+                        <div className="copy-paste-warning">⚠️ Copy-paste detected ({aiAnalysis.score_breakdown.paste_count} paste{aiAnalysis.score_breakdown.paste_count !== 1 ? 's' : ''})</div>
+                      )}
+                    </div>
+                  )}
 
                   {/* Algorithm Type Detection */}
                   {aiAnalysis.algorithm_type && (
@@ -503,37 +647,7 @@ const CodeEditor = ({ problemId, onBack, onSubmitSuccess, onSelectProblem }) => 
                     </div>
                   )}
 
-                  {/* Feedback */}
-                  {aiAnalysis.feedback && (
-                    <div className="feedback">
-                      <h5>💬 Feedback</h5>
-                      <p>{aiAnalysis.feedback}</p>
-                    </div>
-                  )}
 
-                  {/* Improvement Tips */}
-                  {aiAnalysis.improvement_tips && aiAnalysis.improvement_tips.length > 0 && (
-                    <div className="improvements">
-                      <h5>🚀 Improvement Tips</h5>
-                      <ul>
-                        {aiAnalysis.improvement_tips.map((item, idx) => (
-                          <li key={idx}>{item}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
-
-                  {/* Legacy improvements support */}
-                  {aiAnalysis.improvements && aiAnalysis.improvements.length > 0 && !aiAnalysis.improvement_tips && (
-                    <div className="improvements">
-                      <h5>🚀 Suggestions for Improvement</h5>
-                      <ul>
-                        {aiAnalysis.improvements.map((item, idx) => (
-                          <li key={idx}>{item}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  )}
 
                   {/* Next Problem Link inside AI Analysis */}
                   {recommendations && recommendations.recommended_problems && recommendations.recommended_problems.length > 0 && (
@@ -595,10 +709,7 @@ const CodeEditor = ({ problemId, onBack, onSubmitSuccess, onSelectProblem }) => 
                 </div>
               )}
             </div>
-          )}
-
-          {/* Submissions History Tab */}
-          {activeTab === 'submissions' && (
+          ) : activeTab === 'submissions' ? (
             <div className="submissions-history-tab">
               <h3>📋 Submission History</h3>
               
@@ -674,7 +785,7 @@ const CodeEditor = ({ problemId, onBack, onSubmitSuccess, onSelectProblem }) => 
                 </>
               )}
             </div>
-          )}
+          ) : null}
         </div>
       </div>
 
@@ -706,6 +817,93 @@ const CodeEditor = ({ problemId, onBack, onSubmitSuccess, onSelectProblem }) => 
             value={code}
             onChange={(value) => handleCodeChange(value || '')}
             theme="vs-dark"
+            beforeMount={(monaco) => {
+              // ---- Java autocomplete suggestions ----
+              monaco.languages.registerCompletionItemProvider('java', {
+                provideCompletionItems: (model, position) => {
+                  const word = model.getWordUntilPosition(position);
+                  const range = {
+                    startLineNumber: position.lineNumber, endLineNumber: position.lineNumber,
+                    startColumn: word.startColumn, endColumn: word.endColumn,
+                  };
+                  const suggestions = [
+                    // Collections
+                    { label: 'HashMap', kind: monaco.languages.CompletionItemKind.Class, insertText: 'HashMap<${1:String}, ${2:Integer}> ${3:map} = new HashMap<>();', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'java.util.HashMap', range },
+                    { label: 'ArrayList', kind: monaco.languages.CompletionItemKind.Class, insertText: 'ArrayList<${1:Integer}> ${2:list} = new ArrayList<>();', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'java.util.ArrayList', range },
+                    { label: 'HashSet', kind: monaco.languages.CompletionItemKind.Class, insertText: 'HashSet<${1:Integer}> ${2:set} = new HashSet<>();', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'java.util.HashSet', range },
+                    { label: 'LinkedList', kind: monaco.languages.CompletionItemKind.Class, insertText: 'LinkedList<${1:Integer}> ${2:list} = new LinkedList<>();', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'java.util.LinkedList', range },
+                    { label: 'Stack', kind: monaco.languages.CompletionItemKind.Class, insertText: 'Stack<${1:Integer}> ${2:stack} = new Stack<>();', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'java.util.Stack', range },
+                    { label: 'Queue', kind: monaco.languages.CompletionItemKind.Interface, insertText: 'Queue<${1:Integer}> ${2:queue} = new LinkedList<>();', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'java.util.Queue', range },
+                    { label: 'PriorityQueue', kind: monaco.languages.CompletionItemKind.Class, insertText: 'PriorityQueue<${1:Integer}> ${2:pq} = new PriorityQueue<>();', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'java.util.PriorityQueue', range },
+                    { label: 'TreeMap', kind: monaco.languages.CompletionItemKind.Class, insertText: 'TreeMap<${1:Integer}, ${2:Integer}> ${3:map} = new TreeMap<>();', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'java.util.TreeMap', range },
+                    { label: 'Deque', kind: monaco.languages.CompletionItemKind.Interface, insertText: 'Deque<${1:Integer}> ${2:deque} = new ArrayDeque<>();', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'java.util.Deque', range },
+                    // Types
+                    { label: 'Integer', kind: monaco.languages.CompletionItemKind.Class, insertText: 'Integer', detail: 'java.lang.Integer', range },
+                    { label: 'String', kind: monaco.languages.CompletionItemKind.Class, insertText: 'String', detail: 'java.lang.String', range },
+                    { label: 'Boolean', kind: monaco.languages.CompletionItemKind.Class, insertText: 'Boolean', detail: 'java.lang.Boolean', range },
+                    { label: 'Character', kind: monaco.languages.CompletionItemKind.Class, insertText: 'Character', detail: 'java.lang.Character', range },
+                    { label: 'Long', kind: monaco.languages.CompletionItemKind.Class, insertText: 'Long', detail: 'java.lang.Long', range },
+                    { label: 'Double', kind: monaco.languages.CompletionItemKind.Class, insertText: 'Double', detail: 'java.lang.Double', range },
+                    // Common patterns
+                    { label: 'for-loop', kind: monaco.languages.CompletionItemKind.Snippet, insertText: 'for (int ${1:i} = 0; ${1:i} < ${2:n}; ${1:i}++) {\n    $0\n}', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'For loop', range },
+                    { label: 'for-each', kind: monaco.languages.CompletionItemKind.Snippet, insertText: 'for (${1:int} ${2:item} : ${3:collection}) {\n    $0\n}', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'Enhanced for loop', range },
+                    { label: 'while', kind: monaco.languages.CompletionItemKind.Snippet, insertText: 'while (${1:condition}) {\n    $0\n}', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'While loop', range },
+                    { label: 'if-else', kind: monaco.languages.CompletionItemKind.Snippet, insertText: 'if (${1:condition}) {\n    $0\n} else {\n    \n}', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'If-else block', range },
+                    // Utility methods
+                    { label: 'Arrays.sort', kind: monaco.languages.CompletionItemKind.Method, insertText: 'Arrays.sort(${1:arr});', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'Sort array', range },
+                    { label: 'Arrays.fill', kind: monaco.languages.CompletionItemKind.Method, insertText: 'Arrays.fill(${1:arr}, ${2:val});', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'Fill array', range },
+                    { label: 'Collections.sort', kind: monaco.languages.CompletionItemKind.Method, insertText: 'Collections.sort(${1:list});', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'Sort collection', range },
+                    { label: 'Math.max', kind: monaco.languages.CompletionItemKind.Method, insertText: 'Math.max(${1:a}, ${2:b})', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'Maximum of two values', range },
+                    { label: 'Math.min', kind: monaco.languages.CompletionItemKind.Method, insertText: 'Math.min(${1:a}, ${2:b})', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'Minimum of two values', range },
+                    { label: 'StringBuilder', kind: monaco.languages.CompletionItemKind.Class, insertText: 'StringBuilder ${1:sb} = new StringBuilder();', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'java.lang.StringBuilder', range },
+                    { label: 'System.out.println', kind: monaco.languages.CompletionItemKind.Method, insertText: 'System.out.println(${1:});', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'Print line', range },
+                    { label: 'Integer.MAX_VALUE', kind: monaco.languages.CompletionItemKind.Constant, insertText: 'Integer.MAX_VALUE', detail: '2147483647', range },
+                    { label: 'Integer.MIN_VALUE', kind: monaco.languages.CompletionItemKind.Constant, insertText: 'Integer.MIN_VALUE', detail: '-2147483648', range },
+                  ];
+                  return { suggestions };
+                }
+              });
+              // ---- C++ autocomplete suggestions ----
+              monaco.languages.registerCompletionItemProvider('cpp', {
+                provideCompletionItems: (model, position) => {
+                  const word = model.getWordUntilPosition(position);
+                  const range = {
+                    startLineNumber: position.lineNumber, endLineNumber: position.lineNumber,
+                    startColumn: word.startColumn, endColumn: word.endColumn,
+                  };
+                  const suggestions = [
+                    { label: 'vector', kind: monaco.languages.CompletionItemKind.Class, insertText: 'vector<${1:int}> ${2:v};', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'std::vector', range },
+                    { label: 'unordered_map', kind: monaco.languages.CompletionItemKind.Class, insertText: 'unordered_map<${1:int}, ${2:int}> ${3:mp};', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'std::unordered_map', range },
+                    { label: 'unordered_set', kind: monaco.languages.CompletionItemKind.Class, insertText: 'unordered_set<${1:int}> ${2:s};', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'std::unordered_set', range },
+                    { label: 'map', kind: monaco.languages.CompletionItemKind.Class, insertText: 'map<${1:int}, ${2:int}> ${3:mp};', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'std::map', range },
+                    { label: 'set', kind: monaco.languages.CompletionItemKind.Class, insertText: 'set<${1:int}> ${2:s};', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'std::set', range },
+                    { label: 'stack', kind: monaco.languages.CompletionItemKind.Class, insertText: 'stack<${1:int}> ${2:st};', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'std::stack', range },
+                    { label: 'queue', kind: monaco.languages.CompletionItemKind.Class, insertText: 'queue<${1:int}> ${2:q};', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'std::queue', range },
+                    { label: 'priority_queue', kind: monaco.languages.CompletionItemKind.Class, insertText: 'priority_queue<${1:int}> ${2:pq};', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'std::priority_queue', range },
+                    { label: 'pair', kind: monaco.languages.CompletionItemKind.Class, insertText: 'pair<${1:int}, ${2:int}> ${3:p};', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'std::pair', range },
+                    { label: 'sort', kind: monaco.languages.CompletionItemKind.Method, insertText: 'sort(${1:v}.begin(), ${1:v}.end());', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'std::sort', range },
+                    { label: 'reverse', kind: monaco.languages.CompletionItemKind.Method, insertText: 'reverse(${1:v}.begin(), ${1:v}.end());', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'std::reverse', range },
+                    { label: 'for-loop', kind: monaco.languages.CompletionItemKind.Snippet, insertText: 'for (int ${1:i} = 0; ${1:i} < ${2:n}; ${1:i}++) {\n    $0\n}', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'For loop', range },
+                    { label: 'for-each', kind: monaco.languages.CompletionItemKind.Snippet, insertText: 'for (auto& ${1:item} : ${2:collection}) {\n    $0\n}', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'Range-based for', range },
+                    { label: 'INT_MAX', kind: monaco.languages.CompletionItemKind.Constant, insertText: 'INT_MAX', detail: '2147483647', range },
+                    { label: 'INT_MIN', kind: monaco.languages.CompletionItemKind.Constant, insertText: 'INT_MIN', detail: '-2147483648', range },
+                    { label: 'cout', kind: monaco.languages.CompletionItemKind.Method, insertText: 'cout << ${1:} << endl;', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'Print output', range },
+                    { label: 'make_pair', kind: monaco.languages.CompletionItemKind.Method, insertText: 'make_pair(${1:a}, ${2:b})', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'Create pair', range },
+                    { label: 'push_back', kind: monaco.languages.CompletionItemKind.Method, insertText: 'push_back(${1:val})', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'Add to end', range },
+                    { label: 'max', kind: monaco.languages.CompletionItemKind.Method, insertText: 'max(${1:a}, ${2:b})', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'Maximum', range },
+                    { label: 'min', kind: monaco.languages.CompletionItemKind.Method, insertText: 'min(${1:a}, ${2:b})', insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet, detail: 'Minimum', range },
+                  ];
+                  return { suggestions };
+                }
+              });
+            }}
+            onMount={(editor) => {
+              editor.onDidPaste((e) => {
+                pasteCountRef.current += 1;
+                const pastedLen = e.range.endColumn - e.range.startColumn + (e.range.endLineNumber - e.range.startLineNumber) * 40;
+                pastedCharsRef.current += Math.max(pastedLen, 1);
+              });
+            }}
             options={{
               minimap: { enabled: false },
               fontSize: 14,

@@ -155,13 +155,14 @@ export const runCode = async (problemId, code, language = 'python') => {
 };
 
 // Submit code for evaluation and AI feedback
-export const submitCode = async (problemId, code, timeTaken = 0, language = 'python') => {
+export const submitCode = async (problemId, code, timeTaken = 0, language = 'python', typingMetrics = {}) => {
   const response = await api.post('/submit', {
     user_id: getUserId(),
     problem_id: problemId,
     code: code,
     time_taken_minutes: timeTaken,
     language: language,
+    typing_metrics: typingMetrics,
   });
   return response.data;
 };

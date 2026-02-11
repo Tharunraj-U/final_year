@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { getDemoUsers } from '../../services/api';
 import { Code2, LayoutDashboard, History, PlusCircle, Bot, Trophy, Medal, Sun, Moon, LogOut, User, ChevronDown } from 'lucide-react';
 import './Header.css';
@@ -17,6 +17,20 @@ const Header = ({
 }) => {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const demoUsers = getDemoUsers();
+  const userMenuRef = useRef(null);
+
+  // Close dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target)) {
+        setShowUserMenu(false);
+      }
+    };
+    if (showUserMenu) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [showUserMenu]);
 
   // Check if user has a Google profile picture
   const hasGooglePhoto = () => {
@@ -135,7 +149,7 @@ const Header = ({
           </button>
         </div>
 
-        <div className="user-section">
+        <div className="user-section" ref={userMenuRef}>
           <div 
             className="user-profile" 
             onClick={() => setShowUserMenu(!showUserMenu)}

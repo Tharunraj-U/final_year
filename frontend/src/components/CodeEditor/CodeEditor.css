@@ -132,9 +132,111 @@
   border-top: 1px solid #2a2a2a;
 }
 
+.meta-tags-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.meta-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: capitalize;
+  letter-spacing: 0.3px;
+}
+
+.topic-tag {
+  background: rgba(99, 102, 241, 0.12);
+  border: 1px solid rgba(99, 102, 241, 0.3);
+  color: #818cf8;
+}
+
+.difficulty-tag[data-difficulty="easy"] {
+  background: rgba(34, 197, 94, 0.12);
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  color: #4ade80;
+}
+
+.difficulty-tag[data-difficulty="medium"] {
+  background: rgba(234, 179, 8, 0.12);
+  border: 1px solid rgba(234, 179, 8, 0.3);
+  color: #facc15;
+}
+
+.difficulty-tag[data-difficulty="hard"] {
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #f87171;
+}
+
+.time-tag {
+  background: rgba(14, 165, 233, 0.12);
+  border: 1px solid rgba(14, 165, 233, 0.3);
+  color: #38bdf8;
+}
+
+.tests-tag {
+  background: rgba(168, 85, 247, 0.12);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  color: #c084fc;
+}
+
 .problem-meta p {
   margin: 8px 0;
   color: #888;
+}
+
+/* Expected Complexity Badges */
+.expected-complexity-badges {
+  display: flex;
+  gap: 12px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.complexity-badge-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: rgba(255, 107, 0, 0.08);
+  border: 1px solid rgba(255, 107, 0, 0.2);
+  border-radius: 8px;
+  padding: 10px 16px;
+  flex: 1;
+  min-width: 140px;
+}
+
+.complexity-badge-label {
+  font-size: 11px;
+  color: #999;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  font-weight: 500;
+}
+
+.complexity-badge-value {
+  font-size: 16px;
+  font-weight: 700;
+  color: #ff6b00;
+  font-family: 'Fira Code', monospace;
+}
+
+/* Copy-Paste Warning */
+.copy-paste-warning {
+  margin-top: 8px;
+  padding: 8px 14px;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 6px;
+  color: #ef4444;
+  font-size: 13px;
+  font-weight: 500;
 }
 
 /* Result Panel */
@@ -317,6 +419,63 @@
 .mastery-expert {
   background-color: rgba(236, 72, 153, 0.2);
   color: #ec4899;
+}
+
+/* Score Breakdown */
+.score-breakdown-section {
+  margin-bottom: 16px;
+  padding: 12px;
+  background: rgba(255, 107, 0, 0.05);
+  border-radius: 10px;
+  border: 1px solid rgba(255, 107, 0, 0.15);
+}
+
+.score-breakdown-section h5 {
+  margin: 0 0 12px 0;
+  color: #ff6b00;
+  font-size: 14px;
+}
+
+.score-breakdown-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.score-breakdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.score-breakdown-item .breakdown-label {
+  width: 120px;
+  font-size: 12px;
+  color: #aaa;
+  flex-shrink: 0;
+}
+
+.breakdown-bar-container {
+  flex: 1;
+  height: 8px;
+  background: #2a2a2a;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.breakdown-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #ff6b00, #ff9d4d);
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.score-breakdown-item .breakdown-value {
+  width: 50px;
+  text-align: right;
+  font-size: 12px;
+  font-weight: 600;
+  color: #ccc;
 }
 
 /* Algorithm Section */

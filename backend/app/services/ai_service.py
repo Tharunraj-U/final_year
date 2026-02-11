@@ -158,9 +158,14 @@ CRITICAL COMPLEXITY ANALYSIS RULES:
 5. O(1) means CONSTANT time regardless of input size (only single operations, no loops over input)
 6. Nested loops are O(n^2), O(n*m), etc.
 7. ACTUAL recursion with branching factor b and depth d is O(b^d) - but only if recursion is actually invoked!
+8. **HARDCODED / STUB CODE IS O(1) TIME AND O(1) SPACE**: If the code just returns a fixed value, a hardcoded literal, or doesn't process the input at all (e.g., `return [0,1]`, `return new int[]{0,1}`, `return null`, `return 0`), the complexity is O(1) for both time and space. Do NOT report the expected/optimal complexity — report what the code ACTUALLY does.
+9. If the code does NOT iterate over, recurse on, or process the input data in any meaningful way, it is O(1).
+10. If most test cases FAIL, the code is likely not implementing the correct algorithm — do NOT assume it uses the expected optimal approach.
 
 EXAMPLE: If code defines def dfs() but the return statement uses "for d in digits: result *= mapping[d]", 
 the actual complexity is O(n) from the loop, NOT from the unused DFS function.
+
+EXAMPLE: If code is `return new int[]{0,1}` or `return [0, 1]`, the time complexity is O(1) and space complexity is O(1) because no computation happens.
 
 *** CRITICAL is_optimal DETERMINATION RULES ***
 The expected complexity for this problem is: {problem.get('expected_complexity')}

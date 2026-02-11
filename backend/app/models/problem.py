@@ -15,7 +15,8 @@ class Problem:
     difficulty: str  # easy, medium, hard
     topic: str
     expected_complexity: str  # e.g., "O(n)", "O(n log n)"
-    expected_time_minutes: int
+    expected_space_complexity: str = "O(n)"  # e.g., "O(1)", "O(n)"
+    expected_time_minutes: int = 30
     tags: List[str] = field(default_factory=list)
     description: str = ""
     function_name: str = "solution"
@@ -30,6 +31,7 @@ class Problem:
             "difficulty": self.difficulty,
             "topic": self.topic,
             "expected_complexity": self.expected_complexity,
+            "expected_space_complexity": self.expected_space_complexity,
             "expected_time_minutes": self.expected_time_minutes,
             "tags": self.tags,
             "description": self.description,
@@ -47,6 +49,7 @@ class Problem:
             difficulty=data["difficulty"],
             topic=data["topic"],
             expected_complexity=data["expected_complexity"],
+            expected_space_complexity=data.get("expected_space_complexity", "O(n)"),
             expected_time_minutes=data.get("expected_time_minutes", 30),
             tags=data.get("tags", []),
             description=data.get("description", ""),

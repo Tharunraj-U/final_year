@@ -467,6 +467,7 @@ def submit_code():
         user_code = data.get("code", "")
         time_taken = data.get("time_taken_minutes", 0)
         language = data.get("language", "python")
+        typing_metrics = data.get("typing_metrics", {})
         
         problem = problem_bank.get_problem(problem_id)
         if not problem:
@@ -499,6 +500,163 @@ def submit_code():
             language=language
         )
         
+        # ---- Deterministic score based on multiple factors ----
+        from .utils.complexity import compare_complexity
+        
+        passed_count = result.get('passed_count', 0)
+        total_count = result.get('total_count', 0)
+        
+        # 1. Correctness (25 pts) - based on test cases passed
+        correctness_score = round((passed_count / total_count * 25), 1) if total_count > 0 else 0
+        
+        # 2. Time complexity efficiency (20 pts)
+        user_time_cx = ai_analysis.get('time_complexity', {}).get('estimate', 'O(n)')
+        expected_time_cx = problem_dict.get('expected_complexity', 'O(n)')
+        
+        # Sanity check: if most tests fail, the code likely doesn't implement
+        # a real algorithm — cap the efficiency score based on correctness ratio
+        correctness_ratio = passed_count / total_count if total_count > 0 else 0
+        
+        # Detect trivial/stub code that just returns a hardcoded value
+        import re
+        stripped_code = re.sub(r'\s+', ' ', user_code.strip())
+        trivial_patterns = [
+            r'return\s+(None|null|nullptr|0|\[.*?\]|new\s+int\s*\[\]\s*\{.*?\})',
+            r'return\s+".*?"',
+            r'pass\s*$',
+        ]
+        is_trivial = False
+        code_lines = [l.strip() for l in user_code.strip().split('\n') 
+                      if l.strip() and not l.strip().startswith(('#', '//', '/*', '*', 'import', 'from', 'using', '#include', 'class', 'public', 'def ', 'function ', '{', '}', '};'))]
+        if len(code_lines) <= 2:
+            is_trivial = True
+        
+        if is_trivial:
+            # Stub code — force O(1) complexity
+            user_time_cx = 'O(1)'
+            user_space_cx_override = 'O(1)'
+            ai_analysis['time_complexity'] = {'estimate': 'O(1)', 'explanation': 'Code returns a hardcoded value without processing input.', 'is_optimal': False}
+            ai_analysis['space_complexity'] = {'estimate': 'O(1)', 'explanation': 'No additional memory allocated.', 'is_optimal': False}
+        else:
+            user_space_cx_override = None
+        
+        time_efficiency = compare_complexity(user_time_cx, expected_time_cx)
+        time_score = round(time_efficiency * 20, 1)
+        
+        # Cap efficiency scores if correctness is low — you can't claim optimal
+        # complexity if your code doesn't actually solve the problem
+        if correctness_ratio < 0.5:
+            time_score = min(time_score, round(20 * correctness_ratio, 1))
+        
+        # 3. Space complexity efficiency (15 pts)
+        user_space_cx = user_space_cx_override if user_space_cx_override else ai_analysis.get('space_complexity', {}).get('estimate', 'O(n)')
+        expected_space_cx = problem_dict.get('expected_space_complexity', 'O(n)')
+        space_efficiency = compare_complexity(user_space_cx, expected_space_cx)
+        space_score = round(space_efficiency * 15, 1)
+        
+        if correctness_ratio < 0.5:
+            space_score = min(space_score, round(15 * correctness_ratio, 1))
+        
+        # 4. Code quality - variable naming (15 pts)
+        code_quality = ai_analysis.get('code_quality', {})
+        variable_naming_raw = code_quality.get('variable_naming', 7)
+        if isinstance(variable_naming_raw, str):
+            try:
+                variable_naming_raw = int(''.join(c for c in variable_naming_raw if c.isdigit()) or '7')
+            except ValueError:
+                variable_naming_raw = 7
+        readability_raw = code_quality.get('readability', 7)
+        if isinstance(readability_raw, str):
+            try:
+                readability_raw = int(''.join(c for c in readability_raw if c.isdigit()) or '7')
+            except ValueError:
+                readability_raw = 7
+        code_structure_raw = code_quality.get('code_structure', 7)
+        if isinstance(code_structure_raw, str):
+            try:
+                code_structure_raw = int(''.join(c for c in code_structure_raw if c.isdigit()) or '7')
+            except ValueError:
+                code_structure_raw = 7
+        quality_avg = (variable_naming_raw + readability_raw + code_structure_raw) / 3.0
+        code_quality_score = round((quality_avg / 10.0) * 15, 1)
+        
+        # 5. Attempt bonus (10 pts)
+        if attempt_count == 1:
+            attempt_score = 10.0
+        elif attempt_count == 2:
+            attempt_score = 8.0
+        elif attempt_count == 3:
+            attempt_score = 6.0
+        elif attempt_count <= 5:
+            attempt_score = 4.0
+        else:
+            attempt_score = max(1.0, 10.0 - attempt_count * 1.5)
+        attempt_score = round(attempt_score, 1)
+        
+        # 6. Typing speed / engagement (10 pts)
+        keystroke_count = typing_metrics.get('keystroke_count', 0)
+        time_spent_secs = typing_metrics.get('time_spent_seconds', 0)
+        code_length = len(user_code)
+        
+        if time_spent_secs > 30 and keystroke_count > 10:
+            # Good engagement - typed code over reasonable time
+            chars_per_min = (keystroke_count / time_spent_secs) * 60 if time_spent_secs > 0 else 0
+            if 5 <= chars_per_min <= 200:  # Reasonable typing speed
+                typing_speed_score = 10.0
+            elif chars_per_min > 200:  # Suspiciously fast
+                typing_speed_score = 5.0
+            else:
+                typing_speed_score = 7.0
+        elif code_length > 20:
+            typing_speed_score = 6.0  # No metrics but code written
+        else:
+            typing_speed_score = 5.0  # Default
+        typing_speed_score = round(typing_speed_score, 1)
+        
+        # 7. Originality / copy-paste detection (5 pts)
+        paste_count = typing_metrics.get('paste_count', 0)
+        pasted_chars = typing_metrics.get('pasted_chars', 0)
+        total_typed = typing_metrics.get('total_typed_chars', 0)
+        
+        copy_paste_detected = paste_count > 2 or (pasted_chars > code_length * 0.5 and code_length > 30)
+        
+        if paste_count == 0:
+            originality_score = 5.0
+        elif paste_count <= 2 and pasted_chars < code_length * 0.3:
+            originality_score = 4.0  # Minor paste (e.g., function signature)
+        elif paste_count <= 4:
+            originality_score = 2.5
+        else:
+            originality_score = 1.0
+        originality_score = round(originality_score, 1)
+        
+        deterministic_score = round(correctness_score + time_score + space_score + 
+                                     code_quality_score + attempt_score + 
+                                     typing_speed_score + originality_score)
+        deterministic_score = max(0, min(100, deterministic_score))
+        
+        # Override the AI score with deterministic score
+        ai_analysis['score'] = deterministic_score
+        score_breakdown = {
+            'correctness': correctness_score,
+            'time_efficiency': time_score,
+            'space_efficiency': space_score,
+            'code_quality_score': code_quality_score,
+            'attempt_bonus': attempt_score,
+            'typing_speed_score': typing_speed_score,
+            'originality_score': originality_score,
+            'user_time_complexity': user_time_cx,
+            'expected_time_complexity': expected_time_cx,
+            'user_space_complexity': user_space_cx,
+            'expected_space_complexity': expected_space_cx,
+            'copy_paste_detected': copy_paste_detected,
+            'paste_count': paste_count,
+            'variable_naming': variable_naming_raw,
+            'readability': readability_raw,
+            'code_structure': code_structure_raw
+        }
+        ai_analysis['score_breakdown'] = score_breakdown
+        
         # Build comprehensive submission record
         submission = {
             'problem_id': problem_id,
@@ -508,13 +666,13 @@ def submit_code():
             'code': user_code,
             'language': language,
             'passed': result['passed'],
-            'passed_count': result.get('passed_count', 0),
-            'total_count': result.get('total_count', 0),
-            'failed_count': result.get('total_count', 0) - result.get('passed_count', 0),
+            'passed_count': passed_count,
+            'total_count': total_count,
+            'failed_count': total_count - passed_count,
             'time_taken_minutes': time_taken,
             'expected_time_minutes': problem_dict.get('expected_time_minutes', 30),
             'attempt_number': attempt_count,
-            'score': ai_analysis.get('score', 0),
+            'score': deterministic_score,
             # Complexity analysis
             'time_complexity': ai_analysis.get('time_complexity', {}),
             'space_complexity': ai_analysis.get('space_complexity', {}),
@@ -525,6 +683,10 @@ def submit_code():
             # Code quality
             'code_quality': ai_analysis.get('code_quality', {}),
             'mastery_level': ai_analysis.get('mastery_level', 'Unknown'),
+            # Score breakdown for UI
+            'score_breakdown': score_breakdown,
+            # Typing metrics for tracking
+            'typing_metrics': typing_metrics,
             # Store full AI analysis for history
             'ai_analysis': ai_analysis
         }

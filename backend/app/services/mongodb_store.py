@@ -265,9 +265,14 @@ class MongoDBStore:
             'language': submission.get('language', 'python'),
             'passed': submission.get('passed', False),
             'score': submission.get('score', 0),
+            'passed_count': submission.get('passed_count', 0),
+            'total_count': submission.get('total_count', 0),
+            'attempt_number': submission.get('attempt_number', 1),
             'time_complexity': submission.get('time_complexity'),
             'space_complexity': submission.get('space_complexity'),
             'algorithm_type': submission.get('algorithm_type'),
+            'score_breakdown': submission.get('score_breakdown'),
+            'typing_metrics': submission.get('typing_metrics'),
             'ai_analysis': submission.get('ai_analysis'),
             'timestamp': datetime.now()
         }

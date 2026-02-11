@@ -15,22 +15,33 @@ COMPLEXITY_ORDER = [
     "O(1)",
     "O(log n)",
     "O(n)",
+    "O(n log k)",
+    "O(n+m)",
     "O(n log n)",
+    "O(n*k log k)",
+    "O(V+E)",
     "O(n^2)",
+    "O(n*amount)",
+    "O(m*n)",
     "O(n^2 log n)",
     "O(n^3)",
     "O(2^n)",
+    "O(n * 2^n)",
+    "O(3^n)",
+    "O(4^n)",
     "O(n!)"
 ]
 
 # Complexity scoring matrix
-# Score based on how close user's complexity is to expected
+# Score based on how many levels worse user's complexity is vs expected
 COMPLEXITY_SCORES = {
-    0: 1.0,   # Exact match
-    1: 0.8,   # One level worse
-    2: 0.5,   # Two levels worse
-    3: 0.3,   # Three levels worse
-    4: 0.1,   # Four+ levels worse (brute force)
+    0: 1.0,   # Exact match or better
+    1: 0.85,  # One level worse
+    2: 0.65,  # Two levels worse
+    3: 0.45,  # Three levels worse
+    4: 0.25,  # Four levels worse
+    5: 0.15,  # Five levels worse
+    6: 0.10,  # Six+ levels worse (brute force)
 }
 
 # Difficulty levels

@@ -207,6 +207,7 @@ const ProblemList = ({ onSelectProblem }) => {
                             </div>
                           )}
                         </div>
+                        <span className="problem-test-count">{problem.test_cases?.length || 0} tests</span>
                         <div className={`problem-difficulty ${getDifficultyClass(problem.difficulty)}`}>{problem.difficulty}</div>
                       </div>
                     ))}
@@ -222,6 +223,7 @@ const ProblemList = ({ onSelectProblem }) => {
             <span className="col-status">Status</span>
             <span className="col-title">Title</span>
             <span className="col-topic">Topic</span>
+            <span className="col-tests">Tests</span>
             <span className="col-difficulty">Difficulty</span>
           </div>
           {filteredProblems.map((problem) => {
@@ -237,6 +239,7 @@ const ProblemList = ({ onSelectProblem }) => {
                   {IconComponent ? <IconComponent size={16} color={config.color} /> : <Circle size={16} />}
                   {' '}{config.name}
                 </span>
+                <span className="col-tests">{problem.test_cases?.length || 0}</span>
                 <span className={`col-difficulty ${getDifficultyClass(problem.difficulty)}`}>
                   {problem.difficulty?.charAt(0).toUpperCase() + problem.difficulty?.slice(1)}
                 </span>
