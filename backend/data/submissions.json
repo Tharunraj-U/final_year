@@ -2057,6 +2057,298 @@
       },
       "submission_id": "student_tharun_20",
       "submitted_at": "2026-02-10T14:52:06.741229"
+    },
+    {
+      "problem_id": "str-001",
+      "problem_title": "Valid Anagram",
+      "topic": "strings",
+      "difficulty": "easy",
+      "code": "import java.util.*;\n\nclass Solution {\n    public boolean is_anagram(String s, String t) {\n      \n        return false;\n    }\n}",
+      "language": "java",
+      "passed": false,
+      "passed_count": 7,
+      "total_count": 20,
+      "failed_count": 13,
+      "time_taken_minutes": 0,
+      "expected_time_minutes": 10,
+      "attempt_number": 2,
+      "score": 42,
+      "time_complexity": {
+        "estimate": "O(1)",
+        "explanation": "Code returns a hardcoded value without processing input.",
+        "is_optimal": false
+      },
+      "space_complexity": {
+        "estimate": "O(1)",
+        "explanation": "No additional memory allocated.",
+        "is_optimal": false
+      },
+      "algorithm_type": {
+        "primary": "Stub Code",
+        "secondary": [],
+        "is_appropriate": false,
+        "better_approach": "Implement a character counting mechanism using a hash map or an array to compare the frequency of characters in both strings."
+      },
+      "test_case_analysis": {
+        "total_tests": 20,
+        "passed_tests": 7,
+        "failed_tests": 13,
+        "failure_patterns": [
+          "null inputs",
+          "mismatched string lengths",
+          "character frequency mismatches"
+        ],
+        "failure_reasons": [
+          "The function does not process input strings to check for anagrams, leading to incorrect outputs for all cases except the hardcoded false."
+        ]
+      },
+      "code_quality": {
+        "readability": 2,
+        "variable_naming": 1,
+        "code_structure": 1,
+        "comments": "No comments present"
+      },
+      "mastery_level": "Beginner",
+      "score_breakdown": {
+        "correctness": 8.8,
+        "time_efficiency": 7.0,
+        "space_efficiency": 5.2,
+        "code_quality_score": 2.0,
+        "attempt_bonus": 8.0,
+        "typing_speed_score": 6.0,
+        "originality_score": 5.0,
+        "user_time_complexity": "O(1)",
+        "expected_time_complexity": "O(n)",
+        "user_space_complexity": "O(1)",
+        "expected_space_complexity": "O(n)",
+        "copy_paste_detected": false,
+        "paste_count": 0,
+        "variable_naming": 1,
+        "readability": 2,
+        "code_structure": 1
+      },
+      "typing_metrics": {
+        "keystroke_count": 0,
+        "paste_count": 0,
+        "pasted_chars": 0,
+        "total_typed_chars": 0,
+        "time_spent_seconds": 16
+      },
+      "ai_analysis": {
+        "feedback": "The current implementation of the function is incomplete, as it only returns false without performing any checks to determine if the strings are anagrams. To solve the problem, you should compare the character counts of both strings. Consider using a hash map or an array to count occurrences of each character in both strings and then compare these counts. Additionally, handle edge cases such as null inputs or strings of different lengths.",
+        "time_complexity": {
+          "estimate": "O(1)",
+          "explanation": "Code returns a hardcoded value without processing input.",
+          "is_optimal": false
+        },
+        "space_complexity": {
+          "estimate": "O(1)",
+          "explanation": "No additional memory allocated.",
+          "is_optimal": false
+        },
+        "algorithm_type": {
+          "primary": "Stub Code",
+          "secondary": [],
+          "is_appropriate": false,
+          "better_approach": "Implement a character counting mechanism using a hash map or an array to compare the frequency of characters in both strings."
+        },
+        "test_case_analysis": {
+          "total_tests": 20,
+          "passed_tests": 7,
+          "failed_tests": 13,
+          "failure_patterns": [
+            "null inputs",
+            "mismatched string lengths",
+            "character frequency mismatches"
+          ],
+          "failure_reasons": [
+            "The function does not process input strings to check for anagrams, leading to incorrect outputs for all cases except the hardcoded false."
+          ]
+        },
+        "code_quality": {
+          "readability": 2,
+          "variable_naming": 1,
+          "code_structure": 1,
+          "comments": "No comments present"
+        },
+        "improvement_tips": [
+          "Implement logic to count character occurrences in both strings.",
+          "Add checks for null inputs and handle edge cases such as different string lengths.",
+          "Include comments to explain your logic and improve code readability."
+        ],
+        "concepts_demonstrated": [],
+        "concepts_to_learn": [
+          "String manipulation",
+          "Hash maps for counting frequencies",
+          "Handling edge cases in algorithms"
+        ],
+        "score": 42,
+        "mastery_level": "Beginner",
+        "attempt_number": 2,
+        "language": "java",
+        "score_breakdown": {
+          "correctness": 8.8,
+          "time_efficiency": 7.0,
+          "space_efficiency": 5.2,
+          "code_quality_score": 2.0,
+          "attempt_bonus": 8.0,
+          "typing_speed_score": 6.0,
+          "originality_score": 5.0,
+          "user_time_complexity": "O(1)",
+          "expected_time_complexity": "O(n)",
+          "user_space_complexity": "O(1)",
+          "expected_space_complexity": "O(n)",
+          "copy_paste_detected": false,
+          "paste_count": 0,
+          "variable_naming": 1,
+          "readability": 2,
+          "code_structure": 1
+        }
+      },
+      "submission_id": "student_tharun_21",
+      "submitted_at": "2026-02-11T17:27:10.355122"
+    },
+    {
+      "problem_id": "arr-001",
+      "problem_title": "Two Sum",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "code": "def two_sum(nums, target):\n    seen = {}\n    for i, num in enumerate(nums):\n        complement = target - num\n        if complement in seen:\n            return [seen[complement], i]\n        seen[num] = i\n    return []",
+      "language": "python",
+      "passed": true,
+      "passed_count": 20,
+      "total_count": 20,
+      "failed_count": 0,
+      "time_taken_minutes": 0,
+      "expected_time_minutes": 15,
+      "attempt_number": 3,
+      "score": 86,
+      "time_complexity": {
+        "estimate": "O(n)",
+        "explanation": "The code iterates through the input list 'nums' once, performing constant time operations (hash map lookups and insertions) for each element, resulting in a linear time complexity.",
+        "is_optimal": true
+      },
+      "space_complexity": {
+        "estimate": "O(n)",
+        "explanation": "The space complexity is O(n) due to the hash map that stores potentially all unique elements from the input list, which grows with the size of the input.",
+        "is_optimal": false
+      },
+      "algorithm_type": {
+        "primary": "Hash Map",
+        "secondary": [],
+        "is_appropriate": true,
+        "better_approach": null
+      },
+      "test_case_analysis": {
+        "total_tests": 20,
+        "passed_tests": 20,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 8,
+        "variable_naming": 8,
+        "code_structure": 8,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Expert",
+      "score_breakdown": {
+        "correctness": 25.0,
+        "time_efficiency": 20.0,
+        "space_efficiency": 15.0,
+        "code_quality_score": 12.0,
+        "attempt_bonus": 6.0,
+        "typing_speed_score": 6.0,
+        "originality_score": 2.5,
+        "user_time_complexity": "O(n)",
+        "expected_time_complexity": "O(n)",
+        "user_space_complexity": "O(n)",
+        "expected_space_complexity": "O(n)",
+        "copy_paste_detected": true,
+        "paste_count": 1,
+        "variable_naming": 8,
+        "readability": 8,
+        "code_structure": 8
+      },
+      "typing_metrics": {
+        "keystroke_count": 1,
+        "paste_count": 1,
+        "pasted_chars": 293,
+        "total_typed_chars": 136,
+        "time_spent_seconds": 16
+      },
+      "ai_analysis": {
+        "feedback": "Your solution to the Two Sum problem is efficient and correctly implements a hash map to track seen numbers, allowing you to find the two indices that sum to the target in linear time. The code is clear and concise, making it easy to follow. However, consider adding comments to explain the logic behind your approach and improve readability for others who may review your code.",
+        "time_complexity": {
+          "estimate": "O(n)",
+          "explanation": "The code iterates through the input list 'nums' once, performing constant time operations (hash map lookups and insertions) for each element, resulting in a linear time complexity.",
+          "is_optimal": true
+        },
+        "space_complexity": {
+          "estimate": "O(n)",
+          "explanation": "The space complexity is O(n) due to the hash map that stores potentially all unique elements from the input list, which grows with the size of the input.",
+          "is_optimal": false
+        },
+        "algorithm_type": {
+          "primary": "Hash Map",
+          "secondary": [],
+          "is_appropriate": true,
+          "better_approach": null
+        },
+        "test_case_analysis": {
+          "total_tests": 20,
+          "passed_tests": 20,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 8,
+          "variable_naming": 8,
+          "code_structure": 8,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Add comments to explain the purpose of the hash map and the logic behind the iteration.",
+          "Consider edge cases, such as empty arrays or arrays with one element, to improve robustness.",
+          "Ensure consistent variable naming conventions for better readability."
+        ],
+        "concepts_demonstrated": [
+          "Understanding of hash maps",
+          "Basic algorithm design",
+          "Iterative logic"
+        ],
+        "concepts_to_learn": [
+          "Advanced data structures",
+          "Time and space complexity analysis",
+          "Handling edge cases in algorithms"
+        ],
+        "score": 86,
+        "mastery_level": "Expert",
+        "attempt_number": 3,
+        "language": "python",
+        "score_breakdown": {
+          "correctness": 25.0,
+          "time_efficiency": 20.0,
+          "space_efficiency": 15.0,
+          "code_quality_score": 12.0,
+          "attempt_bonus": 6.0,
+          "typing_speed_score": 6.0,
+          "originality_score": 2.5,
+          "user_time_complexity": "O(n)",
+          "expected_time_complexity": "O(n)",
+          "user_space_complexity": "O(n)",
+          "expected_space_complexity": "O(n)",
+          "copy_paste_detected": true,
+          "paste_count": 1,
+          "variable_naming": 8,
+          "readability": 8,
+          "code_structure": 8
+        }
+      },
+      "submission_id": "student_tharun_22",
+      "submitted_at": "2026-02-11T17:28:06.016654"
     }
   ],
   "student_irfan": [
@@ -5301,6 +5593,291 @@
       },
       "submission_id": "tharunraj2023_17",
       "submitted_at": "2026-02-11T17:13:49.127548"
+    },
+    {
+      "problem_id": "arr-001",
+      "problem_title": "Two Sum",
+      "topic": "arrays",
+      "difficulty": "easy",
+      "code": "import java.util.*;\n\nclass Solution {\n    public int[] two_sum(int[] nums, int target) {\n        //int val=ne\n        return new int[]{0,1};\n    }\n}",
+      "language": "java",
+      "passed": false,
+      "passed_count": 7,
+      "total_count": 20,
+      "failed_count": 13,
+      "time_taken_minutes": 1,
+      "expected_time_minutes": 15,
+      "attempt_number": 18,
+      "score": 48,
+      "time_complexity": {
+        "estimate": "O(1)",
+        "explanation": "Code returns a hardcoded value without processing input.",
+        "is_optimal": false
+      },
+      "space_complexity": {
+        "estimate": "O(1)",
+        "explanation": "No additional memory allocated.",
+        "is_optimal": false
+      },
+      "algorithm_type": {
+        "primary": "Hash Map",
+        "secondary": [],
+        "is_appropriate": true,
+        "better_approach": null
+      },
+      "test_case_analysis": {
+        "total_tests": 20,
+        "passed_tests": 20,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 8,
+        "variable_naming": 7,
+        "code_structure": 7,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Proficient",
+      "score_breakdown": {
+        "correctness": 8.8,
+        "time_efficiency": 7.0,
+        "space_efficiency": 5.2,
+        "code_quality_score": 11.0,
+        "attempt_bonus": 1.0,
+        "typing_speed_score": 10.0,
+        "originality_score": 5.0,
+        "user_time_complexity": "O(1)",
+        "expected_time_complexity": "O(n)",
+        "user_space_complexity": "O(1)",
+        "expected_space_complexity": "O(n)",
+        "copy_paste_detected": false,
+        "paste_count": 0,
+        "variable_naming": 7,
+        "readability": 8,
+        "code_structure": 7
+      },
+      "typing_metrics": {
+        "keystroke_count": 23,
+        "paste_count": 0,
+        "pasted_chars": 0,
+        "total_typed_chars": 23,
+        "time_spent_seconds": 49
+      },
+      "ai_analysis": {
+        "feedback": "Your implementation of the Two Sum problem correctly identifies the indices of the two numbers that sum to the target using a hash map, which is efficient and optimal. However, the code could benefit from additional comments to enhance readability and understanding of the logic. Overall, this is a solid implementation that meets the problem requirements, but improving code documentation will help others (and yourself) understand your thought process better.",
+        "time_complexity": {
+          "estimate": "O(1)",
+          "explanation": "Code returns a hardcoded value without processing input.",
+          "is_optimal": false
+        },
+        "space_complexity": {
+          "estimate": "O(1)",
+          "explanation": "No additional memory allocated.",
+          "is_optimal": false
+        },
+        "algorithm_type": {
+          "primary": "Hash Map",
+          "secondary": [],
+          "is_appropriate": true,
+          "better_approach": null
+        },
+        "test_case_analysis": {
+          "total_tests": 20,
+          "passed_tests": 20,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 8,
+          "variable_naming": 7,
+          "code_structure": 7,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Add comments to explain the logic behind your approach.",
+          "Consider edge cases and how your solution would handle them.",
+          "Refactor the code to improve readability and structure."
+        ],
+        "concepts_demonstrated": [
+          "Hash maps",
+          "Basic array manipulation",
+          "Time complexity analysis"
+        ],
+        "concepts_to_learn": [
+          "Optimal algorithm design",
+          "Space complexity analysis"
+        ],
+        "score": 48,
+        "mastery_level": "Proficient",
+        "attempt_number": 18,
+        "language": "java",
+        "score_breakdown": {
+          "correctness": 8.8,
+          "time_efficiency": 7.0,
+          "space_efficiency": 5.2,
+          "code_quality_score": 11.0,
+          "attempt_bonus": 1.0,
+          "typing_speed_score": 10.0,
+          "originality_score": 5.0,
+          "user_time_complexity": "O(1)",
+          "expected_time_complexity": "O(n)",
+          "user_space_complexity": "O(1)",
+          "expected_space_complexity": "O(n)",
+          "copy_paste_detected": false,
+          "paste_count": 0,
+          "variable_naming": 7,
+          "readability": 8,
+          "code_structure": 7
+        }
+      },
+      "submission_id": "tharunraj2023_18",
+      "submitted_at": "2026-02-11T17:26:08.712520"
+    }
+  ],
+  "tharun": [
+    {
+      "problem_id": "arr-004",
+      "problem_title": "Maximum Subarray",
+      "topic": "arrays",
+      "difficulty": "medium",
+      "code": "import java.util.*;\n\nclass Solution {\n    public int max_subarray(int[] nums) {\n        int maxSum = nums[0];\n        int currentSum = nums[0];\n\n        for(int i = 1; i < nums.length; i++){\n            currentSum = Math.max(nums[i], currentSum + nums[i]);\n            maxSum = Math.max(maxSum, currentSum);\n        }\n\n        return maxSum;\n    }\n}",
+      "language": "java",
+      "passed": true,
+      "passed_count": 20,
+      "total_count": 20,
+      "failed_count": 0,
+      "time_taken_minutes": 1,
+      "expected_time_minutes": 20,
+      "attempt_number": 1,
+      "score": 90,
+      "time_complexity": {
+        "estimate": "O(n)",
+        "explanation": "The code iterates through the input array once with a single loop, making the time complexity O(n) as it processes each element exactly once.",
+        "is_optimal": true
+      },
+      "space_complexity": {
+        "estimate": "O(1)",
+        "explanation": "The solution only uses a fixed amount of space for the variables 'maxSum' and 'currentSum', regardless of the input size.",
+        "is_optimal": true
+      },
+      "algorithm_type": {
+        "primary": "Dynamic Programming",
+        "secondary": [],
+        "is_appropriate": true,
+        "better_approach": null
+      },
+      "test_case_analysis": {
+        "total_tests": 20,
+        "passed_tests": 20,
+        "failed_tests": 0,
+        "failure_patterns": [],
+        "failure_reasons": []
+      },
+      "code_quality": {
+        "readability": 7,
+        "variable_naming": 8,
+        "code_structure": 8,
+        "comments": "Needs more comments"
+      },
+      "mastery_level": "Proficient",
+      "score_breakdown": {
+        "correctness": 25.0,
+        "time_efficiency": 20.0,
+        "space_efficiency": 15.0,
+        "code_quality_score": 11.5,
+        "attempt_bonus": 10.0,
+        "typing_speed_score": 6.0,
+        "originality_score": 2.5,
+        "user_time_complexity": "O(n)",
+        "expected_time_complexity": "O(n)",
+        "user_space_complexity": "O(1)",
+        "expected_space_complexity": "O(n)",
+        "copy_paste_detected": true,
+        "paste_count": 1,
+        "variable_naming": 8,
+        "readability": 7,
+        "code_structure": 8
+      },
+      "typing_metrics": {
+        "keystroke_count": 1,
+        "paste_count": 1,
+        "pasted_chars": 561,
+        "total_typed_chars": 212,
+        "time_spent_seconds": 62
+      },
+      "ai_analysis": {
+        "feedback": "Your solution effectively implements Kadane's algorithm to find the maximum subarray sum in linear time, which is optimal for this problem. The use of two variables to track the current and maximum sums is a clean and efficient approach. However, consider adding comments to explain the logic for better readability, especially for those unfamiliar with the algorithm.",
+        "time_complexity": {
+          "estimate": "O(n)",
+          "explanation": "The code iterates through the input array once with a single loop, making the time complexity O(n) as it processes each element exactly once.",
+          "is_optimal": true
+        },
+        "space_complexity": {
+          "estimate": "O(1)",
+          "explanation": "The solution only uses a fixed amount of space for the variables 'maxSum' and 'currentSum', regardless of the input size.",
+          "is_optimal": true
+        },
+        "algorithm_type": {
+          "primary": "Dynamic Programming",
+          "secondary": [],
+          "is_appropriate": true,
+          "better_approach": null
+        },
+        "test_case_analysis": {
+          "total_tests": 20,
+          "passed_tests": 20,
+          "failed_tests": 0,
+          "failure_patterns": [],
+          "failure_reasons": []
+        },
+        "code_quality": {
+          "readability": 7,
+          "variable_naming": 8,
+          "code_structure": 8,
+          "comments": "Needs more comments"
+        },
+        "improvement_tips": [
+          "Add comments to explain the purpose of each variable and the overall logic of the algorithm.",
+          "Consider edge cases such as arrays with all negative numbers or a single element.",
+          "Refactor the method name to follow Java naming conventions, e.g., 'maxSubarray' instead of 'max_subarray'."
+        ],
+        "concepts_demonstrated": [
+          "Dynamic programming",
+          "Array manipulation",
+          "Iterative algorithms"
+        ],
+        "concepts_to_learn": [
+          "Algorithm optimization techniques",
+          "Edge case handling in algorithms",
+          "Code documentation and commenting best practices"
+        ],
+        "score": 90,
+        "mastery_level": "Proficient",
+        "attempt_number": 1,
+        "language": "java",
+        "score_breakdown": {
+          "correctness": 25.0,
+          "time_efficiency": 20.0,
+          "space_efficiency": 15.0,
+          "code_quality_score": 11.5,
+          "attempt_bonus": 10.0,
+          "typing_speed_score": 6.0,
+          "originality_score": 2.5,
+          "user_time_complexity": "O(n)",
+          "expected_time_complexity": "O(n)",
+          "user_space_complexity": "O(1)",
+          "expected_space_complexity": "O(n)",
+          "copy_paste_detected": true,
+          "paste_count": 1,
+          "variable_naming": 8,
+          "readability": 7,
+          "code_structure": 8
+        }
+      },
+      "submission_id": "tharun_1",
+      "submitted_at": "2026-03-11T12:11:43.853484"
     }
   ]
 }
