@@ -128,13 +128,14 @@ If you use CodeMaster AI in your research, please cite:
 
 ```bibtex
 @software{codemaster_ai_2026,
-  author = {Tharun Raj U},
+  author = {Tharun Raj U and Irfan Ahamed},
   title = {CodeMaster AI: An Intelligent Adaptive Learning Platform for Programming Education},
   year = {2026},
   url = {https://github.com/tharunraj-u/codemaster-ai}
 }
 ```
 
-## 👨‍💻 Author
+## 👨‍💻 Authors
 
-Tharun Raj U
+- **Tharun Raj U** - Velammal Engineering College
+- **Irfan Ahamed** - Velammal Engineering College

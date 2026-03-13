@@ -13,8 +13,11 @@ authors:
   - name: Tharun Raj U
     orcid: 0000-0000-0000-0000
     affiliation: 1
+  - name: Irfan Ahamed
+    orcid: 0000-0000-0000-0000
+    affiliation: 1
 affiliations:
-  - name: Department of Computer Science, Institution Name, Country
+  - name: Department of Information Technology, Velammal Engineering College, Chennai, India
     index: 1
 date: 13 March 2026
 bibliography: paper.bib
