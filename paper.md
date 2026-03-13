@@ -11,10 +11,10 @@ tags:
   - LLM
 authors:
   - name: Tharun Raj U
-    orcid: 0000-0000-0000-0000
+    orcid: 0009-0006-5213-6745
     affiliation: 1
   - name: Irfan Ahamed
-    orcid: 0000-0000-0000-0000
+    orcid: 0009-0004-1640-2212
     affiliation: 1
 affiliations:
   - name: Department of Information Technology, Velammal Engineering College, Chennai, India
