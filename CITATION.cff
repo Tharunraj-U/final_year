@@ -1,0 +1,29 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "CodeMaster AI: An Intelligent Adaptive Learning Platform for Programming Education"
+version: 1.0.0
+date-released: 2026-03-13
+url: "https://github.com/tharunraj-u/codemaster-ai"
+repository-code: "https://github.com/tharunraj-u/codemaster-ai"
+license: MIT
+authors:
+  - family-names: "Raj U"
+    given-names: "Tharun"
+    orcid: "https://orcid.org/0000-0000-0000-0000"
+keywords:
+  - intelligent tutoring system
+  - programming education
+  - adaptive learning
+  - artificial intelligence
+  - large language models
+  - code analysis
+  - Python
+  - React
+abstract: >-
+  CodeMaster AI is an open-source intelligent tutoring system 
+  that provides personalized programming education through 
+  adaptive learning techniques and AI-powered code analysis. 
+  The platform combines rule-based algorithms with Large Language 
+  Models to deliver real-time feedback, personalized problem 
+  recommendations, and interactive tutoring.

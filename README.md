@@ -1,6 +1,9 @@
-# 🧠 CodeMaster AI - Final Year Project
+# 🧠 CodeMaster AI - Intelligent Adaptive Learning Platform
 
-An AI-powered coding learning assistant with LeetCode-style problem solving and GPT-powered recommendations.
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![JOSS](https://img.shields.io/badge/JOSS-Submitted-blue.svg)](https://joss.theoj.org/)
+
+An AI-powered intelligent tutoring system for programming education with adaptive learning, personalized recommendations, and LLM-powered code analysis.
 
 ## ✨ Features
 
@@ -117,7 +120,20 @@ REACT_APP_GOOGLE_CLIENT_ID=your_client_id
 
 ## 📝 License
 
-This project is part of a final year academic project.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 📖 Citation
+
+If you use CodeMaster AI in your research, please cite:
+
+```bibtex
+@software{codemaster_ai_2026,
+  author = {Tharun Raj U},
+  title = {CodeMaster AI: An Intelligent Adaptive Learning Platform for Programming Education},
+  year = {2026},
+  url = {https://github.com/tharunraj-u/codemaster-ai}
+}
+```
 
 ## 👨‍💻 Author
 
